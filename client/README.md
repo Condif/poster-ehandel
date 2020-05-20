@@ -7,7 +7,7 @@ and built using [Material-UI](https://material-ui.com/getting-started/installati
 The server is built using [Node.js](https://nodejs.org/en/).
 The database is built with [MongoDB](https://docs.mongodb.com/guides/).
 
-## Projektbeskrivning
+## Project description
 
 E-commerce site that sells posters. The customers should easily be able to choose their favorite poster by category. A customer can register and log in. Add, remove and manipulate the amount of products in their cart. If the user leaves the site their cart is saved in localstorage. They can go from cart to a checkout site, choose delivery option and purchase. After purchace the customer an order proof will be saved to the database which will be presented to the customer when they are logged into the site.
 
