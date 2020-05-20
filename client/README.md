@@ -1,5 +1,5 @@
 # Imagi 
-## A e-handel site with MongoDB
+## En e-handelsida för posters
 
 Link to [github repo](https://github.com/Condif/poster-ehandel).
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
