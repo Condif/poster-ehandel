@@ -7,7 +7,7 @@ and built using [Material-UI](https://material-ui.com/getting-started/installati
 The server is built using [Node.js](https://nodejs.org/en/).
 The database is built with [MongoDB](https://docs.mongodb.com/guides/).
 
-## Project description
+## Projektbeskrivning
 
 Vår företagside består av en E-handelsida som säljer posters, där fokus ligger på att kunden lätt ska kunna hitta sin favorit bland de kategorier som finns. En kund ska kunna registrera sig, logga in, lägga till, ta bort och manipulera antalet varor i kundvagnen, välja fraktsätt samt utföra sitt köp på betalningssidan och se sin senaste order.  Kunden ska därtill kunna avvika från sidan och sedan återvända utan att förlora det som lagts i kundvagnen.
 
