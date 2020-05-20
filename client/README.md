@@ -1,23 +1,50 @@
+# Imagi 
+## A e-handel site with MongoDB
+
+Link to [github repo](https://github.com/Condif/poster-ehandel).
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+and built using [Material-UI](https://material-ui.com/getting-started/installation/).
+The server is built using [Node.js](https://nodejs.org/en/).
+The database is built with [MongoDB](https://docs.mongodb.com/guides/).
 
-## Available Scripts
+## Project description
 
-In the project directory, you can run:
+Vår företagside består av en E-handelsida som säljer posters, där fokus ligger på att kunden lätt ska kunna hitta sin favorit bland de kategorier som finns. En kund ska kunna registrera sig, logga in, lägga till, ta bort och manipulera antalet varor i kundvagnen, välja fraktsätt samt utföra sitt köp på betalningssidan och se sin senaste order.  Kunden ska därtill kunna avvika från sidan och sedan återvända utan att förlora det som lagts i kundvagnen.
 
-### `npm start`
+## Installation
+
+When the project is cloned to your drive, start the project and run;
+
+#### `npm i`
+
+to install dependencies.
+
+### Starting the project
+
+The following command line is used in the projects server directory to start the backend part of the project
+(cd server).
+
+
+#### `node expressApp.js`
+
+If you intend to run the frontend part side by side, open a new terminal window and run:
+
+#### `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+### Additional scripts
+
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
 
-### `npm test`
+#### `npm test`
 
 Launches the test runner in the interactive watch mode.<br />
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
-### `npm run build`
+#### `npm run build`
 
 Builds the app for production to the `build` folder.<br />
 It correctly bundles React in production mode and optimizes the build for the best performance.
@@ -27,7 +54,7 @@ Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+#### `npm run eject`
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -37,32 +64,23 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
-## Learn More
+## Assignment grading
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+This part is only for our teacher's reference, not the actual grading of the assignment.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Passing grades:
 
-### Code Splitting
+- Git & GitHub have been used (Completed)
+- The project has a README.md file (look above for more info) (Completed)
+- The project is handed in on time! (Completed)
+- It needs to be atleast two resources with CRUD-Endpoints (Completed)
+- You should be able to register, log in and create content that is related to the user, that's logged in. (Completed)
+- Only logged in users should be able to perform C_UD operations on their content. (Completed)
+- All content should be saved in MongoDB. (Completed)
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
 
-### Analyzing the Bundle Size
+### Extra credits
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- All of the passing grades are completed. (Completed)
+- There should be an admin role that has admin privileges for all CRUD operations on all content. (Completed)
+- The admin should have access to a user interface that lists all users and their roles. The admin should be able to use the user interface to remove users and change their roles. (Completed)
