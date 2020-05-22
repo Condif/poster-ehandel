@@ -1,16 +1,24 @@
 // users
 
+//Get all
+
 GET http://localhost:8080/api/users/
 
 ###
 
-POST http://localhost:8080/api/users/
+//Get one
+
+GET http://localhost:8080/api/users/5ec7de2364d1654d006e944f
+
+###
+
+POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
 {
-    "name": "Emelie345",
+    "name": "Emelie2",
     "lastname": "lastname",
-    "email": "email1",
+    "email": "email2",
     "password": "admin",
     "role": "true",
     "deliveryAddress": {
