@@ -6,13 +6,13 @@ const controller = require('../controllers/userControllers')
 
 // const getUser = require("../Middlewares/getUser.js");
 
-//Getting all
+// Getting all
 router.get("/", controller.getAllUsers)
 
-//Getting one
+// Getting one
 router.get("/:_id", controller.getUserById)
 
-//Creating one
+// Creating one
 router.post("/register", controller.registerNewUser)
 
 module.exports = router;
