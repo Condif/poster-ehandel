@@ -4,15 +4,18 @@ require("./connection")
 // Server setup
 const express = require('express')
 
-const cors = require('cors')
+
 const app = express()
 const cookieSession = require('cookie-session')
+const cors = require('cors')
+const bodyParser = require('body-parser')
+app.use(bodyParser.json())
 
 const port = process.env.PORT || 8080
-const path = require('path');
+// const path = require('path');
 
 // Routers
-// const usersRouter = require('./Routes/usersRoute')
+const usersRouter = require('./routes/usersRoute')
 // const sessionRouter = require('/Routes/sessionRoute')
 // const productRouter = require('/Routes/productRoute')
 // const orderRouter = require('/Routes/orderRoute')
@@ -21,7 +24,7 @@ const path = require('path');
 
 
 // app.use
-// app.use('/api/users', usersRouter)
+app.use('/api/users', usersRouter)
 // app.use('/api/sessions', sessionRouter)
 // app.use('/api/products', productRouter)
 // app.use('/api/orders', orderRouter)

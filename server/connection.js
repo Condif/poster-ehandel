@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 
 mongoose.set("useCreateIndex", true)
 
-mongoose.connect("mongodb+srv://anonymous_chinchilla:anonymous_chinchilla@poster-ehandel-savbu.mongodb.net/test?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://anonymous_chinchilla:anonymous_chinchilla@poster-ehandel-savbu.mongodb.net/poster-ehandel", {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
