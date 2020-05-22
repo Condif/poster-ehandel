@@ -58,3 +58,13 @@ exports.getProductsFromCategory = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+// Get product by id
+exports.getProductById = async (req, res) => {
+  try {
+    const product = await Product.findOne({ _id: req.params.productId });
+    res.json(product);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
