@@ -8,9 +8,16 @@ POST http://localhost:8080/api/users/
 Content-Type: application/json
 
 {
-    "name": "Lisa",
+    "name": "Emelie345",
+    "lastname": "lastname",
+    "email": "email1",
     "password": "admin",
-    "admin": "true"
+    "role": "true",
+    "deliveryAddress": {
+        "address": "street",
+        "zipcode": 1,
+        "city": "city"
+    }
 }
 
 ###
