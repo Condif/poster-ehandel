@@ -1,15 +1,17 @@
 // users
 
-GET http://localhost:3000/
+GET http://localhost:8080/api/users/
 
 ###
 
-POST http://localhost:3000/
+POST http://localhost:8080/api/users/
 Content-Type: application/json
 
 {
-    "name": "admin",
+    "name": "Ca",
     "password": "admin",
     "admin": "true"
 }
+
+###
 
