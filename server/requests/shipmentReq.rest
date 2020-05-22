@@ -1,5 +1,24 @@
 // Shipments
 
-GET http://localhost:3000/
+// Get all shipment alternatives
+GET http://localhost:8080/api/shipments
+Content-Type: application/json
+
+### 
+
+
+// Get specific shipment alternative
+GET http://localhost:8080/api/shipments/schenker
+Content-Type: application/json
 
 ###
+
+// Add new shipment alternative, for testing purposes
+POST http://localhost:8080/api/shipments
+Content-Type: application/json
+
+{
+    "alternative": "Schenker",
+    "cost": "79",
+    "deliveryTime": 1
+}
