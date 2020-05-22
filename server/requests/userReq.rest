@@ -16,9 +16,9 @@ POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
 {
-    "name": "Emelie2",
+    "name": "Emeliebcrypt",
     "lastname": "lastname",
-    "email": "email2",
+    "email": "email3",
     "password": "admin",
     "role": "true",
     "deliveryAddress": {
