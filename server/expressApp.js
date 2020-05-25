@@ -16,14 +16,14 @@ const port = process.env.PORT || 8080;
 // Routers
 const usersRouter = require("./routes/usersRoute");
 // const sessionRouter = require('/Routes/sessionRoute')
-// const productRouter = require('/Routes/productRoute')
+const productRouter = require("./routes/productsRoute");
 const orderRouter = require("./routes/orderRoute");
 const shipmentRouter = require("./routes/shipmentRoute");
 
 // app.use
 app.use("/api/users", usersRouter);
 // app.use('/api/sessions', sessionRouter)
-// app.use('/api/products', productRouter)
+app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/shipments", shipmentRouter);
 
