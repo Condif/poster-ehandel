@@ -1,9 +1,11 @@
 // Products
 
+// Get all products
 GET http://localhost:8080/api/products/
 
 ###
 
+// Post new product
 POST http://localhost:8080/api/products/
 Content-Type: application/json
 
@@ -17,21 +19,29 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:8080/api/products/5ec7d055dfbbcd4930b76b3d
+// Update a product
+PUT http://localhost:8080/api/products/5ec7cdd8dfbbcd4930b76b3c
 Content-Type: application/json
 
 {
-    "price": "300",
-    "name": "Updated name",
-    "category": "Forest",
-    "description": "New description",
-    "inventory": "3"
+    "price": "199",
+    "name": "Clodus in sky",
+    "category": "Sky",
+    "description": "White, fluffy clouds in the sky on a blue summers sky",
+    "inventory": "10"
 }
 
 ###
 
+// Get all products in category
 GET http://localhost:8080/api/products/category/Forest
 
 ###
 
+// Get one specific product
 GET http://localhost:8080/api/products/product/5ec7cdd8dfbbcd4930b76b3c
+
+###
+
+// Update stock 
+PUT http://localhost:8080/api/products/inventory/5ec7cdd8dfbbcd4930b76b3c

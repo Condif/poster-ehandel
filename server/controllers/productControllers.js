@@ -8,7 +8,6 @@ exports.getAllProducts = async (req, res, next) => {
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-  next();
 };
 
 // Create new peoduct
@@ -42,7 +41,7 @@ exports.updateProduct = async (req, res) => {
         inventory: req.body.inventory,
       }
     );
-    res.json("Post updated");
+    res.json("Product updated");
   } catch (err) {
     res.status(400).json({ message: err.message });
   }
@@ -62,11 +61,19 @@ exports.getProductsFromCategory = async (req, res) => {
 
 // Get product by id
 exports.getProductById = async (req, res) => {
-  console.log("Params: ", req.params);
   try {
     const product = await Product.findOne({ _id: req.params.productId });
     res.json(product);
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+};
+
+exports.updateProductStock = async (req, res) => {
+  try {
+    await Product.update({ _id: req.params.id }, { $inc: { inventory: -1 } });
+    res.json("Product inventory updated");
+  } catch (err) {
+    res.status(400).json({ message: err.message });
   }
 };

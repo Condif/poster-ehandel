@@ -19,4 +19,6 @@ router.get("/category/:productCategory", controller.getProductsFromCategory);
 // Get one specific product
 router.get("/product/:productId", controller.getProductById);
 
+router.put("/inventory/:id", controller.updateProductStock);
+
 module.exports = router;
