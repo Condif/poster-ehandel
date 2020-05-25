@@ -19,7 +19,7 @@ const usersRouter = require('./routes/usersRoute')
 // const sessionRouter = require('/Routes/sessionRoute')
 // const productRouter = require('/Routes/productRoute')
 // const orderRouter = require('/Routes/orderRoute')
-// const shipmentRouter = require('/Routes/shipmentRoute')
+const shipmentRouter = require('./routes/shipmentRoute')
 
 
 
@@ -28,7 +28,7 @@ app.use('/api/users', usersRouter)
 // app.use('/api/sessions', sessionRouter)
 // app.use('/api/products', productRouter)
 // app.use('/api/orders', orderRouter)
-// app.use('/api/shipments', shipmentRouter)
+app.use('/api/shipments', shipmentRouter)
 
 app.use(cors({
     credentials: true,
