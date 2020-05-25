@@ -9,6 +9,22 @@ const cookieSession = require("cookie-session");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
+app.use(
+  cookieSession({
+    name: "LoginSession",
+    secret: "GuppA4Lyf3-geeks",
+    // maxAge: 24 * 60 * 60 * 1000, //24 hours
+    maxAge: 1000 * 60 * 60, //1 hour
+    // maxAge: 30 * 60 * 1000, //30 minutes
+    // maxAge: 60 * 1000, //1 minute
+    // maxAge: 15 * 1000, //15 seconds
+    // maxAge: 10 * 1000, //10 seconds
+    // maxAge: 5 * 1000, //5 seconds
+    sameSite: "strict",
+    httpOnly: true,
+    secure: false,
+  })
+);
 
 const port = process.env.PORT || 8080;
 // const path = require('path');
