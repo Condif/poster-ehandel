@@ -16,9 +16,9 @@ POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
 {
-    "name": "Emeliebcrypt",
-    "lastname": "lastname",
-    "email": "email3",
+    "name": "Name",
+    "lastname": "Lastname",
+    "email": "email2",
     "password": "admin",
     "role": "true",
     "deliveryAddress": {
