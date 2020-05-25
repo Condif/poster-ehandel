@@ -17,15 +17,15 @@ const port = process.env.PORT || 8080;
 const usersRouter = require("./routes/usersRoute");
 // const sessionRouter = require('/Routes/sessionRoute')
 const productRouter = require("./routes/productsRoute");
-// const orderRouter = require('/Routes/orderRoute')
-const shipmentRouter = require('./routes/shipmentRoute')
+const orderRouter = require("./routes/orderRoute");
+const shipmentRouter = require("./routes/shipmentRoute");
 
 // app.use
 app.use("/api/users", usersRouter);
 // app.use('/api/sessions', sessionRouter)
 app.use("/api/products", productRouter);
-// app.use('/api/orders', orderRouter)
-app.use('/api/shipments', shipmentRouter)
+app.use("/api/orders", orderRouter);
+app.use("/api/shipments", shipmentRouter);
 
 app.use(
   cors({
