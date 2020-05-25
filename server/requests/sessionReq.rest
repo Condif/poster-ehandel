@@ -11,5 +11,12 @@ Content-Type: application/json
 
 ###
 
+###
+
+//LOGOUT
+DELETE http://localhost:8080/sessions/logout
+
+###
+
 //CHECK SESSION
 GET http://localhost:8080/sessions/checkLoginSession
