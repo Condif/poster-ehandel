@@ -16,29 +16,15 @@ const port = process.env.PORT || 8080;
 // Routers
 const usersRouter = require("./routes/usersRoute");
 const sessionRouter = require('./routes/sessionRoute')
-// const productRouter = require('./routes/productRoute')
+const productRouter = require("./routes/productsRoute");
 const orderRouter = require("./routes/orderRoute");
 const shipmentRouter = require("./routes/shipmentRoute");
 
 // app.use
-app.use(
-  cookieSession({
-    name: "LoginSession",
-    secret: "GuppA4Lyf3-geeks",
-    // maxAge: 24 * 60 * 60 * 1000, //24 hours
-    maxAge: 1000 * 60 * 60, //1 hour
-    // maxAge: 30 * 60 * 1000, //30 minutes
-    // maxAge: 60 * 1000, //1 minute
-    // maxAge: 15 * 1000, //15 seconds
-    // maxAge: 10 * 1000, //10 seconds
-    // maxAge: 5 * 1000, //5 seconds
-    // sameSite: "strict",
-    httpOnly: true,
-    secure: false,
-  }))
+
 app.use("/api/users", usersRouter);
 app.use('/sessions', sessionRouter)
-// app.use('/api/products', productRouter)
+app.use('/api/products', productRouter)
 app.use("/api/orders", orderRouter);
 app.use("/api/shipments", shipmentRouter);
 
