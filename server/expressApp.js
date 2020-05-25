@@ -15,24 +15,12 @@ const port = process.env.PORT || 8080;
 
 // Routers
 const usersRouter = require("./routes/usersRoute");
-// const sessionRouter = require('/Routes/sessionRoute')
-// const productRouter = require('/Routes/productRoute')
+const sessionRouter = require('./routes/sessionRoute')
+// const productRouter = require('./routes/productRoute')
 const orderRouter = require("./routes/orderRoute");
 const shipmentRouter = require("./routes/shipmentRoute");
 
 // app.use
-app.use("/api/users", usersRouter);
-// app.use('/api/sessions', sessionRouter)
-// app.use('/api/products', productRouter)
-app.use("/api/orders", orderRouter);
-app.use("/api/shipments", shipmentRouter);
-
-app.use(
-  cors({
-    credentials: true,
-    origin: ["http://localhost:3000"],
-  })
-);
 app.use(
   cookieSession({
     name: "LoginSession",
@@ -44,10 +32,22 @@ app.use(
     // maxAge: 15 * 1000, //15 seconds
     // maxAge: 10 * 1000, //10 seconds
     // maxAge: 5 * 1000, //5 seconds
-    sameSite: "strict",
+    // sameSite: "strict",
     httpOnly: true,
     secure: false,
+  }))
+app.use("/api/users", usersRouter);
+app.use('/sessions', sessionRouter)
+// app.use('/api/products', productRouter)
+app.use("/api/orders", orderRouter);
+app.use("/api/shipments", shipmentRouter);
+
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000"],
   })
 );
+
 
 app.listen(port, () => console.log("Server has started"));
