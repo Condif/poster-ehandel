@@ -14,9 +14,9 @@ router.post("/", controller.createNewProduct);
 router.put("/:productId", controller.updateProduct);
 
 // Get all products in a category
-router.get("/:productCategory", controller.getProductsFromCategory);
+router.get("/category/:productCategory", controller.getProductsFromCategory);
 
 // Get one specific product
-router.get("/:productId", controller.getProductById);
+router.get("/product/:productId", controller.getProductById);
 
 module.exports = router;

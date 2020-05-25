@@ -1,13 +1,14 @@
 const Product = require("../models/productModel");
 
 // Get all products
-exports.getAllProducts = async (req, res) => {
+exports.getAllProducts = async (req, res, next) => {
   try {
     const products = await Product.find();
     res.json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+  next();
 };
 
 // Create new peoduct
@@ -61,8 +62,9 @@ exports.getProductsFromCategory = async (req, res) => {
 
 // Get product by id
 exports.getProductById = async (req, res) => {
+  console.log("Params: ", req.params);
   try {
-    const product = await Product.find({ _id: req.params.productId });
+    const product = await Product.findOne({ _id: req.params.productId });
     res.json(product);
   } catch (err) {
     res.status(500).json({ message: err.message });
