@@ -44,4 +44,17 @@ GET http://localhost:8080/api/products/product/5ec7cdd8dfbbcd4930b76b3c
 ###
 
 // Update stock 
-PUT http://localhost:8080/api/products/inventory/5ec7cdd8dfbbcd4930b76b3c
+PUT http://localhost:8080/api/products/
+Content-Type: application/json
+
+[
+{
+    "_id": "5ec7cdd8dfbbcd4930b76b3c",
+    "quantity": 2
+},
+{
+    "_id": "5ec7d87e2e3c8232a853dc36",
+    "quantity": 1
+}
+]
+

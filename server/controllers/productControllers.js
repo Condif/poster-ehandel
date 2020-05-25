@@ -71,7 +71,14 @@ exports.getProductById = async (req, res) => {
 
 exports.updateProductStock = async (req, res) => {
   try {
-    await Product.update({ _id: req.params.id }, { $inc: { inventory: -1 } });
+    console.log("REQ.BODY: ", req.body);
+    req.body.forEach(async (product) => {
+      console.log("PRODUCT: ", product);
+      await Product.updateOne(
+        { _id: product._id },
+        { $inc: { inventory: -product.quantity } }
+      );
+    });
     res.json("Product inventory updated");
   } catch (err) {
     res.status(400).json({ message: err.message });
