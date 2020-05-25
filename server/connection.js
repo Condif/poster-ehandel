@@ -9,5 +9,7 @@ mongoose.connect("mongodb+srv://anonymous_chinchilla:anonymous_chinchilla@poster
 
 const db = mongoose.connection
 
+
 db.on('error', (error) => console.log(error))
 db.once('open', () => console.log('Connected to Database'))
+
