@@ -4,8 +4,6 @@ import Grid from '@material-ui/core/Grid';
 import Header from './Header';
 import NavBar from './NavBar';
 import Container from '@material-ui/core/Container';
-import { spacing } from '@material-ui/system';
-import Box from '@material-ui/core/Box';
 
 const Layout = (props) => {
     return (

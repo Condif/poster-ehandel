@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, Toolbar } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
@@ -27,7 +27,6 @@ const NavButton = withStyles({
 
 
 const NavBar = () => {
-
     return (
         <NavAppBar position="static">
             <Toolbar>

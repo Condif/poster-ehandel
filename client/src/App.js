@@ -1,15 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Layout from './components/Layout';
-import Login from './components/Login';
 import Main from './components/Main';
-import Register from './components/Register';
-import UserOrders from './components/UserOrders';
-import Checkout from './components/Checkout';
-import ProductView from './components/ProductView';
-import CategoryPage from './components/CategoryPage';
-
-window.addEventListener('load', () => console.log(getAllProducts()))
+// import Login from './components/Login';
+// import Register from './components/Register';
+// import UserOrders from './components/UserOrders';
+// import Checkout from './components/Checkout';
+// import ProductView from './components/ProductView';
+// import CategoryPage from './components/CategoryPage';
 
 function App() {
   return (
@@ -34,19 +32,6 @@ function App() {
   );
 }
 
-async function getAllProducts() {
-  const products = await fetch("http://localhost:8080/api/products", {
-    method: "GET",
-    mode: "no-cors"
-  })
-    .then((response) => response.json())
-    .then(data => {
-      return data
-    })
-    .catch(error => console.log(error));
-  console.log(products)
-  return <Route exact path={`/product${"BLOBURL"}`} component={ProductView} />
-}
 
 const slugURL = (string) => {
   string = string.replace(/^\s+|\s+$/g, ''); // trim
