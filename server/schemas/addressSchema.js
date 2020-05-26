@@ -15,4 +15,4 @@ const addressSchema = new mongoose.Schema ({
 }
 , {_id: false})
 
-module.exports = ('Address', addressSchema)
+module.exports = addressSchema

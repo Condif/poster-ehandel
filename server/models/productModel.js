@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const productSchema = new mongoose.Schema({
+module.exports = productSchema = new mongoose.Schema({
   price: {
     type: Number,
     required: true,
