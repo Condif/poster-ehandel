@@ -3,11 +3,10 @@ require("./connection");
 
 // Server setup
 const express = require("express");
-
+require("express-async-errors");
 const app = express();
 const cookieSession = require("cookie-session");
 const cors = require("cors");
-require("express-async-errors");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(
@@ -32,7 +31,7 @@ const port = process.env.PORT || 8080;
 
 // Routers
 const usersRouter = require("./routes/usersRoute");
-const sessionRouter = require('./routes/sessionRoute')
+const sessionRouter = require("./routes/sessionRoute");
 const productRouter = require("./routes/productsRoute");
 const orderRouter = require("./routes/orderRoute");
 const shipmentRouter = require("./routes/shipmentRoute");
@@ -40,8 +39,8 @@ const shipmentRouter = require("./routes/shipmentRoute");
 // app.use
 
 app.use("/api/users", usersRouter);
-app.use('/sessions', sessionRouter)
-app.use('/api/products', productRouter)
+app.use("/sessions", sessionRouter);
+app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/shipments", shipmentRouter);
 
@@ -52,6 +51,8 @@ app.use(
   })
 );
 
+//
+app.use(express.json());
 
 //handle 404 errors
 app.use(function (req, res) {
@@ -59,12 +60,12 @@ app.use(function (req, res) {
 });
 
 //Global error handler
-app.use(function (error, req, res, next) {
+app.use((error, req, res, next) => {
   console.error(error);
   next(error);
 });
 
-app.use(function (error, req, res, next) {
+app.use((error, req, res, next) => {
   if (!error.statusCode) {
     error.statusCode = 500;
   }

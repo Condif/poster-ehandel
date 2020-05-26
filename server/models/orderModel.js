@@ -11,15 +11,15 @@ const orderSchema = new mongoose.Schema({
   //   },
   // ],
 
-  user: String, //{ type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  user: String, //{ type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 
-  orderDate: String, //Detta ska vara Date sedan
+  orderDate: { type: String, required: true }, //Detta ska vara Date sedan
 
-  shipment: String, //{ type: mongoose.Schema.Types.ObjectId, ref: "Shipment" },
+  shipment: { type: String, required: true }, //{ type: mongoose.Schema.Types.ObjectId, ref: "Shipment" },
 
-  totalPrice: Number,
+  totalPrice: { type: Number, required: true },
 
-  deliveryAddress: [Address],
+  deliveryAddress: { type: [Address], required: true },
 });
 
 module.exports = mongoose.model("orders", orderSchema);

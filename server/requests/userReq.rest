@@ -8,7 +8,7 @@ GET http://localhost:8080/api/users/
 
 //Get one
 
-GET http://localhost:8080/api/users/5ec7de2364d1654d006e944f
+GET http://localhost:8080/api/users/5ecba68a7d085f4d744cb891
 
 ###
 
