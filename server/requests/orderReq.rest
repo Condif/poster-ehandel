@@ -7,7 +7,7 @@ GET http://localhost:8080/api/orders
 ###
 
 //GET order by userId
-GET http://localhost:8080/api/orders/5ec80a82aa22c43e1c3c6e8c
+GET http://localhost:8080/api/orders/5ecbf1b742932536cc47965f
 
 ###
 
@@ -18,10 +18,10 @@ Content-Type: application/json
 
 {
     "products": "Skål",
-    "user": "Henke",
-    "orderDate": "1 maj",
+    "user": "Kicki",
+    "orderDate": "10 maj",
     "shipment": "DHL",
-    "totalPrice": 299,
+    "totalPrice": 999,
     "deliveryAddress": {
         "address": "the street",
         "zipcode": 1,
