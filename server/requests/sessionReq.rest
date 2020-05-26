@@ -1,14 +1,22 @@
 // Sessions
 
-GET http://localhost:3000/
-
-###
-
-POST http://localhost:3000/
+// Login
+POST http://localhost:8080/sessions/login
 Content-Type: application/json
 
 {
-    "name": "admin",
-    "password": "admin",
-    "admin": "true"
+    "email": "email",
+    "password": "admin"
 }
+
+###
+
+###
+
+//LOGOUT
+DELETE http://localhost:8080/sessions/logout
+
+###
+
+//CHECK SESSION
+GET http://localhost:8080/sessions/checkLoginSession
