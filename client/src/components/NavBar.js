@@ -1,16 +1,18 @@
 // Hämta useContext för att använda funktioner i UserContext.
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import {
     AppBar,
     Toolbar,
     Button,
     Grid,
-    Typography,
+    Badge,
+    IconButton,
 } from '@material-ui/core';
-import { withStyles } from '@material-ui/core/styles';
+import { withStyles, createStyles } from '@material-ui/core/styles';
 import lightGreen from '@material-ui/core/colors/lightGreen';
 import teal from '@material-ui/core/colors/teal';
-import {UserContext}  from '../contexts/UserContext';
+import { UserContext } from '../contexts/UserContext';
+import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 
 
 const NavAppBar = withStyles({
@@ -19,6 +21,18 @@ const NavAppBar = withStyles({
         background: `linear-gradient(352deg, ${lightGreen[500]} 0%, ${teal[700]} 40%, ${teal[500]} 98%)`
     }
 })(AppBar);
+
+const StyledBadge = withStyles((theme) =>
+  createStyles({
+    badge: {
+      right: 10,
+      top: 16,
+      border: `2px solid ${theme.palette.background.paper}`,
+	  padding: '2px 4px 1px 4px',
+	  fontSize: '0.6rem',
+    },
+  }),
+)(Badge);
 
 const Categories = withStyles({
     root: {
@@ -34,7 +48,7 @@ const NavButton = withStyles({
 
 
 const NavBar = () => {
-    
+
     // Hämta openCart funktionen från UserContext
     const { openCart } = useContext(UserContext)
     return (
@@ -47,12 +61,17 @@ const NavBar = () => {
                     <NavButton aria-label="category3">Category3</NavButton>
                     <NavButton aria-label="category4">Category4</NavButton>
                     <NavButton aria-label="category5">Category5</NavButton>
-                    <Button
-                        color="default"
-                        onClick={openCart}
-                    >
-                        <Typography variant="overline">Cart</Typography>
-                    </Button>
+                    <StyledBadge color="secondary">
+                        <IconButton
+                            style={{
+                                width: "4rem",
+                                color: "#333"
+                            }}
+                            edge="start"
+                            onClick={openCart}>
+                            <ShoppingCartIcon />
+                        </IconButton>
+                    </StyledBadge>
                 </Categories>
                 <Grid item>
                     <NavButton aria-label="sign up">Sign up</NavButton>
