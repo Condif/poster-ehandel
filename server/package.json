@@ -9,8 +9,12 @@
     "cookie-session": "^1.4.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+<<<<<<< HEAD
     "express-async-errors": "^3.1.1",
     "mongoose": "^5.9.15"
+=======
+    "mongoose": "^5.9.16"
+>>>>>>> master
   },
   "devDependencies": {},
   "scripts": {
