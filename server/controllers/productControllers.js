@@ -1,13 +1,13 @@
 const Product = require("../models/productModel");
+const ServerError = require("../serverError");
 
 // Get all products
 exports.getAllProducts = async (req, res, next) => {
-  try {
-    const products = await Product.find();
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  const products = await Product.find();
+  if (!products.length) {
+    throw new ServerError("There are no products", 404);
   }
+  res.json(products);
 };
 
 // Create new peoduct
@@ -19,16 +19,15 @@ exports.createNewProduct = async (req, res) => {
     description: req.body.description,
     inventory: req.body.inventory,
   });
-  try {
-    const newProduct = await product.save();
-    res.status(201).json(newProduct);
-  } catch (err) {
-    // res.status.apply(400).json({ message: err.message })
-    res.status(400).json({ message: err.message });
+  if (!product || !product.length) {
+    throw new ServerError("The product was not created", 400);
   }
+  const newProduct = await product.save();
+  res.status(201).json(newProduct);
 };
 
 // Update product
+//TODO hur gör vi felhanteringen här??
 exports.updateProduct = async (req, res) => {
   try {
     await Product.findOneAndUpdate(
@@ -49,26 +48,25 @@ exports.updateProduct = async (req, res) => {
 
 // Get products from category
 exports.getProductsFromCategory = async (req, res) => {
-  try {
-    const products = await Product.find({
-      category: req.params.productCategory,
-    });
-    res.json(products);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  const products = await Product.find({
+    category: req.params.productCategory,
+  });
+  if (!products.length) {
+    throw new ServerError("The category does not exist", 404);
   }
+  res.json(products);
 };
 
 // Get product by id
 exports.getProductById = async (req, res) => {
-  try {
-    const product = await Product.findOne({ _id: req.params.productId });
-    res.json(product);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
+  const product = await Product.findOne({ _id: req.params.productId });
+  if (!product) {
+    throw new ServerError("The product does not exist", 404);
   }
+  res.json(product);
 };
 
+//TODO hur gör vi felhanteringen här?
 exports.updateProductStock = async (req, res) => {
   try {
     console.log("REQ.BODY: ", req.body);
