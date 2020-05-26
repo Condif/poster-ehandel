@@ -4,8 +4,8 @@ const useStyles = makeStyles((theme) => ({
     headerWrapper: {
         width: "100%",
         height: "4rem",
-        // position: "fixed",
-        // zIndex: 1,
+        position: "fixed",
+        zIndex: 1,
         backgroundColor: "#FFFFFF",
         display: "flex",
         alignItems: "center",
