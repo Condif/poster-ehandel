@@ -2,14 +2,16 @@ import React, {useContext} from 'react';
 import {
     Drawer,
     Typography,
-    Button
 } from "@material-ui/core";
 
-import { UserContext } from '../contexts/UserContext';
+import { UserContext } from '../../contexts/UserContext';
 import CloseIcon from "@material-ui/icons/Close";
+// STYLES
+import useStyles from "./CartStyles";
 
 
 const Cart = () => {
+    const classes = useStyles();
     const { openCart } = useContext(UserContext)
     return (
         <UserContext.Consumer>
@@ -24,14 +26,16 @@ const Cart = () => {
                         }}
                         anchor="right"
                         open={userContext.isCartOpen}>
-                        <div >
+                        <div className={classes.headerWrapper} >
                             <CloseIcon
+                                className={classes.closeIcon}
                                 onClick={openCart}
                             />
-                            <Typography variant="h4">
+                            <Typography className={classes.header} variant="h4">
                                 Cart
 					        </Typography>
                         </div>
+                        <div className={classes.listWrapper}></div>
                     </Drawer>
                 </div>
             )}
