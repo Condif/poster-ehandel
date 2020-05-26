@@ -7,6 +7,7 @@ const express = require("express");
 const app = express();
 const cookieSession = require("cookie-session");
 const cors = require("cors");
+require("express-async-errors");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
@@ -49,5 +50,23 @@ app.use(
     secure: false,
   })
 );
+
+//handle 404 errors
+app.use(function (req, res) {
+  res.status(404).json({ message: "The resource does not exist" });
+});
+
+//Global error handler
+app.use(function (error, req, res, next) {
+  console.error(error);
+  next(error);
+});
+
+app.use(function (error, req, res, next) {
+  if (!error.statusCode) {
+    error.statusCode = 500;
+  }
+  res.status(error.statusCode).json({ message: error.message });
+});
 
 app.listen(port, () => console.log("Server has started"));

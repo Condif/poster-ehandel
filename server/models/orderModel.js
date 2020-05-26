@@ -11,7 +11,7 @@ const orderSchema = new mongoose.Schema({
   //   },
   // ],
 
-  user: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  user: String, //{ type: mongoose.Schema.Types.ObjectId, ref: "User" },
 
   orderDate: String, //Detta ska vara Date sedan
 
