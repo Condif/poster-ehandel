@@ -5,7 +5,7 @@ import Header from './Header';
 import NavBar from './NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './Main';
-import Cart from './Cart'
+import Cart from './cart/Cart'
 // import Login from './Login';
 // import Register from './Register';
 // import UserOrders from './UserOrders';
@@ -23,16 +23,17 @@ const Layout = (props) => {
             <Router>
                 <div className="App">
                     <Grid container spacing={4} justify="center">
+                        <Cart />
                         <Header />
                         <Grid item xs={12}>
                             <NavBar />
+                            
                         </Grid>
                         <Container style={{ marginTop: '8px' }} maxWidth="md">
                             <Paper>
                                 <Switch>
                                     <Route exact path="/">
                                         <Main />
-                                        <Cart />
                                     </Route>
                                     {/* 
                                     <Route exact path="/login" component={Login} />
