@@ -52,7 +52,7 @@ app.use(
 );
 
 //
-app.use(express.json());
+// app.use(express.json());
 
 //handle 404 errors
 app.use(function (req, res) {

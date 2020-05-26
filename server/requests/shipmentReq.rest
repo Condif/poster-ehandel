@@ -8,7 +8,7 @@ Content-Type: application/json
 
 
 // Get specific shipment alternative
-GET http://localhost:8080/api/shipments/schenker
+GET http://localhost:8080/api/shipments/schenket
 Content-Type: application/json
 
 ###
