@@ -5,7 +5,7 @@ const ServerError = require("../serverError");
 // Get all users
 exports.getAllUsers = async (req, res) => {
   const users = await User.find();
-  if (!users.length) {
+  if (users.length === 0) {
     throw new ServerError("The source does not exist", 404);
   }
   res.json(users);
@@ -21,7 +21,6 @@ exports.getUserById = async (req, res) => {
 };
 
 // Register new user
-//TODO testa detta med frontenden errorhandler
 exports.registerNewUser = async (req, res) => {
   const user = new User({
     name: req.body.name,
@@ -31,11 +30,9 @@ exports.registerNewUser = async (req, res) => {
     role: req.body.role,
     deliveryAddress: req.body.deliveryAddress,
   });
-  try {
-    const newUser = await user.save();
-    res.status(201).json({ newUser });
-  } catch (err) {
-    // res.status.apply(400).json({ message: err.message })
-    res.status(400).json({ message: err.message });
+  if (!user) {
+    throw new ServerError("The user was not created", 400);
   }
+  const newUser = await user.save();
+  res.status(201).json({ newUser });
 };
