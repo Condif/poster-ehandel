@@ -27,16 +27,17 @@ exports.login = async (req, res) => {
             if (err) throw err;
             if (!isMatch) return res.status(401).json({ err: 'Wrong username or password' })
             
-            // Create a session
+            // Skapa en session
+            // Allt 
             req.session.email = res.user.email
             req.session.id = res.user._id
             req.session.role = res.user.role
-            // We can now check role with if (req.session.role === role') in requests
+            // Vi kan nu kolla om (req.session.role === role') i requests
 
             console.log('Created client session');
             
 
-            // Returns successful login
+            // Skickar tillbaks en genomförd login
             res.json({email: res.user.email, role: res.user.role})
         })
 }

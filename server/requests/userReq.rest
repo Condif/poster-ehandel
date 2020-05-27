@@ -18,9 +18,9 @@ Content-Type: application/json
 {
     "name": "Name",
     "lastname": "Lastname",
-    "email": "email2",
+    "email": "email3",
     "password": "admin",
-    "role": "true",
+    "role": "Admin",
     "deliveryAddress": {
         "address": "street",
         "zipcode": 1,

@@ -5,6 +5,7 @@ import Header from './Header';
 import NavBar from './NavBar';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Main from './Main';
+import Cart from './cart/Cart'
 // import Login from './Login';
 // import Register from './Register';
 // import UserOrders from './UserOrders';
@@ -12,36 +13,42 @@ import Main from './Main';
 // import ProductView from './ProductView';
 // import CategoryPage from './CategoryPage';
 import Container from '@material-ui/core/Container';
+import UserContextProvider from '../contexts/UserContext';
+
+
 
 const Layout = (props) => {
     return (
-        <Router>
-            <div className="App">
-                <Grid container spacing={4} justify="center">
-                    <Header />
-                    <Grid item xs={12}>
-                        <NavBar />
-                    </Grid>
-                    <Container style={{ marginTop: '8px' }} maxWidth="md">
-                        <Paper>
-                            <Switch>
-                                <Route exact path="/">
-                                    <Main />
-                                </Route>
-                                {/* 
+        <UserContextProvider>
+            <Router>
+                <div className="App">
+                    <Grid container spacing={4} justify="center">
+                        <Cart />
+                        <Header />
+                        <Grid item xs={12}>
+                            <NavBar />
+                        </Grid>
+                        <Container style={{ marginTop: '8px' }} maxWidth="md">
+                            <Paper>
+                                <Switch>
+                                    <Route exact path="/">
+                                        <Main />
+                                    </Route>
+                                    {/* 
                                     <Route exact path="/login" component={Login} />
                                     <Route exact path="/register" component={Register} />
                                     <Route exact path="/category" component={CategoryPage} />
                                     <Route exact path="/checkout" component={Checkout} />
                                     <Route exact path="/orders" component={UserOrders} />
                                 */}
-                            </Switch>
-                            {props.children}
-                        </Paper>
-                    </Container>
-                </Grid>
-            </div>
-        </Router >
+                                </Switch>
+                                {props.children}
+                            </Paper>
+                        </Container>
+                    </Grid>
+                </div>
+            </Router >
+        </UserContextProvider>
 
     )
 }
