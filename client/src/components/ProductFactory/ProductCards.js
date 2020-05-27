@@ -3,9 +3,9 @@ import { useHistory } from 'react-router-dom';
 import { Grid, Card, CardHeader, CardActions, CardActionArea } from '@material-ui/core';
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
-import useStyles from './ProductCardStyle';
+import useStyles from './ProductCardStyles/MainCardStyles';
 
-const ProductCard = (props) => {
+const MainCard = (props) => {
     const classes = useStyles();
     const history = useHistory();
     const { product, path } = props;
@@ -23,7 +23,7 @@ const ProductCard = (props) => {
                     <Typography>
                         {product.name}
                     </Typography>
-                    {window.location.pathname === path && <Typography>{product.description}</Typography>}
+                    <Typography>{product.description}</Typography>
                     <Typography>
                         {product.price}SEK
                     </Typography>
@@ -38,4 +38,6 @@ const ProductCard = (props) => {
     )
 }
 
-export default ProductCard;
+
+
+export {MainCard};
