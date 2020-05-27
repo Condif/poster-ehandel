@@ -1,8 +1,15 @@
 import React, { useState, useContext } from "react";
+import Button from "@material-ui/core/Button";
+import Container from "@material-ui/core/Container";
+import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../contexts/UserContext";
+import { UserContext } from "../../contexts/UserContext";
+import useStyles from "./LoginStyles";
+import teal from "@material-ui/core/colors/teal";
 
 export default function Login() {
+  const classes = useStyles();
+
   const [userEmail, setUserEmail] = useState([]);
   const [userPassword, setUserPassword] = useState([]);
 
@@ -41,22 +48,36 @@ export default function Login() {
   }
 
   return (
-    <div>
-      <input
-        className="userEmail"
+    <Container className={classes.flexedContainer} maxWidth="sm">
+      <TextField
+        fullWidth
+        variant="outlined"
+        margin="normal"
+        size="small"
         type="text"
         required
-        placeholder="E-mail"
+        label="E-mail"
         onChange={(event) => setUserEmail(event.target.value)}
-      ></input>
-      <input
-        className="userPassword"
+      ></TextField>
+      <TextField
+        fullWidth
+        variant="outlined"
+        margin="normal"
+        size="small"
         type="password"
         required
-        placeholder="Lösenord"
+        label="Password"
         onChange={(event) => setUserPassword(event.target.value)}
-      ></input>
-      <button onClick={() => authenticateUser()}>Logga in!</button>
-    </div>
+      ></TextField>
+      <Button
+        className={classes.submitButton}
+        variant="contained"
+        color="primary"
+        fullWidth
+        onClick={() => authenticateUser()}
+      >
+        Sign in
+      </Button>
+    </Container>
   );
 }

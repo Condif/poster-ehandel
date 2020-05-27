@@ -6,7 +6,7 @@ import NavBar from "./NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./Main";
 import Cart from "./cart/Cart";
-import Login from "./Login";
+import Login from "./login/Login";
 // import Register from './Register';
 // import UserOrders from './UserOrders';
 // import Checkout from './Checkout';
