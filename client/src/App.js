@@ -2,7 +2,7 @@ import React from "react";
 import Layout from "./components/Layout";
 import "typeface-roboto";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import MuiThemeProvider from "@material-ui/core/styles/MuiThemeProvider";
+import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import teal from "@material-ui/core/colors/teal";
 
