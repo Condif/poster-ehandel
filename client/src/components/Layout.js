@@ -4,8 +4,8 @@ import Header from "./Header";
 import NavBar from "./NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./Main";
-import Cart from "./cart/Cart";
-import ProductCard from './ProductCard/ProductCard';
+import Cart from "./Cart/Cart";
+import {MainCard} from './ProductFactory/ProductCards';
 import UserContextProvider from "../contexts/UserContext";
 import Login from "./Login";
 // import Register from './Register';
@@ -39,7 +39,7 @@ const Layout = () => {
                         <Paper>
                             <Switch>
                                 <Route exact path="/">
-                                    <Main products={products} createSlug={slugURL} />
+                                    <Main products={products} createSlug={slugURL}/>
                                 </Route>
                                 <Route path="/login" component={Login} />
 
@@ -47,7 +47,7 @@ const Layout = () => {
                                     products.map(product => {
                                         return (
                                             <Route key={product._id} exact path={`/product/${slugURL(product.name)}`}>
-                                                <ProductCard product={product} path={`/product/${slugURL(product.name)}`} />
+                                                <MainCard product={product} path={`/product/${slugURL(product.name)}`}/>
                                             </Route>
                                         )
                                     })}
