@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { Paper, Grid, Container } from '@material-ui/core';
-import Header from './Header';
-import NavBar from './NavBar';
-import Main from './Main';
-// import Login from './Login';
+import React, { useEffect, useState } from "react";
+import { Paper, Grid, Container }from "@material-ui/core";
+import Header from "./Header";
+import NavBar from "./NavBar";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Main from "./Main";
+import Cart from "./cart/Cart";
+import ProductCard from './ProductCard/ProductCard';
+import UserContextProvider from "../contexts/UserContext";
+import Login from "./Login";
 // import Register from './Register';
 // import UserOrders from './UserOrders';
 // import Checkout from './Checkout';
 // import ProductView from './ProductView';
 // import CategoryPage from './CategoryPage';
-import ProductCard from './ProductCard/ProductCard';
 
 const Layout = () => {
     const [products, setProducts] = useState([]);
@@ -25,8 +27,10 @@ const Layout = () => {
 
     return (
         <Router>
+            <UserContextProvider>
             <div className="App">
                 <Grid container spacing={4} justify="center">
+                    <Cart />
                     <Header />
                     <Grid item xs={12}>
                         <NavBar />
@@ -37,6 +41,8 @@ const Layout = () => {
                                 <Route exact path="/">
                                     <Main products={products} createSlug={slugURL} />
                                 </Route>
+                                <Route path="/login" component={Login} />
+
                                 {products !== null && products &&
                                     products.map(product => {
                                         return (
@@ -57,6 +63,7 @@ const Layout = () => {
                     </Container>
                 </Grid>
             </div>
+            </UserContextProvider>
         </Router>
     )
 }

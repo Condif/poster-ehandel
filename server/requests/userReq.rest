@@ -16,11 +16,11 @@ POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
 {
-    "name": "Name",
+    "name": "Emelie",
     "lastname": "Lastname",
-    "email": "email2",
+    "email": "emai5",
     "password": "admin",
-    "role": "true",
+    "role": "Admin",
     "deliveryAddress": {
         "address": "street",
         "zipcode": 1,

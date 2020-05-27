@@ -4,7 +4,7 @@ const ServerError = require("../serverError");
 // Get all products
 exports.getAllProducts = async (req, res, next) => {
   const products = await Product.find();
-  if (!products.length) {
+  if (products.length === 0) {
     throw new ServerError("There are no products", 404);
   }
   res.json(products);
@@ -19,7 +19,7 @@ exports.createNewProduct = async (req, res) => {
     description: req.body.description,
     inventory: req.body.inventory,
   });
-  if (!product || !product.length) {
+  if (product.length === 0) {
     throw new ServerError("The product was not created", 400);
   }
   const newProduct = await product.save();
@@ -51,7 +51,7 @@ exports.getProductsFromCategory = async (req, res) => {
   const products = await Product.find({
     category: req.params.productCategory,
   });
-  if (!products.length) {
+  if (products.length === 0) {
     throw new ServerError("The category does not exist", 404);
   }
   res.json(products);

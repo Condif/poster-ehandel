@@ -8,7 +8,7 @@ exports.getShipmentById = async (req, res, next) => {
   const shipment = await Shipment.find({
     alternative: req.params.shipmentAlternative,
   }).collation(collation);
-  if (!shipment.length) {
+  if (shipment.length === 0) {
     throw new ServerError("The shipment does not exist", 404);
   }
   res.json(shipment);
@@ -17,7 +17,7 @@ exports.getShipmentById = async (req, res, next) => {
 // Get all shipment alternatives
 exports.getShipmentAlternatives = async (req, res) => {
   const shipmentAlternatives = await Shipment.find();
-  if (!shipmentAlternatives.length) {
+  if (shipmentAlternatives.length === 0) {
     throw new ServerError("The resource does not exist", 404);
   }
   res.json(shipmentAlternatives);
@@ -30,7 +30,7 @@ exports.addShipment = async (req, res) => {
     cost: req.body.cost,
     deliveryTime: req.body.deliveryTime,
   });
-  if (!newShipment || !newShipment.length) {
+  if (!newShipment || newShipment.length === 0) {
     throw new ServerError("Could not add shipment", 400);
   }
   const savedShipment = await newShipment.save();
