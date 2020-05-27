@@ -45,6 +45,7 @@ const NavButton = withStyles({
 })(Button);
 
 const NavBar = () => {
+  const history = useHistory();
   // Hämta openCart funktionen från UserContext
   const { openCart } = useContext(UserContext);
   return (

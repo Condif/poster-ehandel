@@ -10,6 +10,13 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 
+app.use(
+  cors({
+    credentials: true,
+    origin: ["http://localhost:3000"],
+  })
+);
+
 // cookieSession skickar med req.session till alla req, s
 //så vi kan komma åt allt vi sparar i req.session globalt.
 app.use(
@@ -46,13 +53,6 @@ app.use("/sessions", sessionRouter);
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/shipments", shipmentRouter);
-
-app.use(
-  cors({
-    credentials: true,
-    origin: ["http://localhost:3000"],
-  })
-);
 
 //
 // app.use(express.json());

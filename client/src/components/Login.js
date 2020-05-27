@@ -10,8 +10,8 @@ export default function Login() {
 
   const history = useHistory();
 
-  function redirectToUserPage() {
-    history.push("/userpage");
+  function redirectToMain() {
+    history.push("/");
   }
 
   function authenticateUser() {
@@ -31,7 +31,7 @@ export default function Login() {
       if (response.status === 200) {
         let dataFromBackend = await response.json();
         setUser(dataFromBackend);
-        redirectToUserPage();
+        redirectToMain();
       }
       if (response.status === 401) {
         let messageResponse = await response.json();
