@@ -1,33 +1,24 @@
-import React, { createContext, Component } from "react";
+import React, { createContext, useState } from "react";
 export const UserContext = createContext();
 
-class UserContextProvider extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            // Allt här kommer vi åt med consumer
-            isCartOpen: false,
-            openCart: this.openCart
-        }
-    }
+const UserContextProvider = (props) => {
+    const [isCartOpen, setIsCartOpen] = useState(false);
 
     //State för cartModal
-    openCart = () => {   
-        this.setState({ isCartOpen: !this.state.isCartOpen})
+    const openCart = () => {
+        setIsCartOpen(!isCartOpen)
     }
 
     // Logga in
     // Logga ut
     // Se senaste beställning
 
-    render() {
-        return (
-            <UserContext.Provider value={{ ...this.state }}>
-                {this.props.children}
-            </UserContext.Provider>
-        );
-    }
+    return (
+        <UserContext.Provider value={{ isCartOpen, openCart }}>
+            {props.children}
+        </UserContext.Provider>
+    );
 
 }
 
-export default UserContextProvider;
+export default UserContextProvider
