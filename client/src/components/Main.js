@@ -28,7 +28,7 @@ const renderProducts = (products, createSlug) => {
     return products.map(product => {
         const slug = createSlug(product.name);
         return (
-            <ProductFactory case="main" key={product._id} product={product} path={slug}/>
+            <ProductFactory case="cart" key={product._id} product={product} path={slug}/>
         )
     })
 }
