@@ -8,7 +8,7 @@ import {
     Badge,
     IconButton,
 } from '@material-ui/core';
-import { withStyles, createStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import lightGreen from '@material-ui/core/colors/lightGreen';
 import teal from '@material-ui/core/colors/teal';
 import { UserContext } from '../contexts/UserContext';
@@ -22,8 +22,7 @@ const NavAppBar = withStyles({
     }
 })(AppBar);
 
-const StyledBadge = withStyles((theme) =>
-  createStyles({
+const StyledBadge = withStyles((theme) => ({
     badge: {
       right: 10,
       top: 16,
@@ -31,8 +30,7 @@ const StyledBadge = withStyles((theme) =>
 	  padding: '2px 4px 1px 4px',
 	  fontSize: '0.6rem',
     },
-  }),
-)(Badge);
+}))(Badge);
 
 const Categories = withStyles({
     root: {
