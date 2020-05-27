@@ -5,8 +5,8 @@ import NavBar from "./NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./Main";
 import Cart from "./cart/Cart";
+import { MainCard } from "./ProductFactory/ProductCards";
 import Login from "./login/Login";
-import ProductCard from "./ProductCard/ProductCard";
 import UserContextProvider from "../contexts/UserContext";
 import Register from "./register/Register";
 // import Register from './Register';
@@ -54,7 +54,7 @@ const Layout = () => {
                           exact
                           path={`/product/${slugURL(product.name)}`}
                         >
-                          <ProductCard
+                          <MainCard
                             product={product}
                             path={`/product/${slugURL(product.name)}`}
                           />
