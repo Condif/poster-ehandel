@@ -5,6 +5,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import lightGreen from '@material-ui/core/colors/lightGreen';
 import teal from '@material-ui/core/colors/teal';
+import { useHistory } from 'react-router-dom';
 
 const NavAppBar = withStyles({
     root: {
@@ -25,13 +26,18 @@ const NavButton = withStyles({
     }
 })(Button);
 
-
 const NavBar = () => {
+    let history = useHistory();
+
+    const handleClick = (event) => {
+        history.push("/")
+    };
+
     return (
         <NavAppBar position="static">
             <Toolbar>
                 <Categories item>
-                    <NavButton aria-label="homepage">Home</NavButton>
+                    <NavButton aria-label="go to homepage" onClick={handleClick}>Home</NavButton>
                     <NavButton aria-label="category1">Category1</NavButton>
                     <NavButton aria-label="category2">Category2</NavButton>
                     <NavButton aria-label="category3">Category3</NavButton>
