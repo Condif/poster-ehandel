@@ -20,7 +20,7 @@ Content-Type: application/json
     "lastname": "Lastname",
     "email": "emai5",
     "password": "admin",
-    "role": "true",
+    "role": "Admin",
     "deliveryAddress": {
         "address": "street",
         "zipcode": 1,
