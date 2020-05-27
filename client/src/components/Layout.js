@@ -8,6 +8,7 @@ import Cart from "./cart/Cart";
 import Login from "./login/Login";
 import ProductCard from "./ProductCard/ProductCard";
 import UserContextProvider from "../contexts/UserContext";
+import Register from "./register/Register";
 // import Register from './Register';
 // import UserOrders from './UserOrders';
 // import Checkout from './Checkout';
@@ -42,6 +43,7 @@ const Layout = () => {
                     <Main products={products} createSlug={slugURL} />
                   </Route>
                   <Route path="/login" component={Login} />
+                  <Route path="/register" component={Register} />
 
                   {products !== null &&
                     products &&

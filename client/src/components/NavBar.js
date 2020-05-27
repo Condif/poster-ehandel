@@ -52,7 +52,9 @@ const NavBar = () => {
     <NavAppBar position="static">
       <Toolbar>
         <Categories item>
-          <NavButton aria-label="homepage" onClick={() => history.push("/")}>Home</NavButton>
+          <NavButton aria-label="homepage" onClick={() => history.push("/")}>
+            Home
+          </NavButton>
           <NavButton aria-label="category1">Category1</NavButton>
           <NavButton aria-label="category2">Category2</NavButton>
           <NavButton aria-label="category3">Category3</NavButton>
@@ -72,7 +74,12 @@ const NavBar = () => {
           </StyledBadge>
         </Categories>
         <Grid item>
-          <NavButton aria-label="sign up">Sign up</NavButton>
+          <NavButton
+            aria-label="sign up"
+            onClick={() => history.push("/register")}
+          >
+            Sign up
+          </NavButton>
           <NavButton aria-label="login" onClick={() => history.push("/login")}>
             Login
           </NavButton>
