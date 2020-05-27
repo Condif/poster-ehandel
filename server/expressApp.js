@@ -9,6 +9,9 @@ const cookieSession = require("cookie-session");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
+
+// cookieSession skickar med req.session till alla req, s
+//så vi kan komma åt allt vi sparar i req.session globalt.
 app.use(
   cookieSession({
     name: "LoginSession",

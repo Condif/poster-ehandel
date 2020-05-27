@@ -27,7 +27,6 @@ const Layout = (props) => {
                         <Header />
                         <Grid item xs={12}>
                             <NavBar />
-                            
                         </Grid>
                         <Container style={{ marginTop: '8px' }} maxWidth="md">
                             <Paper>

@@ -12,10 +12,8 @@ import useStyles from "./CartStyles";
 
 const Cart = () => {
     const classes = useStyles();
-    const { openCart } = useContext(UserContext)
+    const { openCart, isCartOpen } = useContext(UserContext)
     return (
-        <UserContext.Consumer>
-            {userContext => (
                 <div
                     style={{
                         overflowX: "hidden"
@@ -25,7 +23,7 @@ const Cart = () => {
                             overflowX: "hidden"
                         }}
                         anchor="right"
-                        open={userContext.isCartOpen}>
+                        open={isCartOpen}>
                         <div className={classes.headerWrapper} >
                             <CloseIcon
                                 className={classes.closeIcon}
@@ -38,8 +36,6 @@ const Cart = () => {
                         <div className={classes.listWrapper}></div>
                     </Drawer>
                 </div>
-            )}
-        </UserContext.Consumer>
     )
 }
 
