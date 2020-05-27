@@ -6,7 +6,6 @@ import ProductView from './ProductCard/ProductCard';
 
 const Main = (props) => {
     const { products, createSlug } = props;
-    console.log(products)
     return (
         <Grid container spacing={4}>
             <Grid item>

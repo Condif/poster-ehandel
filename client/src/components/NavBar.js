@@ -52,7 +52,7 @@ const NavBar = () => {
     <NavAppBar position="static">
       <Toolbar>
         <Categories item>
-          <NavButton aria-label="homepage">Home</NavButton>
+          <NavButton aria-label="homepage" onClick={() => history.push("/")}>Home</NavButton>
           <NavButton aria-label="category1">Category1</NavButton>
           <NavButton aria-label="category2">Category2</NavButton>
           <NavButton aria-label="category3">Category3</NavButton>
