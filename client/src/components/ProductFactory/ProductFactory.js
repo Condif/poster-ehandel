@@ -2,7 +2,7 @@ import React from "react";
 
 import {
 	MainCard,
-	// CartCard,
+	CartCard,
 	// CheckoutCard,
 	// ProductPageCard,
 } from "./ProductCards";
@@ -14,10 +14,10 @@ const ProductFactory = (props)  => {
 			switch (props.case) {
 				case "main":
 					return (
-						<MainCard product={props.product} path={`/product/${path}`}/>
+						<MainCard product={props.product} case={props.case} path={`/product/${path}`}/>
 					);
-			// 	case "cart":
-			// 		return <CartCard product={props.product}/>;
+				case "cart":
+					return <CartCard product={props.product} case={props.case} path={`/product/${path}`}/>;
 			// 	case "checkout":
 			// 		return <CheckoutCard product={props.product} />;
 			// 	case "productPage":
