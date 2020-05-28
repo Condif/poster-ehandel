@@ -13,8 +13,6 @@ export default function Login() {
     userEmail: "",
     userPassword: "",
   });
-  const [emailErrorMessage, setEmailErrorMessage] = useState("");
-  const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
 
   const { setUser } = useContext(UserContext);
 
@@ -32,14 +30,6 @@ export default function Login() {
   }
 
   function authenticateUser() {
-    if (!inputValues.userEmail) {
-      setEmailErrorMessage({ emailErrorMessage: "Please fill in your email" });
-    }
-    if (!inputValues.userPassword) {
-      setPasswordErrorMessage({
-        passwordErrorMessage: "Please fill in your password",
-      });
-    }
     let user = {
       email: inputValues.userEmail,
       password: inputValues.userPassword,
@@ -71,12 +61,6 @@ export default function Login() {
   return (
     <Container className={classes.flexedContainer} maxWidth="sm">
       <TextField
-        error={emailErrorMessage.length === 0 ? false : true}
-        helperText={
-          emailErrorMessage.length === 0
-            ? ""
-            : emailErrorMessage.emailErrorMessage
-        }
         fullWidth
         variant="outlined"
         margin="normal"
@@ -87,12 +71,6 @@ export default function Login() {
         onChange={(event) => handleChange(event, "userEmail")}
       ></TextField>
       <TextField
-        error={passwordErrorMessage.length === 0 ? false : true}
-        helperText={
-          passwordErrorMessage.length === 0
-            ? ""
-            : "Please fill in your password. "
-        }
         fullWidth
         variant="outlined"
         margin="normal"
@@ -103,6 +81,7 @@ export default function Login() {
         onChange={(event) => handleChange(event, "userPassword")}
       ></TextField>
       <Button
+        disabled={!inputValues.userEmail || !inputValues.userPassword}
         className={classes.submitButton}
         variant="contained"
         color="primary"
