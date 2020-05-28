@@ -5,7 +5,6 @@ import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import useStyles from "./LoginStyles";
-import teal from "@material-ui/core/colors/teal";
 
 export default function Login() {
   const classes = useStyles();
