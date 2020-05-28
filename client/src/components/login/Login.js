@@ -5,13 +5,14 @@ import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 import useStyles from "./LoginStyles";
-import teal from "@material-ui/core/colors/teal";
 
 export default function Login() {
   const classes = useStyles();
 
-  const [userEmail, setUserEmail] = useState([]);
-  const [userPassword, setUserPassword] = useState([]);
+  const [inputValues, setInputValues] = useState({
+    userEmail: "",
+    userPassword: "",
+  });
 
   const { setUser } = useContext(UserContext);
 
@@ -21,10 +22,17 @@ export default function Login() {
     history.push("/");
   }
 
+  function handleChange(event, anchor) {
+    setInputValues({
+      ...inputValues,
+      [anchor]: event.target.value,
+    });
+  }
+
   function authenticateUser() {
     let user = {
-      email: userEmail,
-      password: userPassword,
+      email: inputValues.userEmail,
+      password: inputValues.userPassword,
     };
 
     fetch("http://localhost:8080/sessions/login", {
@@ -42,7 +50,10 @@ export default function Login() {
       }
       if (response.status === 401) {
         let messageResponse = await response.json();
-        alert(messageResponse.message);
+        alert(messageResponse.err);
+      }
+      if (response.status === 404) {
+        alert("Wrong username or password");
       }
     });
   }
@@ -57,7 +68,7 @@ export default function Login() {
         type="text"
         required
         label="E-mail"
-        onChange={(event) => setUserEmail(event.target.value)}
+        onChange={(event) => handleChange(event, "userEmail")}
       ></TextField>
       <TextField
         fullWidth
@@ -67,9 +78,10 @@ export default function Login() {
         type="password"
         required
         label="Password"
-        onChange={(event) => setUserPassword(event.target.value)}
+        onChange={(event) => handleChange(event, "userPassword")}
       ></TextField>
       <Button
+        disabled={!inputValues.userEmail || !inputValues.userPassword}
         className={classes.submitButton}
         variant="contained"
         color="primary"
