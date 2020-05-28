@@ -1,11 +1,11 @@
-const Shipment = require("../models/shipmentModel");
+const { ShipmentModel } = require("../models/shipmentModel");
 const ServerError = require("../serverError");
 
 // Get shipment by id
 exports.getShipmentById = async (req, res, next) => {
   // Makes comparison in find method case insensitive
   const collation = { locale: "sv", strength: 2 };
-  const shipment = await Shipment.find({
+  const shipment = await ShipmentModel.find({
     alternative: req.params.shipmentAlternative,
   }).collation(collation);
   if (shipment.length === 0) {
@@ -16,7 +16,7 @@ exports.getShipmentById = async (req, res, next) => {
 
 // Get all shipment alternatives
 exports.getShipmentAlternatives = async (req, res) => {
-  const shipmentAlternatives = await Shipment.find();
+  const shipmentAlternatives = await ShipmentModel.find();
   if (shipmentAlternatives.length === 0) {
     throw new ServerError("The resource does not exist", 404);
   }
@@ -25,7 +25,7 @@ exports.getShipmentAlternatives = async (req, res) => {
 
 // Add shipment alternative, only for testing purposes
 exports.addShipment = async (req, res) => {
-  const newShipment = new Shipment({
+  const newShipment = new ShipmentModel({
     alternative: req.body.alternative,
     cost: req.body.cost,
     deliveryTime: req.body.deliveryTime,
