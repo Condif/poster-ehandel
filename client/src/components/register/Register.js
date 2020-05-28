@@ -134,7 +134,7 @@ const Register = () => {
         label="Zipcode"
         inputProps={{
           maxLength: 5,
-          //   pattern: "[0-9]+",
+          // pattern: "[0-9]+",
         }}
         value={inputValues.zipcode}
         onChange={(event) => handleInputChange(event, "zipcode")}
@@ -151,6 +151,15 @@ const Register = () => {
         onChange={(event) => handleInputChange(event, "city")}
       ></TextField>
       <Button
+        disabled={
+          !inputValues.name ||
+          !inputValues.lastname ||
+          !inputValues.email ||
+          !inputValues.password ||
+          !inputValues.address ||
+          !inputValues.zipcode ||
+          !inputValues.city
+        }
         className={classes.submitButton}
         variant="contained"
         color="primary"
