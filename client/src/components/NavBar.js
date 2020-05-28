@@ -72,15 +72,16 @@ const NavBar = () => {
               <ShoppingCartIcon />
             </IconButton>
           </StyledBadge>
-          <p>{userData.role}</p>
         </Categories>
         <Grid item>
-          <NavButton
-            aria-label="edit products"
-            onClick={() => history.push("/adminProductPage")}
-          >
-            Edit Products
-          </NavButton>
+          {userData.role === "admin" && (
+            <NavButton
+              aria-label="edit products"
+              onClick={() => history.push("/adminProductPage")}
+            >
+              Edit Products
+            </NavButton>
+          )}
           <NavButton
             aria-label="sign up"
             onClick={() => history.push("/register")}
