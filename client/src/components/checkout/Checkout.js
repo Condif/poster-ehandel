@@ -95,6 +95,7 @@ const Checkout = () => {
         </FormControl>
       </Container>
       <Button
+        disabled={!inputValues.choosenShipment || !inputValues.phoneNr}
         className={classes.submitButton}
         variant="contained"
         color="primary"
