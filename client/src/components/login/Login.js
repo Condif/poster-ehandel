@@ -73,7 +73,9 @@ export default function Login() {
       <TextField
         error={emailErrorMessage.length === 0 ? false : true}
         helperText={
-          emailErrorMessage.length === 0 ? "" : "Please fill in your e-mail. "
+          emailErrorMessage.length === 0
+            ? ""
+            : emailErrorMessage.emailErrorMessage
         }
         fullWidth
         variant="outlined"
