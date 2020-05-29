@@ -15,7 +15,7 @@ import ProductCard from '../ProductCard/ProductCard'
 // STYLES
 import useStyles from "./CartStyles";
 
-const Cart = () => {
+const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
     const { openCart, isCartOpen, cartList } = useContext(UserContext)
