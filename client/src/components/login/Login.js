@@ -65,7 +65,7 @@ export default function Login() {
         variant="outlined"
         margin="normal"
         size="small"
-        type="text"
+        type="email"
         required
         label="E-mail"
         onChange={(event) => handleChange(event, "userEmail")}

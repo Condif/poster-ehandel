@@ -21,14 +21,10 @@ Content-Type: application/json
 ###
 
 // Update a product
-PUT http://localhost:8080/api/products/5ec7cdd8dfbbcd4930b76b3c
+PUT http://localhost:8080/api/products/5ecfd69aabe87203ec813aa7
 Content-Type: application/json
 
 {
-    "price": "199",
-    "name": "Clodus in sky",
-    "category": "Sky",
-    "description": "White, fluffy clouds in the sky on a blue summers sky",
     "inventory": "10"
 }
 

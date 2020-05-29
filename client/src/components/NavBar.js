@@ -46,8 +46,8 @@ const NavButton = withStyles({
 
 const NavBar = () => {
   const history = useHistory();
-  // Hämta openCart funktionen från UserContext
-  const { openCart } = useContext(UserContext);
+  // Hämta openCart funktionen samt inloggad user från UserContext
+  const { openCart, userData } = useContext(UserContext);
   return (
     <NavAppBar position="static">
       <Toolbar>
@@ -74,6 +74,14 @@ const NavBar = () => {
           </StyledBadge>
         </Categories>
         <Grid item>
+          {userData.role === "admin" && (
+            <NavButton
+              aria-label="edit products"
+              onClick={() => history.push("/adminProductPage")}
+            >
+              Edit Products
+            </NavButton>
+          )}
           <NavButton
             aria-label="sign up"
             onClick={() => history.push("/register")}

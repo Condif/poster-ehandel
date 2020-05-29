@@ -34,12 +34,7 @@ exports.updateProduct = async (req, res) => {
     await Product.findOneAndUpdate(
       { _id: req.params.productId },
       {
-        price: req.body.price,
-        name: req.body.name,
-        category: req.body.category,
-        description: req.body.description,
         inventory: req.body.inventory,
-        cartAmount: req.body.cartAmount,
       }
     );
     res.json("Product updated");
