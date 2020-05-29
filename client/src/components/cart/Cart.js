@@ -3,9 +3,11 @@ import {
     Drawer,
     Typography,
     Grid,
+    Button,
 } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from "../../contexts/UserContext";
 import CloseIcon from "@material-ui/icons/Close";
 import ProductCard from '../ProductCard/ProductCard'
 
@@ -13,12 +15,14 @@ import ProductCard from '../ProductCard/ProductCard'
 // STYLES
 import useStyles from "./CartStyles";
 
-
-const Cart = (props) => {
-
-    const classes = useStyles();
+const Cart = () => {
+  const classes = useStyles();
+  const history = useHistory();
     const { openCart, isCartOpen, cartList } = useContext(UserContext)
     const { createSlug } = props
+  function redirectToCheckOut() {
+    history.push("/checkout");
+  }
     return (
         <div
             style={{
@@ -44,6 +48,14 @@ const Cart = (props) => {
                         {cartList !== null && cartList !== undefined && renderProducts(cartList, createSlug)}
                     </Grid>
                 </div>
+        <Button
+          className={classes.submitButton}
+          variant="contained"
+          color="primary"
+          onClick={() => redirectToCheckOut()}
+        >
+          To payment
+        </Button>
             </Drawer>
         </div>
     )

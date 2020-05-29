@@ -8,9 +8,9 @@ import Cart from "./Cart/Cart";
 import Login from "./login/Login";
 import UserContextProvider from "../contexts/UserContext";
 import ProductCard from "./ProductCard/ProductCard"
-// import Register from './Register';
+import Register from "./register/Register";
+import Checkout from "./checkout/Checkout";
 // import UserOrders from './UserOrders';
-// import Checkout from './Checkout';
 // import ProductView from './ProductView';
 // import CategoryPage from './CategoryPage';
 
@@ -42,6 +42,8 @@ const Layout = () => {
                                     <Main products={products} createSlug={slugURL}/>
                                 </Route>
                                 <Route path="/login" component={Login} />
+                                <Route path="/register" component={Register} />
+                  				<Route path="/checkout" component={Checkout} />
 
                                  {products !== null && products &&
                                     products.map(product => {
@@ -55,7 +57,6 @@ const Layout = () => {
                                     <Route exact path="/login" component={Login} />
                                     <Route exact path="/register" component={Register} />
                                     <Route exact path="/category" component={CategoryPage} />
-                                    <Route exact path="/checkout" component={Checkout} />
                                     <Route exact path="/orders" component={UserOrders} />
                                 */} }
                 </Switch>
