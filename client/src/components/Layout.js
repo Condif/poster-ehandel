@@ -47,8 +47,13 @@ const Layout = () => {
                   <Route path="/register" component={Register} />
                   <Route
                     path="/adminProductPage"
-                    component={AdminProductPage}
+                    render={(props) => <AdminProductPage products={products} />}
                   />
+                  {/* <Route
+                    path="/adminProductPage"
+                    component={AdminProductPage}
+                    products={products}
+                  /> */}
 
                   {products !== null &&
                     products &&
