@@ -21,6 +21,10 @@ module.exports = productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  cartAmount: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = mongoose.model("Product", productSchema);

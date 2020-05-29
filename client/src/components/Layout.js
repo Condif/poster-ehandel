@@ -4,10 +4,10 @@ import Header from "./Header";
 import NavBar from "./NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./Main";
-import Cart from "./cart/Cart";
-import { MainCard } from "./ProductFactory/ProductCards";
+import Cart from "./Cart/Cart";
 import Login from "./login/Login";
 import UserContextProvider from "../contexts/UserContext";
+import ProductCard from "./ProductCard/ProductCard"
 import Register from "./register/Register";
 import Checkout from "./checkout/Checkout";
 // import UserOrders from './UserOrders';
@@ -25,48 +25,40 @@ const Layout = () => {
     getProducts();
   }, []);
 
-  return (
-    <Router>
-      <UserContextProvider>
-        <div className="App">
-          <Grid container spacing={4} justify="center">
-            <Cart />
-            <Header />
-            <Grid item xs={12}>
-              <NavBar />
-            </Grid>
-            <Container style={{ marginTop: "8px" }} maxWidth="md">
-              <Paper>
-                <Switch>
-                  <Route exact path="/">
-                    <Main products={products} createSlug={slugURL} />
-                  </Route>
-                  <Route path="/login" component={Login} />
-                  <Route path="/register" component={Register} />
-                  <Route path="/checkout" component={Checkout} />
+    return (
+        <Router>
+            <UserContextProvider>
+            <div className="App">
+                <Grid container spacing={4} justify="center">
+                    <Cart products={products} createSlug={slugURL} />
+                    <Header />
+                    <Grid item xs={12}>
+                        <NavBar />
+                    </Grid>
+                    <Container style={{ marginTop: '8px' }} maxWidth="md">
+                        <Paper>
+                            <Switch>
+                                <Route exact path="/">
+                                    <Main products={products} createSlug={slugURL}/>
+                                </Route>
+                                <Route path="/login" component={Login} />
+                                <Route path="/register" component={Register} />
+                  				<Route path="/checkout" component={Checkout} />
 
-                  {products !== null &&
-                    products &&
-                    products.map((product) => {
-                      return (
-                        <Route
-                          key={product._id}
-                          exact
-                          path={`/product/${slugURL(product.name)}`}
-                        >
-                          <MainCard
-                            product={product}
-                            path={`/product/${slugURL(product.name)}`}
-                          />
-                        </Route>
-                      );
-                    })}
-                  {/* 
+                                 {products !== null && products &&
+                                    products.map(product => {
+                                        return (
+                                            <Route key={product._id} exact path={`/product/${slugURL(product.name)}`}>
+                                                <ProductCard product={product} path={`/product/${slugURL(product.name)}`}/>
+                                            </Route>
+                                        )
+                                    })}
+                                {/* {
                                     <Route exact path="/login" component={Login} />
                                     <Route exact path="/register" component={Register} />
                                     <Route exact path="/category" component={CategoryPage} />
                                     <Route exact path="/orders" component={UserOrders} />
-                                */}
+                                */} }
                 </Switch>
               </Paper>
             </Container>
