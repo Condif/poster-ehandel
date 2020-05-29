@@ -9,9 +9,8 @@ import { MainCard } from "./ProductFactory/ProductCards";
 import Login from "./login/Login";
 import UserContextProvider from "../contexts/UserContext";
 import Register from "./register/Register";
-// import Register from './Register';
+import Checkout from "./checkout/Checkout";
 // import UserOrders from './UserOrders';
-// import Checkout from './Checkout';
 // import ProductView from './ProductView';
 // import CategoryPage from './CategoryPage';
 
@@ -44,6 +43,7 @@ const Layout = () => {
                   </Route>
                   <Route path="/login" component={Login} />
                   <Route path="/register" component={Register} />
+                  <Route path="/checkout" component={Checkout} />
 
                   {products !== null &&
                     products &&
@@ -65,7 +65,6 @@ const Layout = () => {
                                     <Route exact path="/login" component={Login} />
                                     <Route exact path="/register" component={Register} />
                                     <Route exact path="/category" component={CategoryPage} />
-                                    <Route exact path="/checkout" component={Checkout} />
                                     <Route exact path="/orders" component={UserOrders} />
                                 */}
                 </Switch>
