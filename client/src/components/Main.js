@@ -2,7 +2,7 @@ import React from "react";
 // import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
-import ProductFactory from './ProductFactory/ProductFactory'
+import ProductCard from './ProductCard/ProductCard'
 
 const Main = (props) => {
     const { products, createSlug } = props;
@@ -24,11 +24,10 @@ const Main = (props) => {
  * @param {() => string} createSlug 
  */
 const renderProducts = (products, createSlug) => {
-    
     return products.map(product => {
         const slug = createSlug(product.name);
         return (
-            <ProductFactory case="main" key={product._id} product={product} path={slug}/>
+            <ProductCard case="main" key={product._id} product={product} path={`/product/${slug}`}/>
         )
     })
 }

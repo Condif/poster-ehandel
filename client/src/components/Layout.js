@@ -4,15 +4,14 @@ import Header from "./Header";
 import NavBar from "./NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./Main";
-import Cart from "./cart/Cart";
-import { MainCard } from "./ProductFactory/ProductCards";
+import Cart from "./Cart/Cart";
 import Login from "./login/Login";
 import UserContextProvider from "../contexts/UserContext";
+import ProductCard from "./ProductCard/ProductCard";
 import Register from "./register/Register";
+import Checkout from "./checkout/Checkout";
 import AdminProductPage from "./adminProductPage/adminProductPage";
-// import Register from './Register';
 // import UserOrders from './UserOrders';
-// import Checkout from './Checkout';
 // import ProductView from './ProductView';
 // import CategoryPage from './CategoryPage';
 
@@ -32,7 +31,7 @@ const Layout = () => {
       <UserContextProvider>
         <div className="App">
           <Grid container spacing={4} justify="center">
-            <Cart />
+            <Cart products={products} createSlug={slugURL} />
             <Header />
             <Grid item xs={12}>
               <NavBar />
@@ -45,16 +44,11 @@ const Layout = () => {
                   </Route>
                   <Route path="/login" component={Login} />
                   <Route path="/register" component={Register} />
+                  <Route path="/checkout" component={Checkout} />
                   <Route
                     path="/adminProductPage"
                     render={(props) => <AdminProductPage products={products} />}
                   />
-                  {/* <Route
-                    path="/adminProductPage"
-                    component={AdminProductPage}
-                    products={products}
-                  /> */}
-
                   {products !== null &&
                     products &&
                     products.map((product) => {
@@ -64,20 +58,20 @@ const Layout = () => {
                           exact
                           path={`/product/${slugURL(product.name)}`}
                         >
-                          <MainCard
+                          <ProductCard
                             product={product}
                             path={`/product/${slugURL(product.name)}`}
                           />
                         </Route>
                       );
                     })}
-                  {/* 
+                  {/* {
                                     <Route exact path="/login" component={Login} />
                                     <Route exact path="/register" component={Register} />
                                     <Route exact path="/category" component={CategoryPage} />
-                                    <Route exact path="/checkout" component={Checkout} />
                                     <Route exact path="/orders" component={UserOrders} />
-                                */}
+                                */}{" "}
+                  }
                 </Switch>
               </Paper>
             </Container>

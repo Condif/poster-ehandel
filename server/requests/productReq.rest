@@ -11,10 +11,11 @@ Content-Type: application/json
 
 {
     "price": "225",
-     "name": "Trees in a forest",
+     "name": "Katt",
      "category": "Forest",
      "description": "An atmospheric glade with trees, the sun is shining in through the tree tops",
-     "inventory": "8"
+     "inventory": "8",
+     "cartAmount": 0
 }
 
 ###

@@ -18,6 +18,7 @@ exports.createNewProduct = async (req, res) => {
     category: req.body.category,
     description: req.body.description,
     inventory: req.body.inventory,
+    cartAmount: req.body.cartAmount,
   });
   if (product.length === 0) {
     throw new ServerError("The product was not created", 400);
@@ -38,6 +39,7 @@ exports.updateProduct = async (req, res) => {
         category: req.body.category,
         description: req.body.description,
         inventory: req.body.inventory,
+        cartAmount: req.body.cartAmount,
       }
     );
     res.json("Product updated");
@@ -74,7 +76,7 @@ exports.updateProductStock = async (req, res) => {
       console.log("PRODUCT: ", product);
       await Product.updateOne(
         { _id: product._id },
-        { $inc: { inventory: -product.quantity } }
+        { $inc: { inventory: -product.cartAmount } }
       );
     });
     res.json("Product inventory updated");
