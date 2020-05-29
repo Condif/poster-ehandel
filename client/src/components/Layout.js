@@ -4,7 +4,7 @@ import Header from "./Header";
 import NavBar from "./NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Main from "./Main";
-import Cart from "./cart/Cart";
+import Cart from "./Cart/Cart";
 import Login from "./login/Login";
 import UserContextProvider from "../contexts/UserContext";
 import ProductCard from "./ProductCard/ProductCard";

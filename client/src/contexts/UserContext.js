@@ -6,9 +6,10 @@ const UserContextProvider = (props) => {
   const [userData, setUserData] = useState("");
   // CartStates
   const [cartList, setCartList] = useState()
-
+  
   const addToCart = (newProduct) => {
     if (cartList === undefined) {
+      newProduct.cartAmount ++
       setCartList([newProduct])
     } else {
       let existingProduct;
@@ -29,6 +30,7 @@ const UserContextProvider = (props) => {
 
         if (!existingProduct) {
           const state = [...cartList];
+          newProduct.cartAmount ++
           state.push(newProduct)
           setCartList(state);
         }
