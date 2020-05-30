@@ -5,31 +5,33 @@ const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [userData, setUserData] = useState("");
   // CartStates
-  const [cartList, setCartList] = useState()
+  const [cartList, setCartList] = useState();
 
   const addToCart = (newProduct) => {
     if (cartList === undefined) {
-      setCartList([newProduct])
+      setCartList([newProduct]);
     } else {
       let existingProduct;
-      
+
       if (cartList) {
-        cartList.forEach(product => {
+        cartList.forEach((product) => {
           if (newProduct.name === product.name) {
             existingProduct = product;
           }
         });
         if (existingProduct) {
-          existingProduct.cartAmount ++
+          existingProduct.cartAmount++;
           const state = [...cartList];
-          const productIndex = state.findIndex((p) => p.name === existingProduct.name);
+          const productIndex = state.findIndex(
+            (p) => p.name === existingProduct.name
+          );
           state.splice(productIndex, 1, existingProduct);
-          setCartList(state)
+          setCartList(state);
         }
 
         if (!existingProduct) {
           const state = [...cartList];
-          state.push(newProduct)
+          state.push(newProduct);
           setCartList(state);
         }
       }
@@ -42,7 +44,11 @@ const UserContextProvider = (props) => {
   };
 
   const setUser = (user) => {
-    setUserData({ email: user.email, role: user.role });
+    setUserData({
+      email: user.email,
+      role: user.role,
+      deliveryAddress: user.deliveryAddress[0],
+    });
   };
 
   // Logga in
@@ -50,7 +56,17 @@ const UserContextProvider = (props) => {
   // Se senaste beställning
 
   return (
-    <UserContext.Provider value={{ isCartOpen, userData, cartList, openCart, setUser, addToCart, setCartList }}>
+    <UserContext.Provider
+      value={{
+        isCartOpen,
+        userData,
+        cartList,
+        openCart,
+        setUser,
+        addToCart,
+        setCartList,
+      }}
+    >
       {props.children}
     </UserContext.Provider>
   );

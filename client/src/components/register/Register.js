@@ -96,7 +96,7 @@ const Register = () => {
         variant="outlined"
         margin="normal"
         size="small"
-        type="text"
+        type="email"
         required
         label="E-mail"
         value={inputValues.email}
