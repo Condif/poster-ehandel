@@ -29,15 +29,21 @@ exports.login = async (req, res) => {
 
     // Skapa en session
     // Allt
+    req.session.deliveryAddress = res.user.deliveryAddress;
     req.session.email = res.user.email;
     req.session.id = res.user._id;
     req.session.role = res.user.role;
+
     // Vi kan nu kolla om (req.session.role === role') i requests
 
     console.log("Created client session");
 
     // Skickar tillbaks en genomförd login
-    res.json({ email: res.user.email, role: res.user.role });
+    res.json({
+      email: res.user.email,
+      role: res.user.role,
+      deliveryAddress: res.user.deliveryAddress,
+    });
   });
 };
 
