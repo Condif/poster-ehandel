@@ -12,7 +12,7 @@ const Main = (props) => {
                 <Typography variant="h6">All Products</Typography>
             </Grid>
             <Grid item>
-            {products !== null && products !== undefined && renderProducts(products, createSlug)}
+            {products !== null && products !== undefined && renderProducts("main", products, createSlug)}
             </Grid>
         </Grid >
     )
@@ -20,15 +20,15 @@ const Main = (props) => {
 
 /**
  * Render each product
+ * @param {string} caseStyle
  * @param {[]} products fetched list of products
  * @param {() => string} createSlug creates slug url path from product name
  * @return {JSX.Element} product card component
  */
-const renderProducts = (products, createSlug) => {
+export const renderProducts = (caseStyle, products, createSlug) => {
     return products.map(product => {
-        const slug = createSlug(product.name);
         return (
-            <ProductCard case="main" key={product._id} product={product} path={`/product/${slug}`}/>
+            <ProductCard case={caseStyle} key={product._id} product={product} path={`/product/${createSlug(product.name)}`}/>
         )
     })
 }
