@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Container,
@@ -11,6 +11,7 @@ import {
   Button,
   TextField,
 } from "@material-ui/core";
+import { UserContext } from "../../contexts/UserContext";
 
 //styles
 import useStyles from "./CheckOutStyles";
@@ -18,11 +19,15 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
+  const { userData } = useContext(UserContext);
 
   const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
   const [inputValues, setInputValues] = useState({
     choosenShipment: "DHL",
     phoneNr: "",
+    address: userData.deliveryAddress.address,
+    zipcode: userData.deliveryAddress.zipcode,
+    city: userData.deliveryAddress.city,
   });
 
   useEffect(() => {
@@ -38,6 +43,7 @@ const Checkout = () => {
 
   const redirectToSummery = () => {
     history.push("/summery");
+    console.log(inputValues, "här är värdena");
   };
 
   function getShipmentAlternatives() {
@@ -51,7 +57,7 @@ const Checkout = () => {
   }
 
   return (
-    <div>
+    <div className={classes.mainDiv}>
       <Container>
         <Typography>HÄR KOMMER PRODUKTER LIGGA</Typography>
       </Container>
@@ -60,6 +66,7 @@ const Checkout = () => {
           Shipping Alternatives
         </FormLabel>
         <RadioGroup
+          className={classes.containerDiv}
           aria-label="ShippingAlternative"
           name="shipping1"
           value={inputValues.choosenShipment}
@@ -80,6 +87,39 @@ const Checkout = () => {
           ))}
         </RadioGroup>
       </FormControl>
+      <FormControl className={classes.containerDiv}>
+        <FormLabel className={classes.labelText}>Deliveryaddress</FormLabel>
+        <TextField
+          className={classes.containerDiv}
+          variant="outlined"
+          size="small"
+          type="text"
+          required
+          label="Address"
+          value={inputValues.address}
+          onChange={(event) => handleChange(event, "address")}
+        ></TextField>
+        <TextField
+          className={classes.containerDiv}
+          variant="outlined"
+          size="small"
+          type="text"
+          required
+          label="Zipcode"
+          value={inputValues.zipcode}
+          onChange={(event) => handleChange(event, "zipcode")}
+        ></TextField>
+        <TextField
+          className={classes.containerDiv}
+          variant="outlined"
+          size="small"
+          type="text"
+          required
+          label="City"
+          value={inputValues.city}
+          onChange={(event) => handleChange(event, "city")}
+        ></TextField>
+      </FormControl>
       <Container>
         <FormControl className={classes.containerDiv}>
           <FormLabel className={classes.labelText}>Swish</FormLabel>
@@ -95,7 +135,13 @@ const Checkout = () => {
         </FormControl>
       </Container>
       <Button
-        disabled={!inputValues.choosenShipment || !inputValues.phoneNr}
+        disabled={
+          !inputValues.choosenShipment ||
+          !inputValues.phoneNr ||
+          !inputValues.address ||
+          !inputValues.zipcode ||
+          !inputValues.city
+        }
         className={classes.submitButton}
         variant="contained"
         color="primary"
