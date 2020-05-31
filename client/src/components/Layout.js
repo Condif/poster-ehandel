@@ -31,7 +31,7 @@ const Layout = () => {
       <UserContextProvider>
         <div className="App">
           <Grid container spacing={4} justify="center">
-            <Cart products={products} createSlug={slugURL} />
+            <Cart products={products} createSlug={createSlug} />
             <Header />
             <Grid item xs={12}>
               <NavBar />
@@ -40,7 +40,7 @@ const Layout = () => {
               <Paper>
                 <Switch>
                   <Route exact path="/">
-                    <Main products={products} createSlug={slugURL} />
+                    <Main products={products} createSlug={createSlug} />
                   </Route>
                   <Route path="/login" component={Login} />
                   <Route path="/register" component={Register} />
@@ -56,11 +56,11 @@ const Layout = () => {
                         <Route
                           key={product._id}
                           exact
-                          path={`/product/${slugURL(product.name)}`}
+                          path={`/product/${createSlug(product.name)}`}
                         >
                           <ProductCard
                             product={product}
-                            path={`/product/${slugURL(product.name)}`}
+                            path={`/product/${createSlug(product.name)}`}
                           />
                         </Route>
                       );
@@ -107,7 +107,7 @@ async function getAllProducts() {
  * Convert product name to slug URL
  * @param {string} string
  */
-const slugURL = (string) => {
+const createSlug = (string) => {
   string = string.replace(/^\s+|\s+$/g, ""); // trim
   string = string.toLowerCase();
 

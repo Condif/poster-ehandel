@@ -19,9 +19,10 @@ const Main = (props) => {
 }
 
 /**
- * 
- * @param {[]} products 
- * @param {() => string} createSlug 
+ * Render each product
+ * @param {[]} products fetched list of products
+ * @param {() => string} createSlug creates slug url path from product name
+ * @return {JSX.Element} product card component
  */
 const renderProducts = (products, createSlug) => {
     return products.map(product => {
