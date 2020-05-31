@@ -13,7 +13,7 @@ import Checkout from "./checkout/Checkout";
 import AdminProductPage from "./adminProductPage/adminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
-// import CategoryPage from './CategoryPage';
+import CategoryPage from './CategoryPage/CategoryPage';
 
 const Layout = () => {
   const [products, setProducts] = useState([]);
@@ -125,5 +125,6 @@ const createSlug = (string) => {
 
   return string;
 };
+
 
 export default Layout;

@@ -52,14 +52,10 @@ const NavBar = () => {
     <NavAppBar position="static">
       <Toolbar>
         <Categories item>
-          <NavButton aria-label="homepage" onClick={() => history.push("/")}>
-            Home
-          </NavButton>
-          <NavButton aria-label="category1">Category1</NavButton>
-          <NavButton aria-label="category2">Category2</NavButton>
-          <NavButton aria-label="category3">Category3</NavButton>
-          <NavButton aria-label="category4">Category4</NavButton>
-          <NavButton aria-label="category5">Category5</NavButton>
+          <NavButton aria-label="homepage" onClick={() => history.push("/")}>Home</NavButton>
+          <NavButton aria-label="category1" onClick={() => history.push("/category/forest")}>Forest</NavButton>
+          <NavButton aria-label="category2" onClick={() => history.push("/category/sky")}>Sky</NavButton>
+          <NavButton aria-label="category3" onClick={() => history.push("/category/water")}>Water</NavButton>
           <StyledBadge color="secondary">
             <IconButton
               style={{
