@@ -7,17 +7,16 @@ import Main from "./Main";
 import Cart from "./cart/Cart";
 import Login from "./login/Login";
 import UserContextProvider from "../contexts/UserContext";
-import ProductCard from "./ProductCard/ProductCard";
+import ProductCard from "./productCard/ProductCard";
 import Register from "./register/Register";
 import Checkout from "./checkout/Checkout";
 import AdminProductPage from "./adminProductPage/adminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
-import CategoryPage from './CategoryPage/CategoryPage';
+import CategoryPage from './categoryPage/CategoryPage';
 
 const Layout = () => {
   const [products, setProducts] = useState([]);
-
   // Fetch products "on mount"
   useEffect(() => {
     async function getProducts() {
@@ -34,7 +33,7 @@ const Layout = () => {
             <Cart products={products} createSlug={createSlug} />
             <Header />
             <Grid item xs={12}>
-              <NavBar />
+              <NavBar createSlug={createSlug} categories={getCategories(products)} />
             </Grid>
             <Container style={{ marginTop: "8px" }} maxWidth="md">
               <Paper>
@@ -148,6 +147,5 @@ const createSlug = (string) => {
 
   return string;
 };
-
 
 export default Layout;

@@ -9,7 +9,7 @@ import { useHistory } from "react-router-dom";
 
 import { UserContext } from "../../contexts/UserContext";
 import CloseIcon from "@material-ui/icons/Close";
-import ProductCard from '../ProductCard/ProductCard'
+import ProductCard from '../productCard/ProductCard'
 
 
 // STYLES
