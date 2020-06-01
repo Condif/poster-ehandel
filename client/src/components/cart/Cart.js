@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { Drawer, Typography, Grid, Button } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../Contexts/UserContext";
 import CloseIcon from "@material-ui/icons/Close";
 import ProductCard from "../ProductCard/ProductCard";
 

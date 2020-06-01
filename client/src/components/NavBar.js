@@ -11,7 +11,7 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import lightGreen from "@material-ui/core/colors/lightGreen";
 import teal from "@material-ui/core/colors/teal";
-import { UserContext } from "../contexts/UserContext";
+import { UserContext } from "../Contexts/UserContext";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useHistory } from "react-router-dom";
 
@@ -52,11 +52,21 @@ const NavBar = (props) => {
     <NavAppBar position="static">
       <Toolbar>
         <Categories item>
-          <NavButton aria-label="homepage" onClick={() => history.push("/")}>Home</NavButton>
-          {props.categories.map(category => {
+          <NavButton aria-label="homepage" onClick={() => history.push("/")}>
+            Home
+          </NavButton>
+          {props.categories.map((category) => {
             return (
-              <NavButton aria-label={`category ${category}`} key={category} onClick={() => history.push(`/category/${props.createSlug(category)}`)}>{category}</NavButton>
-            )
+              <NavButton
+                aria-label={`category ${category}`}
+                key={category}
+                onClick={() =>
+                  history.push(`/category/${props.createSlug(category)}`)
+                }
+              >
+                {category}
+              </NavButton>
+            );
           })}
           <StyledBadge color="secondary">
             <IconButton

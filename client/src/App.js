@@ -5,7 +5,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import teal from "@material-ui/core/colors/teal";
-import UserContextProvider from "./contexts/UserContext";
+import UserContextProvider from "./Contexts/UserContext";
 
 const theme = createMuiTheme({
   palette: {

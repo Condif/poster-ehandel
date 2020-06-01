@@ -1,4 +1,4 @@
-import { renderProducts } from '../Main';
+import { renderProducts } from '../ProductGrid';
 
 const CategoryPage = (props) => {
     const products = getProducts(props);

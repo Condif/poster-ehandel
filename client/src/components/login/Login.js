@@ -3,7 +3,7 @@ import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../Contexts/UserContext";
 import useStyles from "./LoginStyles";
 
 export default function Login() {

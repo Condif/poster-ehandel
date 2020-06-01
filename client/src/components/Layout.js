@@ -8,17 +8,17 @@ import {
   Switch,
   Redirect,
 } from "react-router-dom";
-import Main from "./Main";
-import Cart from "./cart/Cart";
-import Login from "./login/Login";
+import ProductGrid from "./ProductGrid";
+import Cart from "./Cart/Cart";
+import Login from "./Login/Login";
 import ProductCard from "./ProductCard/ProductCard";
-import Register from "./register/Register";
-import Checkout from "./checkout/Checkout";
-import AdminProductPage from "./adminProductPage/adminProductPage";
+import Register from "./Register/Register";
+import Checkout from "./Checkout/Checkout";
+import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
-import { UserContext } from "../contexts/UserContext";
+import { UserContext } from "../Contexts/UserContext";
 
 const Layout = () => {
   const { isAuthenticated } = useContext(UserContext);
@@ -36,7 +36,7 @@ const Layout = () => {
     <Route
       {...rest}
       render={(props) =>
-        isAuthenticated === true ? (
+        isAuthenticated.isAuthenticated === true ? (
           <Component {...props} products={products} />
         ) : (
           <>
@@ -50,7 +50,6 @@ const Layout = () => {
 
   return (
     <Router>
-      {console.log(isAuthenticated)}
       <div className="App">
         <Grid container spacing={4} justify="center">
           <Cart products={products} createSlug={createSlug} />
@@ -65,7 +64,7 @@ const Layout = () => {
             <Paper>
               <Switch>
                 <Route exact path="/">
-                  <Main products={products} createSlug={createSlug} />
+                  <ProductGrid products={products} createSlug={createSlug} />
                 </Route>
                 <Route path="/login" component={Login} />
                 <Route path="/register" component={Register} />
