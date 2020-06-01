@@ -7,17 +7,16 @@ import Main from "./Main";
 import Cart from "./Cart/Cart";
 import Login from "./login/Login";
 import UserContextProvider from "../contexts/UserContext";
-import ProductCard from "./ProductCard/ProductCard";
+import ProductCard from "./productCard/ProductCard";
 import Register from "./register/Register";
 import Checkout from "./checkout/Checkout";
 import AdminProductPage from "./adminProductPage/adminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
-// import CategoryPage from './CategoryPage';
+import CategoryPage from './categoryPage/CategoryPage';
 
 const Layout = () => {
   const [products, setProducts] = useState([]);
-
   // Fetch products "on mount"
   useEffect(() => {
     async function getProducts() {
@@ -31,16 +30,16 @@ const Layout = () => {
       <UserContextProvider>
         <div className="App">
           <Grid container spacing={4} justify="center">
-            <Cart products={products} createSlug={slugURL} />
+            <Cart products={products} createSlug={createSlug} />
             <Header />
             <Grid item xs={12}>
-              <NavBar />
+              <NavBar createSlug={createSlug} categories={getCategories(products)} />
             </Grid>
             <Container style={{ marginTop: "8px" }} maxWidth="md">
               <Paper>
                 <Switch>
                   <Route exact path="/">
-                    <Main products={products} createSlug={slugURL} />
+                    <Main products={products} createSlug={createSlug} />
                   </Route>
                   <Route path="/login" component={Login} />
                   <Route path="/register" component={Register} />
@@ -49,29 +48,37 @@ const Layout = () => {
                     path="/adminProductPage"
                     render={(props) => <AdminProductPage products={products} />}
                   />
-                  {products !== null &&
+                  {/* Get routes for each product */}
+                  {products !== null && products.length !== 0 &&
                     products &&
                     products.map((product) => {
                       return (
                         <Route
-                          key={product._id}
                           exact
-                          path={`/product/${slugURL(product.name)}`}
+                          key={product._id}
+                          path={`/product/${createSlug(product.name)}`}
                         >
                           <ProductCard
                             product={product}
-                            path={`/product/${slugURL(product.name)}`}
+                            path={`/product/${createSlug(product.name)}`}
                           />
                         </Route>
                       );
                     })}
-                  {/* {
-                                    <Route exact path="/login" component={Login} />
-                                    <Route exact path="/register" component={Register} />
-                                    <Route exact path="/category" component={CategoryPage} />
-                                    <Route exact path="/orders" component={UserOrders} />
-                                */}{" "}
-                  }
+                  {/* Get routes for category pages */}
+                  {products !== null && products.length !== 0 &&
+                    products &&
+                    getCategories(products).map(category => {
+                      return (
+                        <Route
+                          exact
+                          key={category}
+                          path={`/category/${createSlug(category)}`}
+                          render={() => <CategoryPage createSlug={createSlug} products={products} category={category} />}
+                        />
+                      )
+                    })}
+                  {/* <Route exact path="/orders" component={UserOrders} /> */}
                 </Switch>
               </Paper>
             </Container>
@@ -83,7 +90,7 @@ const Layout = () => {
 };
 
 /**
- * Get all available products
+ * Get all available products through fetch
  */
 async function getAllProducts() {
   const products = await fetch("http://localhost:8080/api/products", {
@@ -104,10 +111,25 @@ async function getAllProducts() {
 }
 
 /**
- * Convert product name to slug URL
- * @param {string} string
+ * Get list of all unique categories
+ * @param {[]} products fetched list of all products
  */
-const slugURL = (string) => {
+const getCategories = (products) => {
+  const categories = [];
+  products.map((product) => {
+    if (!categories.includes(product.category)) {
+      categories.push(product.category);
+    }
+  })
+
+  return categories;
+}
+
+/**
+ * Convert product name to slug URL
+ * @param {string} string the string (product or category name) to convert to slug
+ */
+const createSlug = (string) => {
   string = string.replace(/^\s+|\s+$/g, ""); // trim
   string = string.toLowerCase();
 

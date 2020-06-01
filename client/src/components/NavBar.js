@@ -44,7 +44,7 @@ const NavButton = withStyles({
   },
 })(Button);
 
-const NavBar = () => {
+const NavBar = (props) => {
   const history = useHistory();
   // Hämta openCart funktionen samt inloggad user från UserContext
   const { openCart, userData } = useContext(UserContext);
@@ -52,14 +52,12 @@ const NavBar = () => {
     <NavAppBar position="static">
       <Toolbar>
         <Categories item>
-          <NavButton aria-label="homepage" onClick={() => history.push("/")}>
-            Home
-          </NavButton>
-          <NavButton aria-label="category1">Category1</NavButton>
-          <NavButton aria-label="category2">Category2</NavButton>
-          <NavButton aria-label="category3">Category3</NavButton>
-          <NavButton aria-label="category4">Category4</NavButton>
-          <NavButton aria-label="category5">Category5</NavButton>
+          <NavButton aria-label="homepage" onClick={() => history.push("/")}>Home</NavButton>
+          {props.categories.map(category => {
+            return (
+              <NavButton aria-label={`category ${category}`} key={category} onClick={() => history.push(`/category/${props.createSlug(category)}`)}>{category}</NavButton>
+            )
+          })}
           <StyledBadge color="secondary">
             <IconButton
               style={{
