@@ -19,7 +19,7 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { userData } = useContext(UserContext);
+  const { userData, cartList } = useContext(UserContext);
 
   const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
   const [inputValues, setInputValues] = useState({
@@ -32,6 +32,7 @@ const Checkout = () => {
 
   useEffect(() => {
     getShipmentAlternatives();
+    totalCost();
   }, []);
 
   function handleChange(event, anchor) {
@@ -54,6 +55,19 @@ const Checkout = () => {
       .then((shipmentAlternatives) => {
         setShipmentAlternatives(shipmentAlternatives);
       });
+  }
+
+  function totalCost() {
+    const totalCost = cartList.map((product) => {
+      let productCost = product.cartAmount * product.price;
+      return productCost;
+    });
+
+    // const totalPrice = cartList.reduce(
+    //   (acc, product) => acc + product.price,
+    //   0
+    // );
+    console.log(totalCost, "här är totoal");
   }
 
   return (

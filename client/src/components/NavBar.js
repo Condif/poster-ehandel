@@ -52,11 +52,21 @@ const NavBar = (props) => {
     <NavAppBar position="static">
       <Toolbar>
         <Categories item>
-          <NavButton aria-label="homepage" onClick={() => history.push("/")}>Home</NavButton>
-          {props.categories.map(category => {
+          <NavButton aria-label="homepage" onClick={() => history.push("/")}>
+            Home
+          </NavButton>
+          {props.categories.map((category) => {
             return (
-              <NavButton aria-label={`category ${category}`} key={category} onClick={() => history.push(`/category/${props.createSlug(category)}`)}>{category}</NavButton>
-            )
+              <NavButton
+                aria-label={`category ${category}`}
+                key={category}
+                onClick={() =>
+                  history.push(`/category/${props.createSlug(category)}`)
+                }
+              >
+                {category}
+              </NavButton>
+            );
           })}
           <StyledBadge color="secondary">
             <IconButton
