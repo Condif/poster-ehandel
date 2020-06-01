@@ -11,7 +11,6 @@ import { UserContext } from "../../Contexts/UserContext";
 import CloseIcon from "@material-ui/icons/Close";
 import ProductCard from '../ProductCard/ProductCard'
 
-
 // STYLES
 import useStyles from "./CartStyles";
 
