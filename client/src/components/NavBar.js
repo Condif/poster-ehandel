@@ -11,7 +11,7 @@ import {
 import { withStyles } from "@material-ui/core/styles";
 import lightGreen from "@material-ui/core/colors/lightGreen";
 import teal from "@material-ui/core/colors/teal";
-import { UserContext } from "../contexts/UserContext";
+import { UserContext } from "../Contexts/UserContext";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import { useHistory } from "react-router-dom";
 

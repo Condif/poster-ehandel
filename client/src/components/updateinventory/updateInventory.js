@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
-import useStyles from "../adminProductPage/adminProductPageStyles";
+import useStyles from "../AdminProductPage/AdminProductPageStyles";
 
 export default function UpdateInventory(props) {
   const classes = useStyles();

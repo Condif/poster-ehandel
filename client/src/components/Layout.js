@@ -3,17 +3,17 @@ import { Paper, Grid, Container } from "@material-ui/core";
 import Header from "./Header";
 import NavBar from "./NavBar";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import Main from "./Main";
-import Cart from "./cart/Cart";
-import Login from "./login/Login";
-import UserContextProvider from "../contexts/UserContext";
-import ProductCard from "./productCard/ProductCard";
-import Register from "./register/Register";
-import Checkout from "./checkout/Checkout";
-import AdminProductPage from "./adminProductPage/adminProductPage";
+import Main from "./ProductGrid";
+import Cart from "./Cart/Cart";
+import Login from "./Login/Login";
+import UserContextProvider from "../Contexts/UserContext";
+import ProductCard from "./ProductCard/ProductCard";
+import Register from "./Register/Register";
+import Checkout from "./Checkout/Checkout";
+import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
-import CategoryPage from './categoryPage/CategoryPage';
+import CategoryPage from './CategoryPage/CategoryPage';
 
 const Layout = () => {
   const [products, setProducts] = useState([]);

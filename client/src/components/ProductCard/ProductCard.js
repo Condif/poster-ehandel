@@ -4,7 +4,7 @@ import { Grid, Card, CardHeader, CardActions, CardActionArea } from '@material-u
 import { Typography } from '@material-ui/core';
 import { Button } from '@material-ui/core';
 import useStyles from './ProductCardStyles';
-import { UserContext } from '../../contexts/UserContext';
+import { UserContext } from '../../Contexts/UserContext';
 
 const ProductCard = (props) => {
     const classes = useStyles();

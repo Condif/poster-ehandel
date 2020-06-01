@@ -1,7 +1,7 @@
 import React, { useState, useContext } from "react";
 import Container from "@material-ui/core/Container";
-import useStyles from "./adminProductPageStyles";
-import UpdateInventory from "../updateinventory/updateInventory";
+import useStyles from "./AdminProductPageStyles";
+import UpdateInventory from "../Updateinventory/UpdateInventory";
 
 export default function AdminProductPage(props) {
   const { products } = props;
