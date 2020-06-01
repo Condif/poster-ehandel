@@ -58,7 +58,7 @@ const Checkout = () => {
   }
 
   function totalCost() {
-    let totalCost = cartList.map((product) => {
+    const totalCost = cartList.map((product) => {
       let productCost = product.cartAmount * product.price;
       return productCost;
     });
@@ -67,7 +67,7 @@ const Checkout = () => {
     //   (acc, product) => acc + product.price,
     //   0
     // );
-    console.log((totalCost += totalCost), "här är totoal");
+    console.log(totalCost, "här är totoal");
   }
 
   return (
