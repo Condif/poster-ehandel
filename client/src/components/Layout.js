@@ -31,13 +31,14 @@ const Layout = () => {
     }
     getProducts();
   }, []);
-
-  const PrivateRoute = ({ component: Component, ...rest }) => (
+  // { path, ...rest }
+  const PrivateRoute = (props) => (
     <Route
-      {...rest}
-      render={(props) =>
+      // {...rest}
+      path={props.path}
+      render={() =>
         isAuthenticated.isAuthenticated === true ? (
-          <Component {...props} products={products} />
+          props.children
         ) : (
           <>
             {alert("You are not authorized")}
@@ -73,10 +74,9 @@ const Layout = () => {
                   path="/adminProductPage"
                   render={(props) => <AdminProductPage products={products} />}
                 /> */}
-                <PrivateRoute
-                  path="/adminProductPage"
-                  component={AdminProductPage}
-                />
+                <PrivateRoute path="/adminProductPage">
+                  <AdminProductPage products={products} />
+                </PrivateRoute>
                 {/* Get routes for each product */}
                 {products !== null &&
                   products.length !== 0 &&
