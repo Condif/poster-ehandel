@@ -10,12 +10,12 @@ const ProductCard = (props) => {
     const classes = useStyles();
     const history = useHistory();
     const { product, path } = props;
-    const { addToCart } = useContext(UserContext)
+    const { addToCartAndLocalStorage } = useContext(UserContext)
     const handleClick = () => {
         return history.push(path)
     }
     const handleAddToCart = () => {    
-        addToCart(product)
+        addToCartAndLocalStorage(product)
     }
     return (
         <Grid item>
