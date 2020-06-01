@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React from "react";
 import Container from "@material-ui/core/Container";
 import useStyles from "./adminProductPageStyles";
 import UpdateInventory from "../updateinventory/updateInventory";
@@ -6,12 +6,6 @@ import UpdateInventory from "../updateinventory/updateInventory";
 export default function AdminProductPage(props) {
   const { products } = props;
   const classes = useStyles();
-
-  const [productInventoryList, setproductInventoryList] = useState([]);
-
-  // function updateState() {
-  //   console.log("hej");
-  // }
 
   return (
     <Container className={classes.flexedContainer} maxWidth="sm">

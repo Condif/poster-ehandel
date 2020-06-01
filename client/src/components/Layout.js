@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Paper, Grid, Container } from "@material-ui/core";
 import Header from "./Header";
 import NavBar from "./NavBar";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from "react-router-dom";
 import Main from "./Main";
 import Cart from "./cart/Cart";
 import Login from "./login/Login";
-import UserContextProvider from "../contexts/UserContext";
-import ProductCard from "./productCard/ProductCard";
+import ProductCard from "./ProductCard/ProductCard";
 import Register from "./register/Register";
 import Checkout from "./checkout/Checkout";
 import AdminProductPage from "./adminProductPage/adminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
-import CategoryPage from './categoryPage/CategoryPage';
+import CategoryPage from "./CategoryPage/CategoryPage";
+import { UserContext } from "../contexts/UserContext";
 
 const Layout = () => {
+  const { isAuthenticated } = useContext(UserContext);
+
   const [products, setProducts] = useState([]);
   // Fetch products "on mount"
   useEffect(() => {
@@ -25,66 +32,96 @@ const Layout = () => {
     getProducts();
   }, []);
 
+  const PrivateRoute = ({ component: Component, ...rest }) => (
+    <Route
+      {...rest}
+      render={(props) =>
+        isAuthenticated === true ? (
+          <Component {...props} products={products} />
+        ) : (
+          <>
+            {alert("You are not authorized")}
+            <Redirect to="/" />
+          </>
+        )
+      }
+    />
+  );
+
   return (
     <Router>
-      <UserContextProvider>
-        <div className="App">
-          <Grid container spacing={4} justify="center">
-            <Cart products={products} createSlug={createSlug} />
-            <Header />
-            <Grid item xs={12}>
-              <NavBar createSlug={createSlug} categories={getCategories(products)} />
-            </Grid>
-            <Container style={{ marginTop: "8px" }} maxWidth="md">
-              <Paper>
-                <Switch>
-                  <Route exact path="/">
-                    <Main products={products} createSlug={createSlug} />
-                  </Route>
-                  <Route path="/login" component={Login} />
-                  <Route path="/register" component={Register} />
-                  <Route path="/checkout" component={Checkout} />
-                  <Route
-                    path="/adminProductPage"
-                    render={(props) => <AdminProductPage products={products} />}
-                  />
-                  {/* Get routes for each product */}
-                  {products !== null && products.length !== 0 &&
-                    products &&
-                    products.map((product) => {
-                      return (
-                        <Route
-                          exact
-                          key={product._id}
-                          path={`/product/${createSlug(product.name)}`}
-                        >
-                          <ProductCard
-                            product={product}
-                            path={`/product/${createSlug(product.name)}`}
-                          />
-                        </Route>
-                      );
-                    })}
-                  {/* Get routes for category pages */}
-                  {products !== null && products.length !== 0 &&
-                    products &&
-                    getCategories(products).map(category => {
-                      return (
-                        <Route
-                          exact
-                          key={category}
-                          path={`/category/${createSlug(category)}`}
-                          render={() => <CategoryPage createSlug={createSlug} products={products} category={category} />}
-                        />
-                      )
-                    })}
-                  {/* <Route exact path="/orders" component={UserOrders} /> */}
-                </Switch>
-              </Paper>
-            </Container>
+      {console.log(isAuthenticated)}
+      <div className="App">
+        <Grid container spacing={4} justify="center">
+          <Cart products={products} createSlug={createSlug} />
+          <Header />
+          <Grid item xs={12}>
+            <NavBar
+              createSlug={createSlug}
+              categories={getCategories(products)}
+            />
           </Grid>
-        </div>
-      </UserContextProvider>
+          <Container style={{ marginTop: "8px" }} maxWidth="md">
+            <Paper>
+              <Switch>
+                <Route exact path="/">
+                  <Main products={products} createSlug={createSlug} />
+                </Route>
+                <Route path="/login" component={Login} />
+                <Route path="/register" component={Register} />
+                <Route path="/checkout" component={Checkout} />
+                {/* <PrivateRoute
+                  path="/adminProductPage"
+                  render={(props) => <AdminProductPage products={products} />}
+                /> */}
+                <PrivateRoute
+                  path="/adminProductPage"
+                  component={AdminProductPage}
+                />
+                {/* Get routes for each product */}
+                {products !== null &&
+                  products.length !== 0 &&
+                  products &&
+                  products.map((product) => {
+                    return (
+                      <Route
+                        exact
+                        key={product._id}
+                        path={`/product/${createSlug(product.name)}`}
+                      >
+                        <ProductCard
+                          product={product}
+                          path={`/product/${createSlug(product.name)}`}
+                        />
+                      </Route>
+                    );
+                  })}
+                {/* Get routes for category pages */}
+                {products !== null &&
+                  products.length !== 0 &&
+                  products &&
+                  getCategories(products).map((category) => {
+                    return (
+                      <Route
+                        exact
+                        key={category}
+                        path={`/category/${createSlug(category)}`}
+                        render={() => (
+                          <CategoryPage
+                            createSlug={createSlug}
+                            products={products}
+                            category={category}
+                          />
+                        )}
+                      />
+                    );
+                  })}
+                {/* <Route exact path="/orders" component={UserOrders} /> */}
+              </Switch>
+            </Paper>
+          </Container>
+        </Grid>
+      </div>
     </Router>
   );
 };
@@ -120,10 +157,10 @@ const getCategories = (products) => {
     if (!categories.includes(product.category)) {
       categories.push(product.category);
     }
-  })
+  });
 
   return categories;
-}
+};
 
 /**
  * Convert product name to slug URL
