@@ -11,7 +11,7 @@ import {
   Button,
   TextField,
 } from "@material-ui/core";
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../Contexts/UserContext";
 
 //styles
 import useStyles from "./CheckOutStyles";

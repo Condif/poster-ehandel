@@ -7,9 +7,9 @@ import {
 } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 
-import { UserContext } from "../../contexts/UserContext";
+import { UserContext } from "../../Contexts/UserContext";
 import CloseIcon from "@material-ui/icons/Close";
-import ProductCard from '../productCard/ProductCard'
+import ProductCard from '../ProductCard/ProductCard'
 
 
 // STYLES
@@ -41,7 +41,7 @@ const Cart = (props) => {
                     />
                     <Typography className={classes.header} variant="h4">
                         Cart
-					        </Typography>
+					</Typography>
                 </div>
                 <div className={classes.listWrapper}>
                     <Grid item>

@@ -2,7 +2,7 @@ import React from "react";
 // import { useHistory } from 'react-router-dom';
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
-import ProductCard from './productCard/ProductCard'
+import ProductCard from './ProductCard/ProductCard'
 
 const Main = (props) => {
     const { products, createSlug } = props;
