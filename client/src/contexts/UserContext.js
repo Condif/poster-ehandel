@@ -1,16 +1,19 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useEffect } from "react";
 export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [userData, setUserData] = useState("");
   // CartStates
-  const [cartList, setCartList] = useState()
+  const [cartList, setCartList] = useState(
+    JSON.parse(localStorage.getItem('products' || []))
+  ) 
   
-  const addToCart = (newProduct) => {
-    if (cartList === undefined) {
+  const addToCartAndLocalStorage = (newProduct) => {
+    if (!cartList) {
       newProduct.cartAmount ++
       setCartList([newProduct])
+      localStorage.setItem("products", JSON.stringify([newProduct]))
     } else {
       let existingProduct;
 
@@ -26,15 +29,22 @@ const UserContextProvider = (props) => {
           const productIndex = state.findIndex(
             (p) => p.name === existingProduct.name
           );
+          const lsList = JSON.parse(localStorage.getItem('products'))
+          const lsProductIndex = lsList.findIndex((p) => p.name === existingProduct.name)
           state.splice(productIndex, 1, existingProduct);
+          lsList.splice(lsProductIndex, 1, existingProduct);
           setCartList(state);
+          localStorage.setItem("products", JSON.stringify(lsList))
         }
 
         if (!existingProduct) {
+        
+
           const state = [...cartList];
           newProduct.cartAmount ++
           state.push(newProduct)
           setCartList(state);
+          localStorage.setItem("products", JSON.stringify(state))
         }
       }
     }
@@ -65,7 +75,7 @@ const UserContextProvider = (props) => {
         cartList,
         openCart,
         setUser,
-        addToCart,
+        addToCartAndLocalStorage,
         setCartList,
       }}
     >
