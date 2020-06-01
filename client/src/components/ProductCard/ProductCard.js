@@ -12,17 +12,15 @@ const ProductCard = (props) => {
     const { product, path } = props;
     const { addToCart } = useContext(UserContext)
     const handleClick = () => {
-        addToCart(product)
         return history.push(path)
     }
     const handleAddToCart = () => {    
         addToCart(product)
     }
-
     return (
         <Grid item>
             <Card>
-                <CardActionArea>
+                <CardActionArea onClick={handleClick}>
                     <CardHeader title={product.name} titleTypographyProps={{ variant: 'h6' }} classes={props.case === 'cart' ? {title: classes.titleCart  } : { title: classes.title  }} />
                     <Typography>
                         {product.name}
@@ -33,16 +31,14 @@ const ProductCard = (props) => {
                     </Typography>
                 </CardActionArea>
                 <CardActions>
-                    {props.case === 'main' ? 
-                        <Button size="small" onClick={handleClick}>View product</Button> &&
-                        <Button size="small" onClick={handleAddToCart}>Add to cart</Button> : null}
+                    {props.case === "main" ? 
+                        <><Button size="small" onClick={handleClick}>View product</Button>
+                        <Button size="small" onClick={handleAddToCart}>Add to cart</Button></> : null}
                     {props.case === 'cart' ? <Typography>test</Typography> : null}
                 </CardActions>
             </Card>
         </Grid>
     )
 }
-
-
 
 export default ProductCard;
