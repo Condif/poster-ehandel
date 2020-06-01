@@ -10,10 +10,10 @@ import UserContextProvider from "../Contexts/UserContext";
 import ProductCard from "./ProductCard/ProductCard";
 import Register from "./Register/Register";
 import Checkout from "./Checkout/Checkout";
-import AdminProductPage from "./AdminProductPage/AdminProductPage";
+import AdminProductPage from "./AdminProductPage/AdminProductPage.js";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
-import CategoryPage from './CategoryPage/CategoryPage';
+import CategoryPage from "./CategoryPage/CategoryPage";
 
 const Layout = () => {
   const [products, setProducts] = useState([]);
@@ -33,7 +33,10 @@ const Layout = () => {
             <Cart products={products} createSlug={createSlug} />
             <Header />
             <Grid item xs={12}>
-              <NavBar createSlug={createSlug} categories={getCategories(products)} />
+              <NavBar
+                createSlug={createSlug}
+                categories={getCategories(products)}
+              />
             </Grid>
             <Container style={{ marginTop: "8px" }} maxWidth="md">
               <Paper>
@@ -49,7 +52,8 @@ const Layout = () => {
                     render={(props) => <AdminProductPage products={products} />}
                   />
                   {/* Get routes for each product */}
-                  {products !== null && products.length !== 0 &&
+                  {products !== null &&
+                    products.length !== 0 &&
                     products &&
                     products.map((product) => {
                       return (
@@ -66,17 +70,24 @@ const Layout = () => {
                       );
                     })}
                   {/* Get routes for category pages */}
-                  {products !== null && products.length !== 0 &&
+                  {products !== null &&
+                    products.length !== 0 &&
                     products &&
-                    getCategories(products).map(category => {
+                    getCategories(products).map((category) => {
                       return (
                         <Route
                           exact
                           key={category}
                           path={`/category/${createSlug(category)}`}
-                          render={() => <CategoryPage createSlug={createSlug} products={products} category={category} />}
+                          render={() => (
+                            <CategoryPage
+                              createSlug={createSlug}
+                              products={products}
+                              category={category}
+                            />
+                          )}
                         />
-                      )
+                      );
                     })}
                   {/* <Route exact path="/orders" component={UserOrders} /> */}
                 </Switch>
@@ -120,10 +131,10 @@ const getCategories = (products) => {
     if (!categories.includes(product.category)) {
       categories.push(product.category);
     }
-  })
+  });
 
   return categories;
-}
+};
 
 /**
  * Convert product name to slug URL
