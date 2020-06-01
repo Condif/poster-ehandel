@@ -4,16 +4,17 @@ export const UserContext = createContext();
 const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [userData, setUserData] = useState("");
+  const [isAuthenticated, setAuthentication] = useState(false);
   // CartStates
   const [cartList, setCartList] = useState(
-    JSON.parse(localStorage.getItem('products' || []))
-  ) 
-  
+    JSON.parse(localStorage.getItem("products" || []))
+  );
+
   const addToCartAndLocalStorage = (newProduct) => {
     if (!cartList) {
-      newProduct.cartAmount ++
-      setCartList([newProduct])
-      localStorage.setItem("products", JSON.stringify([newProduct]))
+      newProduct.cartAmount++;
+      setCartList([newProduct]);
+      localStorage.setItem("products", JSON.stringify([newProduct]));
     } else {
       let existingProduct;
 
@@ -29,22 +30,22 @@ const UserContextProvider = (props) => {
           const productIndex = state.findIndex(
             (p) => p.name === existingProduct.name
           );
-          const lsList = JSON.parse(localStorage.getItem('products'))
-          const lsProductIndex = lsList.findIndex((p) => p.name === existingProduct.name)
+          const lsList = JSON.parse(localStorage.getItem("products"));
+          const lsProductIndex = lsList.findIndex(
+            (p) => p.name === existingProduct.name
+          );
           state.splice(productIndex, 1, existingProduct);
           lsList.splice(lsProductIndex, 1, existingProduct);
           setCartList(state);
-          localStorage.setItem("products", JSON.stringify(lsList))
+          localStorage.setItem("products", JSON.stringify(lsList));
         }
 
         if (!existingProduct) {
-        
-
           const state = [...cartList];
-          newProduct.cartAmount ++
-          state.push(newProduct)
+          newProduct.cartAmount++;
+          state.push(newProduct);
           setCartList(state);
-          localStorage.setItem("products", JSON.stringify(state))
+          localStorage.setItem("products", JSON.stringify(state));
         }
       }
     }
@@ -53,6 +54,14 @@ const UserContextProvider = (props) => {
   //State för cartModal
   const openCart = () => {
     setIsCartOpen(!isCartOpen);
+  };
+
+  const authenticateUser = (user) => {
+    if (user.role === "admin") {
+      setAuthentication({
+        isAuthenticated: true,
+      });
+    }
   };
 
   const setUser = (user) => {
@@ -73,10 +82,12 @@ const UserContextProvider = (props) => {
         isCartOpen,
         userData,
         cartList,
+        isAuthenticated,
         openCart,
         setUser,
         addToCartAndLocalStorage,
         setCartList,
+        authenticateUser,
       }}
     >
       {props.children}
