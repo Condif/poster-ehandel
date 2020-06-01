@@ -20,9 +20,9 @@ exports.createNewProduct = async (req, res) => {
     inventory: req.body.inventory,
     cartAmount: req.body.cartAmount,
   });
-  if (product.length === 0) {
-    throw new ServerError("The product was not created", 400);
-  }
+  // if (Product.va) {
+  //   throw new ServerError("The product was not created", 400);
+  // }
   const newProduct = await product.save();
   res.status(201).json(newProduct);
 };
@@ -30,17 +30,18 @@ exports.createNewProduct = async (req, res) => {
 // Update product
 //TODO hur gör vi felhanteringen här??
 exports.updateProduct = async (req, res) => {
-  try {
-    await Product.findOneAndUpdate(
-      { _id: req.params.productId },
-      {
-        inventory: req.body.inventory,
-      }
-    );
-    res.json("Product updated");
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+  const product = await Product.findById(req.params.productId);
+  if (!product) {
+    throw new ServerError("Product does not exist", 404);
   }
+
+  if (req.params.productId !== req.body._id) {
+    throw new ServerError("Forbidden!", 403);
+  }
+  const updatedProduct = new Product(req.body);
+  await updatedProduct.save();
+
+  res.json("Product updated");
 };
 
 // Get products from category

@@ -21,11 +21,12 @@ Content-Type: application/json
 ###
 
 // Update a product
-PUT http://localhost:8080/api/products/5ecfd69aabe87203ec813aa7
+PUT http://localhost:8080/api/products/5ecfd07aabe87203ec813aa5
 Content-Type: application/json
 
 {
-    "inventory": "10"
+    "inventory": "9",
+    "_id": "5ecfd07aabe87203ec813aa5"
 }
 
 ###
