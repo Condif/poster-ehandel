@@ -13,14 +13,18 @@ import useStyles from "./ProductCardStyles";
 import { UserContext } from "../../Contexts/UserContext";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
 import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const ProductCard = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { product, path } = props;
-  const { addToCartAndLocalStorage, updateCounter } = useContext(UserContext);
+  const { addToCartAndLocalStorage, updateCounter, deleteProduct } = useContext(
+    UserContext
+  );
   const handleClick = () => {
-    if (props.case !== ("cart" || "checkout")) return history.push(path);
+    if (props.case !== "cart" || props.case !== "checkout")
+      return history.push(path);
   };
   const handleAddToCart = () => {
     addToCartAndLocalStorage(product);
@@ -76,12 +80,27 @@ const ProductCard = (props) => {
           ) : null}
           {props.case === "cart" || props.case === "checkout" ? (
             <>
-              <AddCircleOutlineIcon
+              <Button
+                variant="contained"
+                size="small"
                 onClick={() => updateCounter(product, "add")}
-              />
-              <RemoveCircleOutlineIcon
+              >
+                <AddCircleOutlineIcon />
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
                 onClick={() => updateCounter(product, "remove")}
-              />
+              >
+                <RemoveCircleOutlineIcon />
+              </Button>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => deleteProduct(product)}
+              >
+                <DeleteIcon />
+              </Button>
             </>
           ) : null}
         </CardActions>
