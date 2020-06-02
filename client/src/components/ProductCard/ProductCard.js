@@ -20,8 +20,7 @@ const ProductCard = (props) => {
   const { product, path } = props;
   const { addToCartAndLocalStorage, updateCounter } = useContext(UserContext);
   const handleClick = () => {
-    if(props.case !== 'cart' || 'checkout')
-    return history.push(path);
+    if (props.case !== ("cart" || "checkout")) return history.push(path);
   };
   const handleAddToCart = () => {
     addToCartAndLocalStorage(product);
@@ -75,17 +74,16 @@ const ProductCard = (props) => {
               </Button>
             </form>
           ) : null}
-          {props.case === "cart" || 'checkout' ? (
-          <>
-            <AddCircleOutlineIcon
-              onClick={() => updateCounter(product, 'add')}
-            /> 
-            <RemoveCircleOutlineIcon
-              onClick={() => updateCounter(product, 'remove')}
-            /> 
-          </>
-          )
-            : null}
+          {props.case === "cart" || props.case === "checkout" ? (
+            <>
+              <AddCircleOutlineIcon
+                onClick={() => updateCounter(product, "add")}
+              />
+              <RemoveCircleOutlineIcon
+                onClick={() => updateCounter(product, "remove")}
+              />
+            </>
+          ) : null}
         </CardActions>
       </Card>
     </Grid>

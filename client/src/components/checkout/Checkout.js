@@ -12,22 +12,25 @@ import {
   TextField,
 } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
+import ProductCard from "../ProductCard/ProductCard";
 
 //styles
 import useStyles from "./CheckOutStyles";
 
-const Checkout = () => {
+const Checkout = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { userData, cartList } = useContext(UserContext);
+
+  const { product } = props;
 
   const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
   const [inputValues, setInputValues] = useState({
     choosenShipment: "DHL",
     phoneNr: "",
-    address: userData.deliveryAddress.address,
-    zipcode: userData.deliveryAddress.zipcode,
-    city: userData.deliveryAddress.city,
+    // address: userData.deliveryAddress.address,
+    // zipcode: userData.deliveryAddress.zipcode,
+    // city: userData.deliveryAddress.city,
   });
 
   useEffect(() => {
@@ -78,7 +81,13 @@ const Checkout = () => {
   return (
     <div className={classes.mainDiv}>
       <Container>
-        <Typography>HÄR KOMMER PRODUKTER LIGGA</Typography>
+        {cartList.map((product) => (
+          <ProductCard
+            case="checkout"
+            product={product}
+            // handleChange={handleChange}
+          ></ProductCard>
+        ))}
       </Container>
       <FormControl>
         <FormLabel className={classes.labelText}>
@@ -106,7 +115,7 @@ const Checkout = () => {
           ))}
         </RadioGroup>
       </FormControl>
-      <FormControl className={classes.containerDiv}>
+      {/* <FormControl className={classes.containerDiv}>
         <FormLabel className={classes.labelText}>Deliveryaddress</FormLabel>
         <TextField
           className={classes.containerDiv}
@@ -138,15 +147,19 @@ const Checkout = () => {
           value={inputValues.city}
           onChange={(event) => handleChange(event, "city")}
         ></TextField>
-      </FormControl>
+      </FormControl> */}
       <Container className={classes.containerDiv}>
         {shipmentAlternatives.length > 0 && (
-          <div>
-            <Typography variant="h6">Total cost</Typography>
-            <Typography>{totalCost()} SEK </Typography>
+          <div style={{ width: "12rem" }}>
+            <Typography variant="h6" paragraph>
+              Total cost
+            </Typography>
+            <Typography>Varor: {totalCost()} SEK </Typography>
             <Typography>Varav moms {totalCost() * 0.25} SEK</Typography>
-            <Typography>Frakt {getShipmentCost()} SEK</Typography>
-            <Typography>
+            <Typography className={classes.border}>
+              Frakt: {getShipmentCost()} SEK
+            </Typography>
+            <Typography className={classes.text}>
               Totalkostnad {totalCost() + getShipmentCost()} SEK
             </Typography>
           </div>
