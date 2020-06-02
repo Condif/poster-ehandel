@@ -52,7 +52,7 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
-        <Grid container spacing={4} justify="center">
+        <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />
           <Grid item xs={12}>
