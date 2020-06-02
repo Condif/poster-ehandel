@@ -24,9 +24,9 @@ export default function UpdateInventory(props) {
   function updateProduct(event) {
     event.preventDefault();
 
-    const newProduct = product;
-    newProduct.inventory = inputValues.productInventory;
-    Object.assign();
+    // const newProduct = product;
+    product.inventory = inputValues.productInventory;
+    // Object.assign();
 
     fetch("http://localhost:8080/api/products/" + inputValues.productId, {
       method: "PUT",
@@ -34,7 +34,7 @@ export default function UpdateInventory(props) {
         "Content-Type": "application/json",
       },
       credentials: "include",
-      body: JSON.stringify(newProduct),
+      body: JSON.stringify(product),
     })
       .then((res) => res.json())
       .then(() => {
