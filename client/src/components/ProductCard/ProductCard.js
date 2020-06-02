@@ -8,7 +8,7 @@ import {
   CardActionArea,
 } from "@material-ui/core";
 import { Typography } from "@material-ui/core";
-import { Button } from "@material-ui/core";
+import { Button, TextField } from "@material-ui/core";
 import useStyles from "./ProductCardStyles";
 import { UserContext } from "../../Contexts/UserContext";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -53,6 +53,27 @@ const ProductCard = (props) => {
                 Add to cart
               </Button>
             </>
+          ) : props.case === "updateInventory" ? (
+            <form onSubmit={props.updateProduct}>
+              <TextField
+                name={product._id}
+                style={{ width: 40 }}
+                label="Inventory"
+                type="number"
+                defaultValue={product.inventory}
+                onChange={(event) => props.handleChange(event, product._id)}
+              ></TextField>
+              <Button
+                type="submit"
+                style={{ marginLeft: "1rem" }}
+                size="small"
+                className={classes.submitButton}
+                variant="contained"
+                color="primary"
+              >
+                Update
+              </Button>
+            </form>
           ) : null}
           {props.case === "cart" || 'checkout' ? (
           <>
