@@ -7,13 +7,21 @@ import {
   Grid,
   Badge,
   IconButton,
+  Divider,
+  List,
+  ListItem,
+  ListItemText,
+  Hidden,
+  Drawer,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import lightGreen from "@material-ui/core/colors/lightGreen";
 import teal from "@material-ui/core/colors/teal";
-import { UserContext } from "../Contexts/UserContext";
+import { UserContext } from "../../Contexts/UserContext";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
+import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
+import useStyles from "./NavBarStyles";
 
 const NavAppBar = withStyles({
   root: {
@@ -45,13 +53,73 @@ const NavButton = withStyles({
 })(Button);
 
 const NavBar = (props) => {
+  const classes = useStyles();
   const history = useHistory();
+
+  const [mobileOpen, setMobileOpen] = React.useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
   const { openCart, userData } = useContext(UserContext);
+
+  const handleDrawerToggle = (props) => {
+    setMobileOpen(!mobileOpen);
+  };
+
+  const { window } = props;
+
+  const drawer = (
+    <div className={classes.drawer}>
+      <div className={classes.toolbar} />
+      <Divider />
+      <List>
+        {props.categories.map((category) => (
+          <ListItem
+            button
+            key={category}
+            onClick={function (event) {
+              history.push(`/category/${props.createSlug(category)}`);
+              handleDrawerToggle();
+            }}
+          >
+            <ListItemText primary={category} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+    </div>
+  );
+
+  const container =
+    window !== undefined ? () => window().document.body : undefined;
+
   return (
     <NavAppBar position="static">
       <Toolbar>
-        <Categories item>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          edge="start"
+          onClick={handleDrawerToggle}
+          className={classes.menuButton}
+        >
+          <MenuIcon />
+        </IconButton>
+        <Hidden smUp implementation="css">
+          <Drawer
+            container={container}
+            variant="temporary"
+            open={mobileOpen}
+            onClose={handleDrawerToggle}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {drawer}
+          </Drawer>
+        </Hidden>
+        <Categories className={classes.desktopLinks} item>
           <NavButton aria-label="homepage" onClick={() => history.push("/")}>
             Home
           </NavButton>
@@ -68,18 +136,6 @@ const NavBar = (props) => {
               </NavButton>
             );
           })}
-          <StyledBadge color="secondary">
-            <IconButton
-              style={{
-                width: "4rem",
-                color: "#333",
-              }}
-              edge="start"
-              onClick={openCart}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-          </StyledBadge>
         </Categories>
         <Grid item>
           {userData.role === "admin" && (
@@ -99,6 +155,18 @@ const NavBar = (props) => {
           <NavButton aria-label="login" onClick={() => history.push("/login")}>
             Login
           </NavButton>
+          <StyledBadge color="secondary">
+            <IconButton
+              style={{
+                width: "4rem",
+                color: "#333",
+              }}
+              edge="start"
+              onClick={openCart}
+            >
+              <ShoppingCartIcon />
+            </IconButton>
+          </StyledBadge>
         </Grid>
       </Toolbar>
     </NavAppBar>
