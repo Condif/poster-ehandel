@@ -25,10 +25,11 @@ const NavAppBar = withStyles({
 const StyledBadge = withStyles((theme) => ({
   badge: {
     right: 10,
-    top: 16,
+    top: 8,
     border: `2px solid ${theme.palette.background.paper}`,
     padding: "2px 4px 1px 4px",
     fontSize: "0.6rem",
+    margin: theme.spacing(1),
   },
 }))(Badge);
 
