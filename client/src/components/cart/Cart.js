@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Contexts/UserContext";
 import CloseIcon from "@material-ui/icons/Close";
 import ProductCard from "../ProductCard/ProductCard";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 // STYLES
 import useStyles from "./CartStyles";
@@ -12,7 +13,7 @@ import useStyles from "./CartStyles";
 const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const { openCart, isCartOpen, cartList } = useContext(UserContext);
+  const { openCart, isCartOpen, cartList, clearCartAndLocalStorage } = useContext(UserContext);
   const { createSlug } = props;
   function redirectToCheckOut() {
     history.push("/checkout");
@@ -35,6 +36,13 @@ const Cart = (props) => {
           <Typography className={classes.header} variant="h4">
             Cart
           </Typography>
+          <Button
+							variant="contained"
+							size="small"
+							onClick={clearCartAndLocalStorage}>
+							<DeleteIcon fontSize="small" />
+							Cart
+						</Button>
         </div>
         <div className={classes.listWrapper}>
           <Grid item>
