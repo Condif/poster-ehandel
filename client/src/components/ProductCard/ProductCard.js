@@ -20,7 +20,7 @@ const ProductCard = (props) => {
   const { product, path } = props;
   const { addToCartAndLocalStorage, updateCounter } = useContext(UserContext);
   const handleClick = () => {
-    if(props.case !== 'cart')
+    if(props.case !== 'cart' || 'checkout')
     return history.push(path);
   };
   const handleAddToCart = () => {
@@ -54,7 +54,7 @@ const ProductCard = (props) => {
               </Button>
             </>
           ) : null}
-          {props.case === "cart" ? (
+          {props.case === "cart" || 'checkout' ? (
           <>
             <AddCircleOutlineIcon
               onClick={() => updateCounter(product, 'add')}
