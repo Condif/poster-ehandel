@@ -70,7 +70,22 @@ const UserContextProvider = (props) => {
     } else {
       state.splice(productIndex, 1, product)
     }
-    
+
+    setCartList(state)
+    localStorage.setItem("products", JSON.stringify(state));
+  }
+
+  const clearCartAndLocalStorage = () => {
+    setCartList()
+    localStorage.removeItem('products');
+  }
+
+  const deleteProduct = (product) => {
+    const state = [...cartList];
+    const productIndex = state.findIndex(
+      (p) => p.name === product.name
+    )
+    state.splice(productIndex, 1)
     setCartList(state)
     localStorage.setItem("products", JSON.stringify(state));
   }
@@ -113,6 +128,8 @@ const UserContextProvider = (props) => {
         setCartList,
         authenticateUser,
         updateCounter,
+        clearCartAndLocalStorage,
+        deleteProduct,
       }}
     >
       {props.children}
