@@ -47,7 +47,7 @@ const NavButton = withStyles({
 const NavBar = (props) => {
   const history = useHistory();
   // Hämta openCart funktionen samt inloggad user från UserContext
-  const { openCart, userData } = useContext(UserContext);
+  const { openCart, userData, amountOfItems } = useContext(UserContext);
   return (
     <NavAppBar position="static">
       <Toolbar>
@@ -68,7 +68,7 @@ const NavBar = (props) => {
               </NavButton>
             );
           })}
-          <StyledBadge color="secondary">
+          <StyledBadge color="secondary" badgeContent={amountOfItems()}>
             <IconButton
               style={{
                 width: "4rem",

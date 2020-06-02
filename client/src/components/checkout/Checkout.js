@@ -17,12 +17,12 @@ import ProductCard from "../ProductCard/ProductCard";
 //styles
 import useStyles from "./CheckOutStyles";
 
-const Checkout = (props) => {
+const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { userData, cartList } = useContext(UserContext);
-
-  const { product } = props;
+  const { userData, cartList, totalCost, amountOfItems } = useContext(
+    UserContext
+  );
 
   const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
   const [inputValues, setInputValues] = useState({
@@ -58,13 +58,6 @@ const Checkout = (props) => {
       .then((shipmentAlternatives) => {
         setShipmentAlternatives(shipmentAlternatives);
       });
-  }
-
-  function totalCost() {
-    const totalCost = cartList.reduce((total, product) => {
-      return total + product.cartAmount * product.price;
-    }, 0);
-    return totalCost;
   }
 
   function getShipmentCost() {
@@ -154,10 +147,11 @@ const Checkout = (props) => {
             <Typography variant="h6" paragraph>
               Total cost
             </Typography>
-            <Typography>Varor: {totalCost()} SEK </Typography>
-            <Typography>Varav moms {totalCost() * 0.25} SEK</Typography>
+            <Typography>Items: {amountOfItems()}</Typography>
+            <Typography>Products: {totalCost()} SEK </Typography>
+            <Typography>VAT {totalCost() * 0.2} SEK</Typography>
             <Typography className={classes.border}>
-              Frakt: {getShipmentCost()} SEK
+              Shipment: {getShipmentCost()} SEK
             </Typography>
             <Typography className={classes.text}>
               Totalkostnad {totalCost() + getShipmentCost()} SEK

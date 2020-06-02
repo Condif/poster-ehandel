@@ -35,6 +35,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: "center",
     alignSelf: "center",
   },
+  totalCostText: {
+    fontWeight: "bold",
+  },
 }));
 
 export default useStyles;
