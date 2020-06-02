@@ -32,7 +32,7 @@ const Checkout = () => {
 
   useEffect(() => {
     getShipmentAlternatives();
-    totalCost();
+    // totalCost();
   }, []);
 
   function handleChange(event, anchor) {
@@ -58,16 +58,21 @@ const Checkout = () => {
   }
 
   function totalCost() {
-    const totalCost = cartList.map((product) => {
-      let productCost = product.cartAmount * product.price;
-      return productCost;
+    const totalCost = cartList.reduce((total, product) => {
+      return total + product.cartAmount * product.price;
+    }, 0);
+    return totalCost;
+  }
+
+  function getShipmentCost() {
+    const shipment = shipmentAlternatives.filter((currentShipment) => {
+      console.log(currentShipment, "nuvarande skeppning");
+      return currentShipment.alternative === inputValues.choosenShipment;
     });
 
-    // const totalPrice = cartList.reduce(
-    //   (acc, product) => acc + product.price,
-    //   0
-    // );
-    console.log(totalCost, "här är totoal");
+    if (!shipmentAlternatives.length == 0) {
+      return shipment[0].cost;
+    }
   }
 
   return (
@@ -134,6 +139,18 @@ const Checkout = () => {
           onChange={(event) => handleChange(event, "city")}
         ></TextField>
       </FormControl>
+      <Container className={classes.containerDiv}>
+        {shipmentAlternatives.length > 0 && (
+          <div>
+            <Typography>{totalCost()} SEK </Typography>
+            <Typography>Varav moms {totalCost() * 0.25} SEK</Typography>
+            <Typography>Frakt {getShipmentCost()} SEK</Typography>
+            <Typography>
+              Totalkostnad {totalCost() + getShipmentCost()} SEK
+            </Typography>
+          </div>
+        )}
+      </Container>
       <Container>
         <FormControl className={classes.containerDiv}>
           <FormLabel className={classes.labelText}>Swish</FormLabel>
