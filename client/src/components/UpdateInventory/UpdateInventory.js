@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Button, TextField } from "@material-ui/core";
 import useStyles from "../AdminProductPage/AdminProductPageStyles";
+import ProductCard from "../ProductCard/ProductCard";
 
 export default function UpdateInventory(props) {
   const classes = useStyles();
@@ -20,13 +21,10 @@ export default function UpdateInventory(props) {
     });
   }
 
-  //TODO kopiera sedan modifiera - sedan state (Object.assign)
   function updateProduct(event) {
     event.preventDefault();
 
-    // const newProduct = product;
     product.inventory = inputValues.productInventory;
-    // Object.assign();
 
     fetch("http://localhost:8080/api/products/" + inputValues.productId, {
       method: "PUT",
@@ -43,31 +41,40 @@ export default function UpdateInventory(props) {
   }
 
   return (
-    <div>
-      <p>{product.name}</p>
-      <p>{product.description}</p>
-      <p>{product.price} SEK</p>
-      <form onSubmit={updateProduct}>
-        <TextField
-          name={product._id}
-          style={{ width: 40 }}
-          label="Inventory"
-          type="number"
-          defaultValue={product.inventory}
-          onChange={(event) => handleChange(event, product._id)}
-        ></TextField>
-        <Button
-          type="submit"
-          style={{ marginLeft: "1rem" }}
-          size="small"
-          className={classes.submitButton}
-          variant="contained"
-          color="primary"
-          // onClick={(event) => updateProducts(product._id, event)}
-        >
-          Update
-        </Button>
-      </form>
-    </div>
+    <ProductCard
+      case="updateInventory"
+      product={product}
+      updateProduct={updateProduct}
+      handleChange={handleChange}
+    ></ProductCard>
   );
 }
+
+//   return (
+//     <div>
+//       <p>{product.name}</p>
+//       <p>{product.description}</p>
+//       <p>{product.price} SEK</p>
+//       <form onSubmit={updateProduct}>
+//         <TextField
+//           name={product._id}
+//           style={{ width: 40 }}
+//           label="Inventory"
+//           type="number"
+//           defaultValue={product.inventory}
+//           onChange={(event) => handleChange(event, product._id)}
+//         ></TextField>
+//         <Button
+//           type="submit"
+//           style={{ marginLeft: "1rem" }}
+//           size="small"
+//           className={classes.submitButton}
+//           variant="contained"
+//           color="primary"
+//         >
+//           Update
+//         </Button>
+//       </form>
+//     </div>
+//   );
+// }
