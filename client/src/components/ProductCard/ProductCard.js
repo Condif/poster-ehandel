@@ -19,9 +19,11 @@ const ProductCard = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { product, path } = props;
-  const { addToCartAndLocalStorage, updateCounter, deleteProduct } = useContext(UserContext);
+  const { addToCartAndLocalStorage, updateCounter, deleteProduct } = useContext(
+    UserContext
+  );
   const handleClick = () => {
-    if (props.case !== 'cart' || props.case !== 'checkout')
+    if (props.case !== "cart" || props.case !== "checkout")
       return history.push(path);
   };
   const handleAddToCart = () => {
@@ -42,6 +44,12 @@ const ProductCard = (props) => {
           />
           <Typography>{product.name}</Typography>
           <Typography>{product.description}</Typography>
+          {product.cartAmount > 1 && (
+            <Typography>{product.cartAmount} items</Typography>
+          )}
+          {product.cartAmount == 1 && (
+            <Typography>{product.cartAmount} item</Typography>
+          )}
           <Typography>{product.price}SEK</Typography>
         </CardActionArea>
         <CardActions>
@@ -76,20 +84,31 @@ const ProductCard = (props) => {
               </Button>
             </form>
           ) : null}
-          {props.case === "cart" || props.case === 'checkout' ? (
+          {props.case === "cart" || props.case === "checkout" ? (
             <>
-              <Button variant="contained" size="small" onClick={() => updateCounter(product, 'add')}>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => updateCounter(product, "add")}
+              >
                 <AddCircleOutlineIcon />
               </Button>
-              <Button variant="contained" size="small" onClick={() => updateCounter(product, 'remove')}>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => updateCounter(product, "remove")}
+              >
                 <RemoveCircleOutlineIcon />
               </Button>
-              <Button variant="contained" size="small" onClick={() => deleteProduct(product)}>
+              <Button
+                variant="contained"
+                size="small"
+                onClick={() => deleteProduct(product)}
+              >
                 <DeleteIcon />
               </Button>
             </>
-          )
-            : null}
+          ) : null}
         </CardActions>
       </Card>
     </Grid>

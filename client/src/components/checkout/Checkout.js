@@ -12,6 +12,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
+import ProductCard from "../ProductCard/ProductCard";
 
 //styles
 import useStyles from "./CheckOutStyles";
@@ -19,20 +20,22 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { userData, cartList } = useContext(UserContext);
+  const { userData, cartList, totalCost, amountOfItems } = useContext(
+    UserContext
+  );
 
   const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
   const [inputValues, setInputValues] = useState({
     choosenShipment: "DHL",
     phoneNr: "",
-    address: userData.deliveryAddress.address,
-    zipcode: userData.deliveryAddress.zipcode,
-    city: userData.deliveryAddress.city,
+    // address: userData.deliveryAddress.address,
+    // zipcode: userData.deliveryAddress.zipcode,
+    // city: userData.deliveryAddress.city,
   });
 
   useEffect(() => {
     getShipmentAlternatives();
-    totalCost();
+    // totalCost();
   }, []);
 
   function handleChange(event, anchor) {
@@ -57,23 +60,27 @@ const Checkout = () => {
       });
   }
 
-  function totalCost() {
-    const totalCost = cartList.map((product) => {
-      let productCost = product.cartAmount * product.price;
-      return productCost;
+  function getShipmentCost() {
+    const shipment = shipmentAlternatives.filter((currentShipment) => {
+      console.log(currentShipment, "nuvarande skeppning");
+      return currentShipment.alternative === inputValues.choosenShipment;
     });
 
-    // const totalPrice = cartList.reduce(
-    //   (acc, product) => acc + product.price,
-    //   0
-    // );
-    console.log(totalCost, "här är totoal");
+    if (!shipmentAlternatives.length == 0) {
+      return shipment[0].cost;
+    }
   }
 
   return (
     <div className={classes.mainDiv}>
       <Container>
-        <Typography>HÄR KOMMER PRODUKTER LIGGA</Typography>
+        {cartList.map((product) => (
+          <ProductCard
+            case="checkout"
+            product={product}
+            // handleChange={handleChange}
+          ></ProductCard>
+        ))}
       </Container>
       <FormControl>
         <FormLabel className={classes.labelText}>
@@ -101,7 +108,7 @@ const Checkout = () => {
           ))}
         </RadioGroup>
       </FormControl>
-      <FormControl className={classes.containerDiv}>
+      {/* <FormControl className={classes.containerDiv}>
         <FormLabel className={classes.labelText}>Deliveryaddress</FormLabel>
         <TextField
           className={classes.containerDiv}
@@ -133,7 +140,25 @@ const Checkout = () => {
           value={inputValues.city}
           onChange={(event) => handleChange(event, "city")}
         ></TextField>
-      </FormControl>
+      </FormControl> */}
+      <Container className={classes.containerDiv}>
+        {shipmentAlternatives.length > 0 && (
+          <div style={{ width: "12rem" }}>
+            <Typography variant="h6" paragraph>
+              Total cost
+            </Typography>
+            <Typography>Items: {amountOfItems()}</Typography>
+            <Typography>Products: {totalCost()} SEK </Typography>
+            <Typography>VAT {totalCost() * 0.2} SEK</Typography>
+            <Typography className={classes.border}>
+              Shipment: {getShipmentCost()} SEK
+            </Typography>
+            <Typography className={classes.text}>
+              Totalkostnad {totalCost() + getShipmentCost()} SEK
+            </Typography>
+          </div>
+        )}
+      </Container>
       <Container>
         <FormControl className={classes.containerDiv}>
           <FormLabel className={classes.labelText}>Swish</FormLabel>
