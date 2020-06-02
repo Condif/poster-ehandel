@@ -38,7 +38,7 @@ exports.updateProduct = async (req, res) => {
   if (req.params.productId !== req.body._id) {
     throw new ServerError("Forbidden!", 403);
   }
-  const updatedProduct = new Product(req.body);
+  const updatedProduct = new Product(Object.assign(product, req.body));
   await updatedProduct.save();
 
   res.json("Product updated");
