@@ -11,14 +11,18 @@ import { Typography } from "@material-ui/core";
 import { Button, TextField } from "@material-ui/core";
 import useStyles from "./ProductCardStyles";
 import { UserContext } from "../../Contexts/UserContext";
+import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 const ProductCard = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { product, path } = props;
-  const { addToCartAndLocalStorage } = useContext(UserContext);
+  const { addToCartAndLocalStorage, updateCounter, deleteProduct } = useContext(UserContext);
   const handleClick = () => {
-    return history.push(path);
+    if (props.case !== 'cart' || props.case !== 'checkout')
+      return history.push(path);
   };
   const handleAddToCart = () => {
     addToCartAndLocalStorage(product);
@@ -72,7 +76,20 @@ const ProductCard = (props) => {
               </Button>
             </form>
           ) : null}
-          {props.case === "cart" ? <Typography>test</Typography> : null}
+          {props.case === "cart" || props.case === 'checkout' ? (
+            <>
+              <Button variant="contained" size="small" onClick={() => updateCounter(product, 'add')}>
+                <AddCircleOutlineIcon />
+              </Button>
+              <Button variant="contained" size="small" onClick={() => updateCounter(product, 'remove')}>
+                <RemoveCircleOutlineIcon />
+              </Button>
+              <Button variant="contained" size="small" onClick={() => deleteProduct(product)}>
+                <DeleteIcon />
+              </Button>
+            </>
+          )
+            : null}
         </CardActions>
       </Card>
     </Grid>
