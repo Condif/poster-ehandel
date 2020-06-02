@@ -142,6 +142,7 @@ const Checkout = () => {
       <Container className={classes.containerDiv}>
         {shipmentAlternatives.length > 0 && (
           <div>
+            <Typography variant="h6">Total cost</Typography>
             <Typography>{totalCost()} SEK </Typography>
             <Typography>Varav moms {totalCost() * 0.25} SEK</Typography>
             <Typography>Frakt {getShipmentCost()} SEK</Typography>
