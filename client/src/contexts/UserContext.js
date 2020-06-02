@@ -1,4 +1,4 @@
-import React, { createContext, useState} from "react";
+import React, { createContext, useState } from "react";
 export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
@@ -15,41 +15,65 @@ const UserContextProvider = (props) => {
       newProduct.cartAmount++;
       setCartList([newProduct]);
       localStorage.setItem("products", JSON.stringify([newProduct]));
-    } else {
-      let existingProduct;
+    }
+    if (JSON.parse(localStorage.getItem("products")) === null) {
+      localStorage.setItem("products", JSON.stringify(cartList))
+    }
+    let existingProduct;
 
-      if (cartList) {
-        cartList.forEach((product) => {
-          if (newProduct.name === product.name) {
-            existingProduct = product;
-          }
-        });
-        if (existingProduct) {
-          existingProduct.cartAmount++;
-          const state = [...cartList];
-          const productIndex = state.findIndex(
-            (p) => p.name === existingProduct.name
-          );
-          const lsList = JSON.parse(localStorage.getItem("products"));
-          const lsProductIndex = lsList.findIndex(
-            (p) => p.name === existingProduct.name
-          );
-          state.splice(productIndex, 1, existingProduct);
-          lsList.splice(lsProductIndex, 1, existingProduct);
-          setCartList(state);
-          localStorage.setItem("products", JSON.stringify(lsList));
+    if (cartList) {
+      cartList.forEach((product) => {
+        if (newProduct.name === product.name) {
+          existingProduct = product;
         }
+      });
+      if (existingProduct) {
+        existingProduct.cartAmount++;
+        const state = [...cartList];
+        const productIndex = state.findIndex(
+          (p) => p.name === existingProduct.name
+        );
+        const lsList = JSON.parse(localStorage.getItem("products"));    
+        const lsProductIndex = lsList.findIndex(
+          (p) => p.name === existingProduct.name
+        );
+        state.splice(productIndex, 1, existingProduct);
+        lsList.splice(lsProductIndex, 1, existingProduct);
+        setCartList(state);
+        localStorage.setItem("products", JSON.stringify(lsList));
+      }
 
-        if (!existingProduct) {
-          const state = [...cartList];
-          newProduct.cartAmount++;
-          state.push(newProduct);
-          setCartList(state);
-          localStorage.setItem("products", JSON.stringify(state));
-        }
+      if (!existingProduct) {
+        const state = [...cartList];
+        newProduct.cartAmount++;
+        state.push(newProduct);
+        setCartList(state);
+        localStorage.setItem("products", JSON.stringify(state));
       }
     }
   };
+
+  const updateCounter = (product, anchor) => {
+    if (anchor === 'add') {
+      product.cartAmount++
+    } 
+    if (anchor === 'remove') {
+      product.cartAmount--
+    }
+    const state = [...cartList];
+    const productIndex = state.findIndex(
+      (p) => p.name === product.name
+    )
+
+    if(product.cartAmount < 1) {
+      state.splice(productIndex, 1)
+    } else {
+      state.splice(productIndex, 1, product)
+    }
+    
+    setCartList(state)
+    localStorage.setItem("products", JSON.stringify(state));
+  }
 
   //State för cartModal
   const openCart = () => {
@@ -88,6 +112,7 @@ const UserContextProvider = (props) => {
         addToCartAndLocalStorage,
         setCartList,
         authenticateUser,
+        updateCounter,
       }}
     >
       {props.children}
