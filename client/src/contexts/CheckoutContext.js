@@ -18,7 +18,12 @@ const CheckoutContextProvider = (props) => {
         phoneNr: {
             value: "",
             error: false
-        }  
+        },
+        choosenShipment: {
+            value: "DHL",
+            error: false,
+        } 
+
     })
 
     const validateInputFields = () => {
@@ -52,7 +57,7 @@ const CheckoutContextProvider = (props) => {
         return validationInputs.address.error
     }
 
-    const setInputToState = (input, id, valid) => {   
+    const setInputToState = (input, id, valid) => {
 		setValidationInputs({
 			...validationInputs,
 			[id]: {

@@ -33,21 +33,11 @@ const Checkout = () => {
 
 
   const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
-  const [inputValues, setInputValues] = useState({
-    choosenShipment: "DHL",
-  });
 
   useEffect(() => {
     getShipmentAlternatives();
     // totalCost();
   }, []);
-
-  function handleChange(event, anchor) {
-    setInputValues({
-      ...inputValues,
-      [anchor]: event.target.value,
-    });
-  }
 
   const redirectToSummery = () => {
     const validated = validateInputFields()
@@ -68,7 +58,7 @@ const Checkout = () => {
 
   function getShipmentCost() {
     const shipment = shipmentAlternatives.filter((currentShipment) => {
-      return currentShipment.alternative === inputValues.choosenShipment;
+      return currentShipment.alternative === validationInputs.choosenShipment.value;
     });
 
     if (!shipmentAlternatives.length == 0) {
@@ -118,8 +108,8 @@ const Checkout = () => {
           className={classes.containerDiv}
           aria-label="ShippingAlternative"
           name="shipping1"
-          value={inputValues.choosenShipment}
-          onChange={(event) => handleChange(event, "choosenShipment")}
+          value={validationInputs.choosenShipment.value}
+          onChange={(event) => handleInputChange(event, "choosenShipment")}
         >
           {shipmentAlternatives.map((shipment, index) => (
             <div key={index} className={classes.containerDiv}>
@@ -149,7 +139,6 @@ const Checkout = () => {
           inputProps={{
             maxLength: 20,
           }}
-          value={inputValues.address}
           onChange={(event) => handleInputChange(event, "address")}
         ></TextField>
         <TextField
@@ -161,10 +150,9 @@ const Checkout = () => {
             maxLength: 5,
           }}
           type="text"
-          helperText={validationInputs.phoneNr.error ? "Enter 5 numbers" : null}
+          helperText={validationInputs.zipcode.error ? "Enter 5 numbers" : null}
           required
           label="Zipcode"
-          value={inputValues.zipcode}
           onChange={(event) => handleInputChange(event, "zipcode")}
         ></TextField>
         <TextField
@@ -176,10 +164,9 @@ const Checkout = () => {
           inputProps={{
             maxLength: 20,
           }}
-          helperText={validationInputs.phoneNr.error ? "Enter letters" : null}
+          helperText={validationInputs.city.error ? "Enter letters" : null}
           required
           label="City"
-          value={inputValues.city}
           onChange={(event) => handleInputChange(event, "city")}
         ></TextField>
       </FormControl>
@@ -215,7 +202,6 @@ const Checkout = () => {
             helperText={validationInputs.phoneNr.error ? "Enter a valid phone number" : null}
             required
             label="Phone number"
-            value={inputValues.phoneNr}
             onChange={(event) => handleInputChange(event, "phoneNr")}
           ></TextField>
         </FormControl>
