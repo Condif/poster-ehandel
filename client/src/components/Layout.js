@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from "react";
 import { Paper, Grid, Container } from "@material-ui/core";
 import Header from "./Header";
-import NavBar from "./NavBar";
+import NavBar from "./NavBar/NavBar";
 import {
   BrowserRouter as Router,
   Route,

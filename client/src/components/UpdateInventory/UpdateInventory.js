@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import { Button, TextField } from "@material-ui/core";
-import useStyles from "../AdminProductPage/AdminProductPageStyles";
 import ProductCard from "../ProductCard/ProductCard";
 
 export default function UpdateInventory(props) {
-  const classes = useStyles();
-
   const [inputValues, setInputValues] = useState({
     productId: "",
     productInventory: "",
@@ -49,32 +45,3 @@ export default function UpdateInventory(props) {
     ></ProductCard>
   );
 }
-
-//   return (
-//     <div>
-//       <p>{product.name}</p>
-//       <p>{product.description}</p>
-//       <p>{product.price} SEK</p>
-//       <form onSubmit={updateProduct}>
-//         <TextField
-//           name={product._id}
-//           style={{ width: 40 }}
-//           label="Inventory"
-//           type="number"
-//           defaultValue={product.inventory}
-//           onChange={(event) => handleChange(event, product._id)}
-//         ></TextField>
-//         <Button
-//           type="submit"
-//           style={{ marginLeft: "1rem" }}
-//           size="small"
-//           className={classes.submitButton}
-//           variant="contained"
-//           color="primary"
-//         >
-//           Update
-//         </Button>
-//       </form>
-//     </div>
-//   );
-// }

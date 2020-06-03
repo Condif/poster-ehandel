@@ -112,17 +112,21 @@ const UserContextProvider = (props) => {
   // Se senaste beställning
 
   function totalCost() {
-    const totalCost = cartList.reduce((total, product) => {
-      return total + product.cartAmount * product.price;
-    }, 0);
-    return totalCost;
+    if (cartList !== null) {
+      const totalCost = cartList.reduce((total, product) => {
+        return total + product.cartAmount * product.price;
+      }, 0);
+      return totalCost;
+    }
   }
 
   function amountOfItems() {
-    const itemsAmount = cartList.reduce((amount, product) => {
-      return amount + product.cartAmount;
-    }, 0);
-    return itemsAmount;
+    if (cartList !== null) {
+      const itemsAmount = cartList.reduce((amount, product) => {
+        return amount + product.cartAmount;
+      }, 0);
+      return itemsAmount;
+    }
   }
 
   return (
