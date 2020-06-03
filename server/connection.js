@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const { imageStorage } = require("./imageStorage")
 
 mongoose.set("useCreateIndex", true);
 
@@ -14,4 +15,7 @@ mongoose.connect(
 const db = mongoose.connection;
 
 db.on("error", (error) => console.log(error));
-db.once("open", () => console.log("Connected to Database"));
+db.once("open", function () {
+  console.log("Connected to mongodb");
+  imageStorage(db, mongoose.mongo);
+});

@@ -6,15 +6,15 @@ GET http://localhost:8080/api/products/
 ###
 
 // Post new product
-POST http://localhost:8080/api/products/
+POST http://localhost:8080/api/productsss/
 Content-Type: application/json
 
 {
-    "price": "200",
-     "name": "White clouds",
-     "category": "Sky",
-     "description": "White clouds on a blue summers sky.",
-     "inventory": "8",
+    "price": "199",
+     "name": "Green Valley",
+     "category": "Forest",
+     "description": "An atmospheric glade with trees, the sun is shining in through the tree tops",
+     "inventory": "10",
      "cartAmount": 0
 }
 

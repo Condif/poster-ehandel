@@ -25,6 +25,10 @@ module.exports = productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  imageId: {
+    type: mongoose.SchemaTypes.ObjectId,
+    required: true
+  }
 });
 
 module.exports = mongoose.model("Product", productSchema);

@@ -1,14 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  Grid,
+  Button,
   Card,
   CardHeader,
   CardActions,
   CardActionArea,
+  Grid,
+  TextField,
+  Typography
 } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
-import { Button, TextField } from "@material-ui/core";
 import useStyles from "./ProductCardStyles";
 import { UserContext } from "../../Contexts/UserContext";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -18,10 +19,12 @@ import DeleteIcon from "@material-ui/icons/Delete";
 const ProductCard = (props) => {
   const classes = useStyles();
   const history = useHistory();
+  const [image, setImage] = useState([]);
   const { product, path } = props;
   const { addToCartAndLocalStorage, updateCounter, deleteProduct } = useContext(
     UserContext
   );
+
   const handleClick = () => {
     if (props.case !== "cart" || props.case !== "checkout")
       return history.push(path);
