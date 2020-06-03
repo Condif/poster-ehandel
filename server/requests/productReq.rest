@@ -14,19 +14,19 @@ Content-Disposition: form-data; name="productBody"
 Content-Type: application/json
 
 {
-    "price": "199",
-    "name": "Wheat Fields",
-    "category": "Nature",
-    "description": "An atmospheric glade with trees, the sun is shining in through the tree tops",
-    "inventory": "10",
+    "price": "229",
+    "name": "Sea Shore of Maldives",
+    "category": "Sea",
+    "description": "The deep blue water on the shore of the Maldives",
+    "inventory": "8",
     "cartAmount": "0"
 }
 
 --FormDataRow
-Content-Disposition: form-data; name="image"; filename="jelly.jpg"
+Content-Disposition: form-data; name="image"; filename="splash.jpg"
 Content-Type: image/jpeg
 
-< ./jelly.jpg
+< ./splash.jpg
 
 --FormDataRow--
 
