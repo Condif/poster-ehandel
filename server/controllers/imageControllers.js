@@ -38,7 +38,6 @@ exports.getImageByProduct = async (req, res) => {
  */
 exports.getImageById = async (req, res, imageId) => {
     // Set id to find
-    console.log(req.params._id, imageId)
     let id;
     if (req.params._id === undefined) {
         id = imageId;
