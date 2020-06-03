@@ -51,12 +51,14 @@ const ProductCard = (props) => {
           />
           <Typography>{product.name}</Typography>
           <Typography>{product.description}</Typography>
-          {product.cartAmount > 1 && (
+          {props.case !== "cart" || props.case !== "checkout" ? 
+          product.cartAmount > 1 && (
             <Typography>{product.cartAmount} items</Typography>
-          )}
-          {product.cartAmount == 1 && (
+          ) : null}
+          {props.case !== "cart" || props.case !== "checkout" ? 
+          product.cartAmount === 1 && (
             <Typography>{product.cartAmount} item</Typography>
-          )}
+          ) : null}
           <Typography>{product.price}SEK</Typography>
         </CardActionArea>
         <CardActions>
