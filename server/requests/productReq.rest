@@ -6,17 +6,35 @@ GET http://localhost:8080/api/products/
 ###
 
 // Post new product
-POST http://localhost:8080/api/productsss/
+POST http://localhost:8080/api/products
+Content-Type: multipart/form-data; boundary=FormDataRow
+
+--FormDataRow
+Content-Disposition: form-data; name="productBody"
 Content-Type: application/json
 
 {
     "price": "199",
-     "name": "Green Valley",
-     "category": "Forest",
-     "description": "An atmospheric glade with trees, the sun is shining in through the tree tops",
-     "inventory": "10",
-     "cartAmount": 0
+    "name": "Wheat Fields",
+    "category": "Nature",
+    "description": "An atmospheric glade with trees, the sun is shining in through the tree tops",
+    "inventory": "10",
+    "cartAmount": "0"
 }
+
+--FormDataRow
+Content-Disposition: form-data; name="image"; filename="jelly.jpg"
+Content-Type: image/jpeg
+
+< ./jelly.jpg
+
+--FormDataRow--
+
+### Content-Type kan också vara image/png beroende på bildens extension
+
+### Tänk på följande:
+### ALLA boundary's måste BÖRJA med --
+### SISTA boundary'n måste AVSLUTAS med --
 
 ###
 
