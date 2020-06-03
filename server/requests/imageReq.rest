@@ -1,0 +1,7 @@
+// Get image by image id
+GET http://localhost:8080/api/image/5ed656cab58ee332e48eaf14
+
+###
+
+// Get image by product id
+GET http://localhost:8080/api/image/product/5ed75a533684fe7140ac77f7

@@ -1,5 +1,6 @@
 const Product = require("../models/productModel");
 const ServerError = require("../serverError");
+const { upload } = require("../imageStorage");
 
 // Get all products
 exports.getAllProducts = async (req, res, next) => {
@@ -12,19 +13,29 @@ exports.getAllProducts = async (req, res, next) => {
 
 // Create new peoduct
 exports.createNewProduct = async (req, res) => {
+  if (req.file === undefined) {
+    throw new ServerError("Image file is missing", 400);
+  }
+
+  const body = JSON.parse(req.body.productBody);
+  const file = req.file;
+
   const product = new Product({
-    price: req.body.price,
-    name: req.body.name,
-    category: req.body.category,
-    description: req.body.description,
-    inventory: req.body.inventory,
-    cartAmount: req.body.cartAmount,
+    price: body.price,
+    name: body.name,
+    category: body.category,
+    description: body.description,
+    inventory: body.inventory,
+    cartAmount: body.cartAmount,
+    imageId: file.id
   });
   // if (Product.va) {
   //   throw new ServerError("The product was not created", 400);
   // }
+
   const newProduct = await product.save();
   res.status(201).json(newProduct);
+
 };
 
 // Update product
