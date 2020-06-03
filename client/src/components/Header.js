@@ -1,15 +1,10 @@
-import React from 'react';
-import Box from '@material-ui/core/Box';
-import { Typography } from '@material-ui/core';
+import React from "react";
+import Box from "@material-ui/core/Box";
+
+import { CardMedia } from "@material-ui/core";
 
 const Header = () => {
-    return (
-        <Box p={2} m={8}>
-            <Typography variant="h3">
-                Imagi
-            </Typography>
-        </Box>
-    )
-}
+  return <img height="120" src={require("../assets/logo.jpg")} alt="Logo" />;
+};
 
 export default Header;

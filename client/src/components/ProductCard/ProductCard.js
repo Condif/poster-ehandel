@@ -42,7 +42,6 @@ const ProductCard = (props) => {
                 : { title: classes.title }
             }
           />
-          <Typography>{product.name}</Typography>
           <Typography>{product.description}</Typography>
           {product.cartAmount > 1 && (
             <Typography>{product.cartAmount} items</Typography>

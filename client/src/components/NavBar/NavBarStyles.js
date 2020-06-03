@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
     width: 240,
     flexShrink: 0,
   },
+  toolbar: {
+    justifyContent: "space-between",
+  },
 }));
 
 export default useStyles;

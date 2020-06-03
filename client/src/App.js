@@ -4,12 +4,12 @@ import "typeface-roboto";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
-import teal from "@material-ui/core/colors/teal";
+import green from "@material-ui/core/colors/green";
 import UserContextProvider from "./Contexts/UserContext";
 
 const theme = createMuiTheme({
   palette: {
-    primary: teal,
+    primary: green,
   },
 });
 
