@@ -8,11 +8,15 @@ const ServerError = require('./serverError');
 
 const options = { bucketName: 'images' };
 
+/**
+ * Create new GridFsBucket for image storage
+ * @param {import("mongoose").Connection} db
+ */
 exports.imageStorage = async (db) => {
     const gfs = new GridFsBucket(db.db, options);
     const connect = await setConnection(gfs);
     if (connect === undefined) {
-        throw new ServerError(`Failed to connect to ${connect.reason}`, 500)
+        throw new ServerError(`Failed to connect to ${connect.reason}`, 500);
     }
 }
 
