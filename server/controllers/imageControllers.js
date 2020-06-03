@@ -38,21 +38,27 @@ exports.getImageByProduct = async (req, res) => {
  */
 exports.getImageById = async (req, res, imageId) => {
     // Set id to find
-    const id = req.params._id || imageId;
+    console.log(req.params._id, imageId)
+    let id;
+    if (req.params._id === undefined) {
+        id = imageId;
+    } else { id = req.params._id }
 
     // Search for ObjectId in images.files
     // -- specify ObjectId type, otherwise it is not recognized as a valid ObjectId
     // -- convert response to array
     const image = await gfs.find({ _id: mongoose.Types.ObjectId(id) }).toArray();
 
-    // Set response content-type
-    // -- set content-type to image/jpeg or image/png otherwise response is base64 string and not an image file
-    res.set('Content-Type', image[0].contentType);
-
     // Check if image was found
     if (image.length === 0) {
         throw new ServerError("Image was not found", 404);
     }
+    
+    // Set response content-type
+    // -- set content-type to image/jpeg or image/png otherwise response is base64 string and not an image file
+    if (image[0].contentType === undefined) {
+        res.set('Content-Type', 'image/jpeg');
+    } else { res.set('Content-Type', image[0].contentType) }
 
     // Create download stream to stream image to client from GridFs
     const downloadStream = gfs.openDownloadStream(image[0]._id);
