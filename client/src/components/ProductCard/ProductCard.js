@@ -49,7 +49,7 @@ const ProductCard = (props) => {
             <Typography>{product.cartAmount} items</Typography>
           ) : null}
           {props.case !== "cart" || props.case !== "checkout" ? 
-          product.cartAmount == 1 && (
+          product.cartAmount === 1 && (
             <Typography>{product.cartAmount} item</Typography>
           ) : null}
           <Typography>{product.price}SEK</Typography>

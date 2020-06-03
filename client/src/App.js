@@ -6,6 +6,7 @@ import { ThemeProvider as MuiThemeProvider } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import teal from "@material-ui/core/colors/teal";
 import UserContextProvider from "./Contexts/UserContext";
+import CheckoutContextProvider from "./Contexts/CheckoutContext";
 
 const theme = createMuiTheme({
   palette: {
@@ -17,10 +18,12 @@ function App() {
   return (
     <>
       <UserContextProvider>
-        <MuiThemeProvider theme={theme}>
-          <CssBaseline />
-          <Layout />
-        </MuiThemeProvider>
+        <CheckoutContextProvider>
+          <MuiThemeProvider theme={theme}>
+            <CssBaseline />
+            <Layout />
+          </MuiThemeProvider>
+        </CheckoutContextProvider>
       </UserContextProvider>
     </>
   );
