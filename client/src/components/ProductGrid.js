@@ -7,7 +7,7 @@ import ProductCard from "./ProductCard/ProductCard";
 const Main = (props) => {
   const { products, createSlug } = props;
   return (
-    <Grid container spacing={3} alignItems="stretch">
+    <Grid container spacing={2} alignItems="stretch">
       {products !== null &&
         products !== undefined &&
         renderProducts("main", products, createSlug)}

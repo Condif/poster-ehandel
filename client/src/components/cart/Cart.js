@@ -57,14 +57,14 @@ const Cart = (props) => {
               cartList !== undefined &&
               renderProducts(cartList, createSlug)}
           </Grid>
-        </div>
-        <div>
-          <Typography className={classes.totalCostText}>
-            Total cost excluding shipment: {totalCost()} SEK
-          </Typography>
-          <Typography className={classes.totalCostText}>
-            VAT: {totalCost() * 0.2} SEK
-          </Typography>
+          <Grid item>
+            <Typography className={classes.totalCostText}>
+              Total cost excluding shipment: {totalCost()} SEK
+            </Typography>
+            <Typography className={classes.totalCostText}>
+              VAT: {totalCost() * 0.2} SEK
+            </Typography>
+          </Grid>
         </div>
         <Button
           className={classes.submitButton}

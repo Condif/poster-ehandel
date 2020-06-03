@@ -23,13 +23,16 @@ const useStyles = makeStyles((theme) => ({
   },
   listWrapper: {
     position: "relative",
-    height: "calc(100% - 13rem)",
+    height: "calc(100% - 5rem)",
     top: "4rem",
-    width: "30rem",
+    // width: "30rem",
     overflowY: "auto",
+    [theme.breakpoints.down("sm")]: {
+      width: "100vw",
+    },
   },
   submitButton: {
-    margin: theme.spacing(2, 0),
+    margin: theme.spacing(13, 0, 4, 0),
     width: "40",
     display: "flex",
     justifyContent: "center",
