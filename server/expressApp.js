@@ -7,9 +7,11 @@ require("express-async-errors");
 const app = express();
 const cookieSession = require("cookie-session");
 const cors = require("cors");
+const runMiddleware = require('run-middleware');
+runMiddleware(app);
 const bodyParser = require("body-parser");
-app.use(bodyParser.json());
-
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }))
 app.use(
   cors({
     credentials: true,
@@ -45,6 +47,7 @@ const sessionRouter = require("./routes/sessionRoute");
 const productRouter = require("./routes/productsRoute");
 const orderRouter = require("./routes/orderRoute");
 const shipmentRouter = require("./routes/shipmentRoute");
+const imageRouter = require('./routes/imageRoute');
 
 // app.use
 
@@ -53,6 +56,7 @@ app.use("/sessions", sessionRouter);
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
 app.use("/api/shipments", shipmentRouter);
+app.use("/api/image", imageRouter);
 
 //
 // app.use(express.json());
@@ -76,3 +80,5 @@ app.use((error, req, res, next) => {
 });
 
 app.listen(port, () => console.log("Server has started"));
+
+module.exports = app;

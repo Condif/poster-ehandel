@@ -1,14 +1,16 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {
-  Grid,
+  Button,
   Card,
-  CardHeader,
   CardActions,
   CardActionArea,
+  CardHeader,
+  CardMedia,
+  Grid,
+  TextField,
+  Typography
 } from "@material-ui/core";
-import { Typography } from "@material-ui/core";
-import { Button, TextField } from "@material-ui/core";
 import useStyles from "./ProductCardStyles";
 import { UserContext } from "../../Contexts/UserContext";
 import AddCircleOutlineIcon from "@material-ui/icons/AddCircleOutline";
@@ -19,20 +21,25 @@ const ProductCard = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const { product, path } = props;
-  const { addToCartAndLocalStorage, updateCounter, deleteProduct } = useContext(
-    UserContext
-  );
+  const { addToCartAndLocalStorage, updateCounter, deleteProduct } = useContext(UserContext);
+
+
   const handleClick = () => {
     if (props.case !== "cart" || props.case !== "checkout")
       return history.push(path);
   };
+
   const handleAddToCart = () => {
     addToCartAndLocalStorage(product);
   };
+
   return (
-    <Grid item>
+    <Grid className={classes.root} item>
       <Card>
         <CardActionArea onClick={handleClick}>
+          <CardMedia
+            className={classes.media}
+            image={`http://localhost:8080/api/image/product/${product._id}`} />
           <CardHeader
             title={product.name}
             titleTypographyProps={{ variant: "h6" }}
