@@ -8,6 +8,11 @@ const useStyles = makeStyles({
     titleCart: {
         fontSize: "6px"
     
+    },
+    media: {
+        height: 0,
+        paddingTop: "130%",
+
     }
 });
 

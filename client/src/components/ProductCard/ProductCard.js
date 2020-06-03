@@ -1,11 +1,12 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Button,
   Card,
-  CardHeader,
   CardActions,
   CardActionArea,
+  CardHeader,
+  CardMedia,
   Grid,
   TextField,
   Typography
@@ -19,23 +20,26 @@ import DeleteIcon from "@material-ui/icons/Delete";
 const ProductCard = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const [image, setImage] = useState([]);
   const { product, path } = props;
-  const { addToCartAndLocalStorage, updateCounter, deleteProduct } = useContext(
-    UserContext
-  );
+  const { addToCartAndLocalStorage, updateCounter, deleteProduct } = useContext(UserContext);
+
 
   const handleClick = () => {
     if (props.case !== "cart" || props.case !== "checkout")
       return history.push(path);
   };
+
   const handleAddToCart = () => {
     addToCartAndLocalStorage(product);
   };
+
   return (
-    <Grid item>
+    <Grid className={classes.root} item>
       <Card>
         <CardActionArea onClick={handleClick}>
+          <CardMedia
+            className={classes.media}
+            image={`http://localhost:8080/api/image/product/${product._id}`} />
           <CardHeader
             title={product.name}
             titleTypographyProps={{ variant: "h6" }}
