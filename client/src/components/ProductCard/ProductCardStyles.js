@@ -1,11 +1,14 @@
 import { makeStyles } from "@material-ui/core";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   title: {
     margin: "2px",
   },
   titleCart: {
     fontSize: "12px",
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.6rem",
+    },
   },
   media: {
     height: 0,
@@ -19,6 +22,16 @@ const useStyles = makeStyles({
   cartDisplay: {
     display: "flex",
   },
-});
+  flexedDiv: {
+    display: "flex",
+    justifyContent: "center",
+    width: "100%",
+  },
+  cartSmallText: {
+    [theme.breakpoints.down("xs")]: {
+      fontSize: "0.6rem",
+    },
+  },
+}));
 
 export default useStyles;

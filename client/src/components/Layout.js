@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
-import { Paper, Grid, Container } from "@material-ui/core";
+import { Grid, Container } from "@material-ui/core";
 import Header from "./Header";
 import NavBar from "./NavBar/NavBar";
 import {
@@ -19,9 +19,12 @@ import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
 import { UserContext } from "../Contexts/UserContext";
+import Footer from "./Footer/Footer";
 
 const Layout = () => {
-  const { setUser, userData, authenticateUser, isAuthenticated } = useContext(UserContext);
+  const { setUser, userData, authenticateUser, isAuthenticated } = useContext(
+    UserContext
+  );
 
   const [products, setProducts] = useState([]);
   // Fetch products "on mount"
@@ -30,8 +33,8 @@ const Layout = () => {
       setProducts(await getAllProducts());
     }
     getProducts();
-    checkLoginSession()
-    console.log(userData)
+    checkLoginSession();
+    console.log(userData);
     // checkLoginSession()
   }, []);
   // { path, ...rest }
@@ -55,7 +58,7 @@ const Layout = () => {
   const checkLoginSession = () => {
     fetch("http://localhost:8080/sessions/checkLoginSession", {
       method: "GET",
-      credentials: "include"
+      credentials: "include",
     }).then(async (response) => {
       const data = await response.json();
       if (data.err) {
@@ -63,12 +66,11 @@ const Layout = () => {
       }
       setUser(data);
       authenticateUser(data);
-    })
-  }
+    });
+  };
 
   return (
     <Router>
-      
       <div className="App">
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
@@ -79,7 +81,10 @@ const Layout = () => {
               categories={getCategories(products)}
             />
           </Grid>
-          <Container style={{ marginTop: "20px" }} maxWidth="md">
+          <Container
+            style={{ marginTop: "20px", minHeight: "calc(100vh - 345px)" }}
+            maxWidth="md"
+          >
             <Switch>
               <Route exact path="/">
                 <ProductGrid products={products} createSlug={createSlug} />
@@ -156,6 +161,7 @@ const Layout = () => {
               {/* <Route exact path="/orders" component={UserOrders} /> */}
             </Switch>
           </Container>
+          <Footer />
         </Grid>
       </div>
     </Router>
