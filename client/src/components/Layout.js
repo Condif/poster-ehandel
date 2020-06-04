@@ -21,7 +21,7 @@ import CategoryPage from "./CategoryPage/CategoryPage";
 import { UserContext } from "../Contexts/UserContext";
 
 const Layout = () => {
-  const { isAuthenticated } = useContext(UserContext);
+  const { setUser, userData, authenticateUser, isAuthenticated } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
   // Fetch products "on mount"
@@ -30,6 +30,9 @@ const Layout = () => {
       setProducts(await getAllProducts());
     }
     getProducts();
+    checkLoginSession()
+    console.log(userData)
+    // checkLoginSession()
   }, []);
   // { path, ...rest }
   const PrivateRoute = (props) => (
@@ -49,8 +52,23 @@ const Layout = () => {
     />
   );
 
+  const checkLoginSession = () => {
+    fetch("http://localhost:8080/sessions/checkLoginSession", {
+      method: "GET",
+      credentials: "include"
+    }).then(async (response) => {
+      const data = await response.json();
+      if (data.err) {
+        return;
+      }
+      setUser(data);
+      authenticateUser(data);
+    })
+  }
+
   return (
     <Router>
+      
       <div className="App">
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />

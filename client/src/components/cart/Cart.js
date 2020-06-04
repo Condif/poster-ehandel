@@ -14,6 +14,8 @@ const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const {
+    setUser,
+    authenticateUser,
     openCart,
     isCartOpen,
     cartList,
@@ -24,7 +26,7 @@ const Cart = (props) => {
   function redirectToCheckOut() {
     if(cartList !== undefined){   
       if(cartList !== null) {
-        history.push("/checkout")
+        history.push("/checkout");
       }
     } 
   }
