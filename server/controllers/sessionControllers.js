@@ -46,18 +46,20 @@ exports.login = async (req, res) => {
     });
   });
 };
-// console.log(window.location.pathname)
-exports.checkLoginSession = async (req, res, next) => {
+
+exports.checkLoginSession = (req, res, next) => {
   let user;
-  if (req.session.id) {
+  if (req.session.id && req.session.id !== undefined) {
+    console.log(req.session.id)
     user = {
       email: req.session.email,
       role: req.session.role,
       deliveryAddress: req.session.deliveryAddress,
+      id: req.session.id
     };
     res.session = user;
     res.json(user);
-  } else {
-    res.json({ err: { login: "Please sign in before " } });
+    return;
   }
+  res.json({ err: { message: "Please sign in before" } });
 };

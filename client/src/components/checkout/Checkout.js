@@ -43,7 +43,7 @@ const Checkout = () => {
     <div className={classes.mainDiv}>
       <Container>
         {cartList.map((product) => (
-          <ProductCard case="checkout" product={product}></ProductCard>
+          <ProductCard key={product._id} case="checkout" product={product}></ProductCard>
         ))}
       </Container>
       <ShipmentAlternatives />

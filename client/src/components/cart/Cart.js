@@ -14,6 +14,7 @@ const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const {
+    userData,
     setUser,
     authenticateUser,
     openCart,
@@ -22,14 +23,37 @@ const Cart = (props) => {
     clearCartAndLocalStorage,
     totalCost,
   } = useContext(UserContext);
+
   const { createSlug } = props;
-  function redirectToCheckOut() {
-    if(cartList !== undefined){   
-      if(cartList !== null) {
-        history.push("/checkout");
+
+  const redirectToCheckOut = async () => {
+    if (cartList !== undefined) {
+      if (cartList !== null) {
+        // Check if user is logged in
+        await fetch("http://localhost:8080/sessions/checkLoginSession", {
+          method: "GET",
+          credentials: "include"
+        }).then(async (response) => {
+          const data = await response.json();
+          if (data.err) {
+            // Reset user data when session has ended
+            if (userData !== "") {
+              setUser("");
+            }
+            alert(`${JSON.stringify(data.err.message).slice(1, -1)} proceeding to checkout`)
+            return;
+          }
+          if (userData.id !== data.id) {
+            console.log("hello2")
+            setUser(data);
+          }
+          authenticateUser(data);
+          history.push("/checkout");
+        })
       }
-    } 
+    }
   }
+
   return (
     <div
       style={{

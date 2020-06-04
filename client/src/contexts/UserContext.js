@@ -100,6 +100,10 @@ const UserContextProvider = (props) => {
   };
 
   const setUser = (user) => {
+    if (user === "") {
+      setUserData("");
+      return;
+    }
     setUserData({
       email: user.email,
       role: user.role,
