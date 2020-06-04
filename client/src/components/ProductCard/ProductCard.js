@@ -51,26 +51,25 @@ const ProductCard = (props) => {
           />
           <Typography>{product.name}</Typography>
           <Typography>{product.description}</Typography>
-          {props.case !== "cart" || props.case !== "checkout" ? 
+          {props.case === "cart" || props.case === "checkout" ? 
           product.cartAmount > 1 && (
             <Typography>{product.cartAmount} items</Typography>
           ) : null}
-          {props.case !== "cart" || props.case !== "checkout" ? 
+          {props.case === "cart" || props.case === "checkout" ? 
           product.cartAmount === 1 && (
             <Typography>{product.cartAmount} item</Typography>
           ) : null}
           <Typography>{product.price}SEK</Typography>
         </CardActionArea>
         <CardActions>
-          {props.case === "main" ? (
-            <>
+          {props.case === "main" ? 
               <Button size="small" onClick={handleClick}>
                 View product
-              </Button>
+              </Button> : null}
+          {props.case === "main" || props.case === "productview" ? (
               <Button size="small" onClick={handleAddToCart}>
                 Add to cart
-              </Button>
-            </>
+              </Button> 
           ) : props.case === "updateInventory" ? (
             <form onSubmit={props.updateProduct}>
               <TextField

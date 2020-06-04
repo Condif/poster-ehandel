@@ -17,6 +17,7 @@ import { CheckoutContext } from "../../Contexts/CheckoutContext";
 import ProductCard from "../ProductCard/ProductCard";
 import ShipmentAlternatives from "../ShipmentAlternatives/ShipmentAlternatives";
 import ErrorIcon from "@material-ui/icons/Error";
+import PaymentInformation from "./PaymentInformation";
 
 //styles
 import useStyles from "./CheckOutStyles";
@@ -25,6 +26,13 @@ const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
   const { cartList, totalCost, amountOfItems } = useContext(UserContext);
+
+  // const {
+  //   validationInputs,
+  //   validateInputFields,
+  //   checkErrorsInInfo,
+  //   handleInputChange,
+  // } = useContext(CheckoutContext);
 
   const {
     validationInputs,
@@ -43,24 +51,6 @@ const Checkout = () => {
     }
   };
 
-  const handleInputChange = (event, id) => {
-    if (id === "city") {
-      if (validateInputs(event.target.value, true)) {
-        setInputToState(event.target.value, id, true);
-      } else {
-        setInputToState(event.target.value, id, false);
-      }
-    } else if (id === "zipcode" || id === "phoneNr")
-      if (validateInputs(event.target.value, false)) {
-        setInputToState(event.target.value, id, true);
-      } else {
-        setInputToState(event.target.value, id, false);
-      }
-    else {
-      setInputToState(event.target.value, id, true);
-    }
-  };
-
   return (
     <div className={classes.mainDiv}>
       <Container>
@@ -69,50 +59,7 @@ const Checkout = () => {
         ))}
       </Container>
       <ShipmentAlternatives />
-      <FormControl className={classes.containerDiv}>
-        <FormLabel className={classes.labelText}>Deliveryaddress</FormLabel>
-        <TextField
-          className={classes.containerDiv}
-          error={validationInputs.address.error}
-          variant="outlined"
-          size="small"
-          type="text"
-          required
-          label="Address"
-          inputProps={{
-            maxLength: 20,
-          }}
-          onChange={(event) => handleInputChange(event, "address")}
-        ></TextField>
-        <TextField
-          className={classes.containerDiv}
-          error={validationInputs.zipcode.error}
-          variant="outlined"
-          size="small"
-          inputProps={{
-            maxLength: 5,
-          }}
-          type="text"
-          helperText={validationInputs.zipcode.error ? "Enter 5 numbers" : null}
-          required
-          label="Zipcode"
-          onChange={(event) => handleInputChange(event, "zipcode")}
-        ></TextField>
-        <TextField
-          className={classes.containerDiv}
-          error={validationInputs.city.error}
-          variant="outlined"
-          size="small"
-          type="text"
-          inputProps={{
-            maxLength: 20,
-          }}
-          helperText={validationInputs.city.error ? "Enter letters" : null}
-          required
-          label="City"
-          onChange={(event) => handleInputChange(event, "city")}
-        ></TextField>
-      </FormControl>
+      <PaymentInformation></PaymentInformation>
       <Container className={classes.containerDiv}>
         {shipmentAlternatives.length > 0 && (
           <div style={{ width: "12rem" }}>
@@ -131,28 +78,7 @@ const Checkout = () => {
           </div>
         )}
       </Container>
-      <Container>
-        <FormControl className={classes.containerDiv}>
-          <FormLabel className={classes.labelText}>Swish</FormLabel>
-          <TextField
-            variant="outlined"
-            error={validationInputs.phoneNr.error}
-            size="small"
-            type="tel"
-            inputProps={{
-              maxLength: 10,
-            }}
-            helperText={
-              validationInputs.phoneNr.error
-                ? "Enter a valid phone number"
-                : null
-            }
-            required
-            label="Phone number"
-            onChange={(event) => handleInputChange(event, "phoneNr")}
-          ></TextField>
-        </FormControl>
-      </Container>
+      <Container></Container>
       <Grid item xs={12}>
         {checkErrorsInInfo() ? (
           <div className={classes.errorMsg}>

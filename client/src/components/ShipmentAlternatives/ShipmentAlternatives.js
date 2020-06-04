@@ -18,6 +18,7 @@ const ShipmentAlternatives = () => {
     setShipmentAlternatives,
     validationInputs,
     shipmentAlternatives,
+    handleInputChange,
   } = useContext(CheckoutContext);
 
   useEffect(() => {
