@@ -58,7 +58,7 @@ const NavBar = (props) => {
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
-  const { openCart, userData, amountOfItems } = useContext(UserContext);
+  const { openCart, userData, amountOfItems, setUser } = useContext(UserContext);
 
   const handleDrawerToggle = (props) => {
     setMobileOpen(!mobileOpen);
@@ -108,6 +108,21 @@ const NavBar = (props) => {
       </List>
     </div>
   );
+
+  const logout = async () => {
+    await fetch("http://localhost:8080/sessions/logout", {
+      method: "POST",
+      credentials: "include"
+    }).then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        setUser("");
+        alert("You have been logged out");
+        if (window.location.pathname !== "/") {
+          history.push("/");
+        }
+      }})
+  }
 
   return (
     <NavAppBar position="static">
@@ -171,17 +186,25 @@ const NavBar = (props) => {
             >
               Edit Products
             </NavButton>
-            </>
-          ) : null }
-          <NavButton
-            aria-label="sign up"
-            onClick={() => history.push("/register")}
-          >
-            Sign up
+          )}
+          {userData === "" &&
+            <NavButton
+              aria-label="sign up"
+              onClick={() => history.push("/register")}
+            >
+              Sign up
           </NavButton>
+          }
           <NavButton aria-label="login" onClick={() => history.push("/login")}>
             Login
           </NavButton>
+          {userData !== "" &&
+            <NavButton
+              aria-label="log out"
+              onClick={logout}
+            >
+              Logout
+            </NavButton>}
           {window.location.pathname !== "/checkout" ? (
             userData.email && (
               <StyledBadge color="secondary" badgeContent={amountOfItems()}>
