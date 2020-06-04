@@ -55,7 +55,7 @@ const Layout = () => {
       credentials: "include"
     }).then(async (response) => {
       const data = await response.json();
-      if (data.session) {
+      if (data.error) {
         return;
       }
       setUser(data);

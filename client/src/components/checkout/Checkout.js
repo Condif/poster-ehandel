@@ -34,7 +34,7 @@ const Checkout = () => {
       credentials: "include"
     }).then(async (response) => {
       const data = await response.json();
-      if (data.success === false) {
+      if (data.error) {
         // Reset user data when session has ended
         if (userData !== "") {
           setUser("");
