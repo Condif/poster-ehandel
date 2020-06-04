@@ -7,7 +7,6 @@ import {
   CardActionArea,
   CardHeader,
   CardMedia,
-  Grid,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -26,7 +25,7 @@ const ProductCard = (props) => {
   );
 
   const handleClick = () => {
-    if (props.case !== "cart" || props.case !== "checkout") {
+    if (!props.case === "cart" || !props.case === "checkout") {
       return history.push(path);
     }
   };

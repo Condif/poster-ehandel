@@ -24,11 +24,9 @@ const Cart = (props) => {
   } = useContext(UserContext);
   const { createSlug } = props;
   function redirectToCheckOut() {
-    if(cartList !== undefined){   
-      if(cartList !== null) {
+    if((cartList !== undefined || cartList !== undefined)){   
         openCart()
         history.push("/checkout")
-      }
     } 
   }
   return (
