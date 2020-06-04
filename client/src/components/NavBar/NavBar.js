@@ -15,8 +15,7 @@ import {
   Drawer,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-import lightGreen from "@material-ui/core/colors/lightGreen";
-import teal from "@material-ui/core/colors/teal";
+import green from "@material-ui/core/colors/green";
 import { UserContext } from "../../Contexts/UserContext";
 import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MenuIcon from "@material-ui/icons/Menu";
@@ -26,7 +25,7 @@ import useStyles from "./NavBarStyles";
 const NavAppBar = withStyles({
   root: {
     backgroundColor: `rgb(139, 195, 74)`,
-    background: `linear-gradient(352deg, ${lightGreen[500]} 0%, ${teal[700]} 40%, ${teal[500]} 98%)`,
+    background: `linear-gradient(352deg, ${green[400]} 0%, ${green[700]} 40%, ${green[900]} 98%)`,
   },
 })(AppBar);
 
@@ -72,6 +71,15 @@ const NavBar = (props) => {
       <div className={classes.toolbar} />
       <Divider />
       <List>
+        <ListItem
+          button
+          onClick={function (event) {
+            history.push("/");
+            handleDrawerToggle();
+          }}
+        >
+          Home
+        </ListItem>
         {props.categories.map((category) => (
           <ListItem
             button
@@ -86,6 +94,19 @@ const NavBar = (props) => {
         ))}
       </List>
       <Divider />
+      <List>
+        {userData.role === "admin" && (
+          <ListItem
+            button
+            onClick={function (event) {
+              history.push("/adminProductPage");
+              handleDrawerToggle();
+            }}
+          >
+            Edit Products
+          </ListItem>
+        )}
+      </List>
     </div>
   );
 
@@ -94,7 +115,7 @@ const NavBar = (props) => {
 
   return (
     <NavAppBar position="static">
-      <Toolbar>
+      <Toolbar className={classes.toolbar}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
@@ -104,23 +125,23 @@ const NavBar = (props) => {
         >
           <MenuIcon />
         </IconButton>
-        <Hidden smUp implementation="css">
-          <Drawer
-            container={container}
-            variant="temporary"
-            open={mobileOpen}
-            onClose={handleDrawerToggle}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-            ModalProps={{
-              keepMounted: true, // Better open performance on mobile.
-            }}
-          >
-            {drawer}
-          </Drawer>
-        </Hidden>
         <Categories className={classes.desktopLinks} item>
+          <Hidden smUp implementation="css">
+            <Drawer
+              container={container}
+              variant="temporary"
+              open={mobileOpen}
+              onClose={handleDrawerToggle}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+              ModalProps={{
+                keepMounted: true, // Better open performance on mobile.
+              }}
+            >
+              {drawer}
+            </Drawer>
+          </Hidden>
           <NavButton aria-label="homepage" onClick={() => history.push("/")}>
             Home
           </NavButton>
@@ -137,22 +158,11 @@ const NavBar = (props) => {
               </NavButton>
             );
           })}
-          <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-            <IconButton
-              style={{
-                width: "4rem",
-                color: "#333",
-              }}
-              edge="start"
-              onClick={openCart}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-          </StyledBadge>
         </Categories>
-        <Grid item>
+        <Grid justifyContent="flex-end" item>
           {userData.role === "admin" && (
             <NavButton
+              className={classes.desktopLinks}
               aria-label="edit products"
               onClick={() => history.push("/adminProductPage")}
             >
@@ -168,18 +178,20 @@ const NavBar = (props) => {
           <NavButton aria-label="login" onClick={() => history.push("/login")}>
             Login
           </NavButton>
-          <StyledBadge color="secondary">
-            <IconButton
-              style={{
-                width: "4rem",
-                color: "#333",
-              }}
-              edge="start"
-              onClick={openCart}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-          </StyledBadge>
+          {userData.email && (
+            <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+              <IconButton
+                style={{
+                  width: "4rem",
+                  color: "#333",
+                }}
+                edge="start"
+                onClick={openCart}
+              >
+                <ShoppingCartIcon />
+              </IconButton>
+            </StyledBadge>
+          )}
         </Grid>
       </Toolbar>
     </NavAppBar>

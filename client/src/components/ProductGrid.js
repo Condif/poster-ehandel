@@ -7,15 +7,10 @@ import ProductCard from "./ProductCard/ProductCard";
 const Main = (props) => {
   const { products, createSlug } = props;
   return (
-    <Grid container spacing={4}>
-      <Grid item>
-        <Typography variant="h6">All Products</Typography>
-      </Grid>
-      <Grid item>
-        {products !== null &&
-          products !== undefined &&
-          renderProducts("main", products, createSlug)}
-      </Grid>
+    <Grid container spacing={2} alignItems="stretch">
+      {products !== null &&
+        products !== undefined &&
+        renderProducts("main", products, createSlug)}
     </Grid>
   );
 };
@@ -30,12 +25,14 @@ const Main = (props) => {
 export const renderProducts = (caseStyle, products, createSlug) => {
   return products.map((product) => {
     return (
-      <ProductCard
-        case={caseStyle}
-        key={product._id}
-        product={product}
-        path={`/product/${createSlug(product.name)}`}
-      />
+      <Grid item sm={6}>
+        <ProductCard
+          case={caseStyle}
+          key={product._id}
+          product={product}
+          path={`/product/${createSlug(product.name)}`}
+        />
+      </Grid>
     );
   });
 };
