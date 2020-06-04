@@ -38,7 +38,8 @@ const ProductCard = (props) => {
     <Card style={{ height: "100%" }}>
       <CardActionArea onClick={handleClick}>
         <CardMedia
-          className={classes.media}
+          className={props.case === "cart" ? classes.cartmedia : classes.media}
+          // className={classes.media}
           image={`http://localhost:8080/api/image/product/${product._id}`}
         />
         <CardHeader
@@ -50,7 +51,9 @@ const ProductCard = (props) => {
               : { title: classes.title }
           }
         />
-        <Typography>{product.description}</Typography>
+        {props.case !== "cart" ? (
+          <Typography>{product.description}</Typography>
+        ) : null}
         {product.cartAmount > 1 && (
           <Typography>{product.cartAmount} items</Typography>
         )}

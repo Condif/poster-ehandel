@@ -112,7 +112,7 @@ const UserContextProvider = (props) => {
   // Se senaste beställning
 
   function totalCost() {
-    if (cartList !== null) {
+    if (cartList !== null && cartList !== undefined) {
       const totalCost = cartList.reduce((total, product) => {
         return total + product.cartAmount * product.price;
       }, 0);
@@ -121,7 +121,7 @@ const UserContextProvider = (props) => {
   }
 
   function amountOfItems() {
-    if (cartList !== null) {
+    if (cartList !== null && cartList !== undefined) {
       const itemsAmount = cartList.reduce((amount, product) => {
         return amount + product.cartAmount;
       }, 0);

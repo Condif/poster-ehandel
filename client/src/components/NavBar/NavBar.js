@@ -178,18 +178,20 @@ const NavBar = (props) => {
           <NavButton aria-label="login" onClick={() => history.push("/login")}>
             Login
           </NavButton>
-          <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-            <IconButton
-              style={{
-                width: "4rem",
-                color: "#333",
-              }}
-              edge="start"
-              onClick={openCart}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-          </StyledBadge>
+          {userData.email && (
+            <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+              <IconButton
+                style={{
+                  width: "4rem",
+                  color: "#333",
+                }}
+                edge="start"
+                onClick={openCart}
+              >
+                <ShoppingCartIcon />
+              </IconButton>
+            </StyledBadge>
+          )}
         </Grid>
       </Toolbar>
     </NavAppBar>
