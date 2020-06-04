@@ -89,6 +89,7 @@ const Layout = () => {
                         path={`/product/${createSlug(product.name)}`}
                       >
                         <ProductCard
+                          case={'productview'}
                           product={product}
                           path={`/product/${createSlug(product.name)}`}
                         />
