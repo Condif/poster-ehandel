@@ -23,10 +23,10 @@ const Cart = (props) => {
 
   const { createSlug } = props;
   function redirectToCheckOut() {
-    if((cartList !== undefined || cartList !== undefined)){   
-        openCart()
-        history.push("/checkout")
-    } 
+    if (cartList !== undefined || cartList !== undefined) {
+      openCart();
+      history.push("/checkout");
+    }
   }
 
   return (
@@ -67,7 +67,7 @@ const Cart = (props) => {
               Total cost excluding shipment: {totalCost()} SEK
             </Typography>
             <Typography className={classes.totalCostText}>
-              VAT: {totalCost() * 0.2} SEK
+              VAT: {(totalCost() * 0.2).toFixed(2)} SEK
             </Typography>
           </Grid>
         </div>
