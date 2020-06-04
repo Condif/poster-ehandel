@@ -107,10 +107,6 @@ const UserContextProvider = (props) => {
     });
   };
 
-  // Logga in
-  // Logga ut
-  // Se senaste beställning
-
   function totalCost() {
     if (cartList !== null) {
       if (cartList !== undefined) {
