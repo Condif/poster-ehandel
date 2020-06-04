@@ -13,7 +13,7 @@ const Orders = () => {
     <div className={classes.mainDiv}>
       <Container>
         {cartList.map((product) => (
-          <ProductCard key={product._id} case="checkout" product={product}></ProductCard>
+          <ProductCard key={product._id} case="orders" product={product}></ProductCard>
         ))}
       </Container>
     </div>

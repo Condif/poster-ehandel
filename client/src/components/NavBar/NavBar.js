@@ -154,8 +154,16 @@ const NavBar = (props) => {
             );
           })}
         </Categories>
-        <Grid justifycontent="flex-end" item>
-          {userData.role === "admin" && (
+
+        <Grid justifycontent="flex-end" item>  
+          {userData.role === "admin" ? (
+            <>
+              <NavButton
+                aria-label="orders"
+                onClick={() => history.push("/orders")}
+              >
+                See all orders
+            </NavButton>
             <NavButton
               className={classes.desktopLinks}
               aria-label="edit products"
@@ -163,13 +171,8 @@ const NavBar = (props) => {
             >
               Edit Products
             </NavButton>
-          )}
-          <NavButton
-            aria-label="edit products"
-            onClick={() => history.push("/adminProductPage")}
-          >
-            Edit Products
-          </NavButton>
+            </>
+          ) : null }
           <NavButton
             aria-label="sign up"
             onClick={() => history.push("/register")}
@@ -180,23 +183,23 @@ const NavBar = (props) => {
             Login
           </NavButton>
           {window.location.pathname !== "/checkout" ? (
-              userData.email && (
-                <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-                  <IconButton
-                    style={{
-                      width: "4rem",
-                      color: "#333",
-                    }}
-                    edge="start"
-                    onClick={openCart}
-                  >
-                    <ShoppingCartIcon />
-                  </IconButton>
-                </StyledBadge>
-              )
+            userData.email && (
+              <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+                <IconButton
+                  style={{
+                    width: "4rem",
+                    color: "#333",
+                  }}
+                  edge="start"
+                  onClick={openCart}
+                >
+                  <ShoppingCartIcon />
+                </IconButton>
+              </StyledBadge>
+            )
           )
-          :
-          null}
+            :
+            null}
         </Grid>
       </Toolbar>
     </NavAppBar >

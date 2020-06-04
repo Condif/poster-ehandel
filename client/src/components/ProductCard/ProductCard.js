@@ -37,11 +37,11 @@ const ProductCard = (props) => {
   return (
     <Card style={{ height: "100%" }}>
       <CardActionArea
-        className={props.case === "cart" ? classes.cartDisplay : null}
+        className={props.case === "cart" || props.case === "orders" ? classes.cartDisplay : null}
         onClick={handleClick}
       >
         <CardMedia
-          className={props.case === "cart" ? classes.cartmedia : classes.media}
+          className={props.case === "cart" || props.case === "orders" ? classes.cartmedia : classes.media}
           image={`http://localhost:8080/api/image/product/${product._id}`}
         />
         <CardHeader
