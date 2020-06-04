@@ -24,6 +24,7 @@ const Cart = (props) => {
   function redirectToCheckOut() {
     if(cartList !== undefined){   
       if(cartList !== null) {
+        openCart()
         history.push("/checkout")
       }
     } 

@@ -65,7 +65,6 @@ const NavBar = (props) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const { window } = props;
 
   const drawer = (
     <div className={classes.drawer}>
@@ -89,9 +88,6 @@ const NavBar = (props) => {
     </div>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
     <NavAppBar position="static">
       <Toolbar>
@@ -106,7 +102,6 @@ const NavBar = (props) => {
         </IconButton>
         <Hidden smUp implementation="css">
           <Drawer
-            container={container}
             variant="temporary"
             open={mobileOpen}
             onClose={handleDrawerToggle}
@@ -137,52 +132,57 @@ const NavBar = (props) => {
               </NavButton>
             );
           })}
-          <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+         
+          {window.location.pathname !== "/checkout" ? 
+            < StyledBadge color="secondary" badgeContent={amountOfItems()}>
             <IconButton
-              style={{
-                width: "4rem",
-                color: "#333",
-              }}
-              edge="start"
-              onClick={openCart}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-          </StyledBadge>
-        </Categories>
-        <Grid item>
-          {userData.role === "admin" && (
-            <NavButton
-              aria-label="edit products"
-              onClick={() => history.push("/adminProductPage")}
-            >
-              Edit Products
-            </NavButton>
-          )}
-          <NavButton
-            aria-label="sign up"
-            onClick={() => history.push("/register")}
+            style={{
+              width: "4rem",
+              color: "#333",
+            }}
+            edge="start"
+            onClick={openCart}
           >
-            Sign up
+            <ShoppingCartIcon />
+          </IconButton>
+          </StyledBadge> 
+          :
+          null
+          }
+        </Categories>
+      <Grid item>
+        {userData.role === "admin" && (
+          <NavButton
+            aria-label="edit products"
+            onClick={() => history.push("/adminProductPage")}
+          >
+            Edit Products
           </NavButton>
-          <NavButton aria-label="login" onClick={() => history.push("/login")}>
-            Login
+        )}
+        <NavButton
+          aria-label="sign up"
+          onClick={() => history.push("/register")}
+        >
+          Sign up
           </NavButton>
-          <StyledBadge color="secondary">
-            <IconButton
-              style={{
-                width: "4rem",
-                color: "#333",
-              }}
-              edge="start"
-              onClick={openCart}
-            >
-              <ShoppingCartIcon />
-            </IconButton>
-          </StyledBadge>
-        </Grid>
+        <NavButton aria-label="login" onClick={() => history.push("/login")}>
+          Login
+          </NavButton>
+        <StyledBadge color="secondary">
+          <IconButton
+            style={{
+              width: "4rem",
+              color: "#333",
+            }}
+            edge="start"
+            onClick={openCart}
+          >
+            <ShoppingCartIcon />
+          </IconButton>
+        </StyledBadge>
+      </Grid>
       </Toolbar>
-    </NavAppBar>
+    </NavAppBar >
   );
 };
 
