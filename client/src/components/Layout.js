@@ -26,18 +26,15 @@ const Layout = () => {
   const [products, setProducts] = useState([]);
   // Fetch products "on mount"
   useEffect(() => {
-    async function getProducts() {
+    async function fetchOnLoad() {
       setProducts(await getAllProducts());
+      checkLoginSession();
     }
-    getProducts();
-    checkLoginSession()
-    console.log(userData)
-    // checkLoginSession()
+    fetchOnLoad();
   }, []);
-  // { path, ...rest }
+
   const PrivateRoute = (props) => (
     <Route
-      // {...rest}
       path={props.path}
       render={() =>
         isAuthenticated.isAuthenticated === true ? (
@@ -58,7 +55,7 @@ const Layout = () => {
       credentials: "include"
     }).then(async (response) => {
       const data = await response.json();
-      if (data.err) {
+      if (data.session) {
         return;
       }
       setUser(data);
