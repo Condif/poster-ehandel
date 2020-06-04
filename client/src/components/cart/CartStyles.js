@@ -31,6 +31,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       width: "100vw",
     },
+    [theme.breakpoints.up("md")]: {
+      width: "35vw",
+    },
   },
   submitButton: {
     margin: theme.spacing(13, 0, 4, 0),

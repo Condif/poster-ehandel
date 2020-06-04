@@ -37,36 +37,62 @@ const ProductCard = (props) => {
   return (
     <Card style={{ height: "100%" }}>
       <CardActionArea
-        className={props.case === "cart" ? classes.cartDisplay : null}
+        className={
+          props.case === "cart" || props.case === "checkout"
+            ? classes.cartDisplay
+            : null
+        }
         onClick={handleClick}
       >
         <CardMedia
-          className={props.case === "cart" ? classes.cartmedia : classes.media}
+          className={
+            props.case === "cart" || props.case === "checkout"
+              ? classes.cartmedia
+              : classes.media
+          }
           image={`http://localhost:8080/api/image/product/${product._id}`}
         />
-        <CardHeader
-          title={product.name}
-          titleTypographyProps={{ variant: "h6" }}
-          classes={
-            props.case === "cart"
-              ? { title: classes.titleCart }
-              : { title: classes.title }
-          }
-        />
-        {props.case !== "cart" ? (
-          <Typography>{product.description}</Typography>
-        ) : null}
-        {props.case === "cart" || props.case === "checkout"
-          ? product.cartAmount > 1 && (
-              <Typography>{product.cartAmount} items&nbsp;</Typography>
-            )
-          : null}
-        {props.case === "cart" || props.case === "checkout"
-          ? product.cartAmount === 1 && (
-              <Typography>{product.cartAmount} item&nbsp;</Typography>
-            )
-          : null}
-        <Typography>á {product.price} SEK</Typography>
+        <div>
+          <CardHeader
+            title={product.name}
+            titleTypographyProps={{ variant: "h6" }}
+            classes={
+              props.case === "cart"
+                ? { title: classes.titleCart }
+                : { title: classes.title }
+            }
+          />
+          {props.case === "main" || props.case === "productview" ? (
+            <Typography style={{ marginLeft: "1rem" }}>
+              {product.description}
+            </Typography>
+          ) : null}
+          <div style={{ display: "flex", marginLeft: "1rem" }}>
+            {props.case === "cart" || props.case === "checkout"
+              ? product.cartAmount > 1 && (
+                  <Typography className={classes.cartSmallText}>
+                    {product.cartAmount} items&nbsp;
+                  </Typography>
+                )
+              : null}
+            {props.case === "cart" || props.case === "checkout"
+              ? product.cartAmount === 1 && (
+                  <Typography className={classes.cartSmallText}>
+                    {product.cartAmount} item&nbsp;
+                  </Typography>
+                )
+              : null}
+            {props.case === "main" || props.case === "productview" ? (
+              <Typography style={{ marginLeft: "1rem" }}>
+                {product.price} SEK
+              </Typography>
+            ) : (
+              <Typography className={classes.cartSmallText}>
+                á {product.price} SEK
+              </Typography>
+            )}
+          </div>
+        </div>
       </CardActionArea>
       <CardActions>
         {props.case === "main" ? (
@@ -101,7 +127,7 @@ const ProductCard = (props) => {
           </form>
         ) : null}
         {props.case === "cart" || props.case === "checkout" ? (
-          <>
+          <div className={classes.flexedDiv}>
             <Button
               variant="contained"
               size="small"
@@ -123,7 +149,7 @@ const ProductCard = (props) => {
             >
               <DeleteIcon />
             </Button>
-          </>
+          </div>
         ) : null}
       </CardActions>
     </Card>
