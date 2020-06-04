@@ -46,18 +46,18 @@ exports.login = async (req, res) => {
     });
   });
 };
-
+// console.log(window.location.pathname)
 exports.checkLoginSession = async (req, res, next) => {
   let user;
   if (req.session.id) {
     user = {
       email: req.session.email,
       role: req.session.role,
+      deliveryAddress: req.session.deliveryAddress,
     };
     res.session = user;
-    next();
+    res.json(user);
   } else {
-    res.json({ err: { login: "Please renew your login session!" } });
+    res.json({ err: { login: "Please sign in before " } });
   }
-  res.json(res.session);
 };

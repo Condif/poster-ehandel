@@ -154,7 +154,7 @@ const NavBar = (props) => {
             );
           })}
         </Categories>
-        <Grid justifyContent="flex-end" item>
+        <Grid justifycontent="flex-end" item>
           {userData.role === "admin" && (
             <NavButton
               className={classes.desktopLinks}
