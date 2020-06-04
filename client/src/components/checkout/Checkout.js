@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {  useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
@@ -15,21 +15,11 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList, totalCost, amountOfItems } = useContext(UserContext);
-
-  // const {
-  //   validationInputs,
-  //   validateInputFields,
-  //   checkErrorsInInfo,
-  //   handleInputChange,
-  // } = useContext(CheckoutContext);
+  const { cartList } = useContext(UserContext);
 
   const {
-    validationInputs,
     validateInputFields,
     checkErrorsInInfo,
-    setInputToState,
-    validateInputs,
   } = useContext(CheckoutContext);
 
   const redirectToSummery = () => {

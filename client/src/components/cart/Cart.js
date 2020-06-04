@@ -14,9 +14,6 @@ const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const {
-    userData,
-    setUser,
-    authenticateUser,
     openCart,
     isCartOpen,
     cartList,
@@ -25,12 +22,11 @@ const Cart = (props) => {
   } = useContext(UserContext);
 
   const { createSlug } = props;
-
-  const redirectToCheckOut = async () => {
+  function redirectToCheckOut() {
     if((cartList !== undefined || cartList !== undefined)){   
-      openCart()
-      history.push("/checkout")
-    }
+        openCart()
+        history.push("/checkout")
+    } 
   }
 
   return (

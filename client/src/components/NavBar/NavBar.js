@@ -64,7 +64,6 @@ const NavBar = (props) => {
     setMobileOpen(!mobileOpen);
   };
 
-  const { window } = props;
 
   const drawer = (
     <div className={classes.drawer}>
@@ -110,9 +109,6 @@ const NavBar = (props) => {
     </div>
   );
 
-  const container =
-    window !== undefined ? () => window().document.body : undefined;
-
   return (
     <NavAppBar position="static">
       <Toolbar className={classes.toolbar}>
@@ -128,7 +124,6 @@ const NavBar = (props) => {
         <Categories className={classes.desktopLinks} item>
           <Hidden smUp implementation="css">
             <Drawer
-              container={container}
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
@@ -170,6 +165,12 @@ const NavBar = (props) => {
             </NavButton>
           )}
           <NavButton
+            aria-label="edit products"
+            onClick={() => history.push("/adminProductPage")}
+          >
+            Edit Products
+          </NavButton>
+          <NavButton
             aria-label="sign up"
             onClick={() => history.push("/register")}
           >
@@ -178,23 +179,27 @@ const NavBar = (props) => {
           <NavButton aria-label="login" onClick={() => history.push("/login")}>
             Login
           </NavButton>
-          {userData.email && (
-            <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-              <IconButton
-                style={{
-                  width: "4rem",
-                  color: "#333",
-                }}
-                edge="start"
-                onClick={openCart}
-              >
-                <ShoppingCartIcon />
-              </IconButton>
-            </StyledBadge>
-          )}
+          {window.location.pathname !== "/checkout" ? (
+              userData.email && (
+                <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+                  <IconButton
+                    style={{
+                      width: "4rem",
+                      color: "#333",
+                    }}
+                    edge="start"
+                    onClick={openCart}
+                  >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                </StyledBadge>
+              )
+          )
+          :
+          null}
         </Grid>
       </Toolbar>
-    </NavAppBar>
+    </NavAppBar >
   );
 };
 
