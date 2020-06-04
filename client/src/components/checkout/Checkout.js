@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, {  useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
@@ -15,35 +15,47 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList, totalCost, amountOfItems } = useContext(UserContext);
-
-  // const {
-  //   validationInputs,
-  //   validateInputFields,
-  //   checkErrorsInInfo,
-  //   handleInputChange,
-  // } = useContext(CheckoutContext);
+  const { cartList, userData, setUser, authenticateUser } = useContext(UserContext);
 
   const {
-    validationInputs,
     validateInputFields,
     checkErrorsInInfo,
-    setInputToState,
-    validateInputs,
   } = useContext(CheckoutContext);
 
   const redirectToSummery = () => {
     const validated = validateInputFields();
     if (validated) {
-      history.push("/summery");
+      
     }
+
+
+    fetch("http://localhost:8080/sessions/checkLoginSession", {
+      method: "GET",
+      credentials: "include"
+    }).then(async (response) => {
+      const data = await response.json();
+      if (data.error) {
+        // Reset user data when session has ended
+        if (userData !== "") {
+          setUser("");
+        }
+        alert(`You need to be a member to make a purchase.
+          Would you like to sign up?`)
+        return;
+      }
+      if (userData.id !== data.id) {
+        setUser(data);
+      }
+      authenticateUser(data);
+      history.push("/summery");
+    })
   };
 
   return (
     <div className={classes.mainDiv}>
       <Container>
         {cartList.map((product) => (
-          <ProductCard case="checkout" product={product}></ProductCard>
+          <ProductCard key={product._id} case="checkout" product={product}></ProductCard>
         ))}
       </Container>
       <ShipmentAlternatives />

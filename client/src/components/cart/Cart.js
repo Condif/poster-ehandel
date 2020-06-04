@@ -14,22 +14,21 @@ const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const {
-    setUser,
-    authenticateUser,
     openCart,
     isCartOpen,
     cartList,
     clearCartAndLocalStorage,
     totalCost,
   } = useContext(UserContext);
+
   const { createSlug } = props;
   function redirectToCheckOut() {
-    if(cartList !== undefined){   
-      if(cartList !== null) {
-        history.push("/checkout");
-      }
-    } 
+    if (cartList !== undefined || cartList !== undefined) {
+      openCart();
+      history.push("/checkout");
+    }
   }
+
   return (
     <div
       style={{
@@ -67,9 +66,11 @@ const Cart = (props) => {
             <Typography className={classes.totalCostText}>
               Total cost excluding shipment: {totalCost()} SEK
             </Typography>
-            <Typography className={classes.totalCostText}>
-              VAT: {totalCost() * 0.2} SEK
-            </Typography>
+            {cartList !== null && cartList !== undefined && (
+              <Typography className={classes.totalCostText}>
+                VAT: {(totalCost() * 0.2).toFixed(2)} SEK
+              </Typography>
+            )}
           </Grid>
         </div>
         <Button

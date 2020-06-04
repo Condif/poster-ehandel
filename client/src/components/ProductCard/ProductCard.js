@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import {
   Button,
@@ -7,7 +7,6 @@ import {
   CardActionArea,
   CardHeader,
   CardMedia,
-  Grid,
   TextField,
   Typography,
 } from "@material-ui/core";
@@ -26,8 +25,9 @@ const ProductCard = (props) => {
   );
 
   const handleClick = () => {
-    if (props.case !== "cart" || props.case !== "checkout")
-      return history.push(path);
+    if (props.case !== "cart" || props.case !== "checkout") {
+      history.push(path);
+    }
   };
 
   const handleAddToCart = () => {
