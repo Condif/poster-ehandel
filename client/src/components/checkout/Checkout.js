@@ -16,6 +16,7 @@ import { UserContext } from "../../Contexts/UserContext";
 import { CheckoutContext } from "../../Contexts/CheckoutContext";
 import ProductCard from "../ProductCard/ProductCard";
 import ErrorIcon from "@material-ui/icons/Error";
+import PaymentInformation from "./PaymentInformation";
 
 //styles
 import useStyles from "./CheckOutStyles";
@@ -27,7 +28,7 @@ const Checkout = () => {
     UserContext,
   );
 
-  const { validationInputs, validateInputFields, checkErrorsInInfo, setInputToState, validateInputs } = useContext(
+  const { validationInputs, validateInputFields, checkErrorsInInfo, handleInputChange } = useContext(
     CheckoutContext
   )
 
@@ -65,31 +66,6 @@ const Checkout = () => {
       return shipment[0].cost;
     }
   }
-
-  const handleInputChange = (event, id) => {
-
-    if (
-      id === 'city'
-    ) {
-      if (validateInputs(event.target.value, true)) {
-        setInputToState(event.target.value, id, true);
-      } else {
-        setInputToState(event.target.value, id, false);
-      }
-    } else if (
-      id === 'zipcode' ||
-      id === 'phoneNr'
-    )
-      if (validateInputs(event.target.value, false)) {
-        setInputToState(event.target.value, id, true);
-      } else {
-        setInputToState(event.target.value, id, false);
-      }
-    else {
-      setInputToState(event.target.value, id, true)
-    }
-  }
-
   return (
     <div className={classes.mainDiv}>
       <Container>
@@ -126,50 +102,7 @@ const Checkout = () => {
           ))}
         </RadioGroup>
       </FormControl>
-      <FormControl className={classes.containerDiv}>
-        <FormLabel className={classes.labelText}>Deliveryaddress</FormLabel>
-        <TextField
-          className={classes.containerDiv}
-          error={validationInputs.address.error}
-          variant="outlined"
-          size="small"
-          type="text"
-          required
-          label="Address"
-          inputProps={{
-            maxLength: 20,
-          }}
-          onChange={(event) => handleInputChange(event, "address")}
-        ></TextField>
-        <TextField
-          className={classes.containerDiv}
-          error={validationInputs.zipcode.error}
-          variant="outlined"
-          size="small"
-          inputProps={{
-            maxLength: 5,
-          }}
-          type="text"
-          helperText={validationInputs.zipcode.error ? "Enter 5 numbers" : null}
-          required
-          label="Zipcode"
-          onChange={(event) => handleInputChange(event, "zipcode")}
-        ></TextField>
-        <TextField
-          className={classes.containerDiv}
-          error={validationInputs.city.error}
-          variant="outlined"
-          size="small"
-          type="text"
-          inputProps={{
-            maxLength: 20,
-          }}
-          helperText={validationInputs.city.error ? "Enter letters" : null}
-          required
-          label="City"
-          onChange={(event) => handleInputChange(event, "city")}
-        ></TextField>
-      </FormControl>
+      <PaymentInformation></PaymentInformation>
       <Container className={classes.containerDiv}>
         {shipmentAlternatives.length > 0 && (
           <div style={{ width: "12rem" }}>
@@ -189,22 +122,6 @@ const Checkout = () => {
         )}
       </Container>
       <Container>
-        <FormControl className={classes.containerDiv}>
-          <FormLabel className={classes.labelText}>Swish</FormLabel>
-          <TextField
-            variant="outlined"
-            error={validationInputs.phoneNr.error}
-            size="small"
-            type="tel"
-            inputProps={{
-              maxLength: 10,
-            }}
-            helperText={validationInputs.phoneNr.error ? "Enter a valid phone number" : null}
-            required
-            label="Phone number"
-            onChange={(event) => handleInputChange(event, "phoneNr")}
-          ></TextField>
-        </FormControl>
       </Container>
       <Grid item xs={12}>
         {checkErrorsInInfo() ? (
