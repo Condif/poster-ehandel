@@ -18,6 +18,7 @@ import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
+import Orders from "./Orders/Orders"
 import { UserContext } from "../Contexts/UserContext";
 
 const Layout = () => {
@@ -87,6 +88,7 @@ const Layout = () => {
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route path="/checkout" component={Checkout} />
+              <Route path="/orders" component={Orders} />
               {/* <PrivateRoute
                   path="/adminProductPage"
                   render={(props) => <AdminProductPage products={products} />}
