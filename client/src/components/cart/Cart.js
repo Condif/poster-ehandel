@@ -20,6 +20,7 @@ const Cart = (props) => {
     clearCartAndLocalStorage,
     totalCost,
   } = useContext(UserContext);
+
   const { createSlug } = props;
   function redirectToCheckOut() {
     if((cartList !== undefined || cartList !== undefined)){   
@@ -27,6 +28,7 @@ const Cart = (props) => {
         history.push("/checkout")
     } 
   }
+
   return (
     <div
       style={{
