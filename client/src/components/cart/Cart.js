@@ -27,30 +27,9 @@ const Cart = (props) => {
   const { createSlug } = props;
 
   const redirectToCheckOut = async () => {
-    if (cartList !== undefined) {
-      if (cartList !== null) {
-        // Check if user is logged in
-        await fetch("http://localhost:8080/sessions/checkLoginSession", {
-          method: "GET",
-          credentials: "include"
-        }).then(async (response) => {
-          const data = await response.json();
-          if (data.err) {
-            // Reset user data when session has ended
-            if (userData !== "") {
-              setUser("");
-            }
-            alert(`${JSON.stringify(data.err.message).slice(1, -1)} proceeding to checkout`)
-            return;
-          }
-          if (userData.id !== data.id) {
-            console.log("hello2")
-            setUser(data);
-          }
-          authenticateUser(data);
-          history.push("/checkout");
-        })
-      }
+    if((cartList !== undefined || cartList !== undefined)){   
+      openCart()
+      history.push("/checkout")
     }
   }
 
