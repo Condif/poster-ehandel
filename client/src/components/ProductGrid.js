@@ -25,10 +25,9 @@ const Main = (props) => {
 export const renderProducts = (caseStyle, products, createSlug) => {
   return products.map((product) => {
     return (
-      <Grid item sm={6}>
+      <Grid key={product._id} item sm={6}>
         <ProductCard
           case={caseStyle}
-          key={product._id}
           product={product}
           path={`/product/${createSlug(product.name)}`}
         />
