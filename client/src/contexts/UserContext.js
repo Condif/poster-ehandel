@@ -100,15 +100,18 @@ const UserContextProvider = (props) => {
   };
 
   const setUser = (user) => {
-    if (user === "") {
+    console.log(user)
+    if (user === "" || user.success === false) {
       setUserData("");
       return;
     }
-    setUserData({
-      email: user.email,
-      role: user.role,
-      deliveryAddress: user.deliveryAddress[0],
-    });
+    if (!user.error) {
+      setUserData({
+        email: user.email,
+        role: user.role,
+        deliveryAddress: user.deliveryAddress[0],
+      });
+    }
   };
 
   function totalCost() {

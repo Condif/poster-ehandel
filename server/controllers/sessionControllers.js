@@ -60,5 +60,5 @@ exports.checkLoginSession = (req, res, next) => {
     res.json(user);
     return;
   }
-  res.json({ success: false });
+  res.json({ error: true });
 };
