@@ -78,26 +78,32 @@ const Register = () => {
         onSubmit={handleSubmit}
         onError={(errors) => console.log(errors)}
       >
-        <TextField
+        <TextValidator
           fullWidth
           variant="outlined"
           margin="normal"
           size="small"
           type="text"
           label="Name"
+          name="name"
           value={inputValues.name}
           onChange={(event) => handleInputChange(event, "name")}
-        ></TextField>
-        <TextField
+          validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
+          errorMessages={["this field is required", "only letters"]}
+        ></TextValidator>
+        <TextValidator
           fullWidth
           variant="outlined"
           margin="normal"
           size="small"
           type="text"
           label="Lastname"
+          name="lastname"
           value={inputValues.lastname}
+          validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
+          errorMessages={["this field is required", "only letters"]}
           onChange={(event) => handleInputChange(event, "lastname")}
-        ></TextField>
+        ></TextValidator>
         <TextValidator
           fullWidth
           variant="outlined"
@@ -149,16 +155,19 @@ const Register = () => {
           ]}
           errorMessages={["only numbers"]}
         />
-        <TextField
+        <TextValidator
           fullWidth
           variant="outlined"
           margin="normal"
           size="small"
           type="text"
           label="City"
+          name="city"
           value={inputValues.city}
           onChange={(event) => handleInputChange(event, "city")}
-        ></TextField>
+          validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
+          errorMessages={["this field is required", "only letters"]}
+        ></TextValidator>
         <Button
           type="submit"
           disabled={

@@ -100,7 +100,7 @@ const UserContextProvider = (props) => {
   };
 
   const setUser = (user) => {
-    console.log(user)
+    console.log(user);
     if (user === "" || user.success === false) {
       setUserData("");
       return;
@@ -115,20 +115,24 @@ const UserContextProvider = (props) => {
   };
 
   function totalCost() {
-    if ((cartList !== null || cartList !== undefined)) {
-            const totalCost = cartList.reduce((total, product) => {
+    if (cartList !== null) {
+      if (cartList !== undefined) {
+        const totalCost = cartList.reduce((total, product) => {
           return total + product.cartAmount * product.price;
         }, 0);
-      return totalCost;
-    } 
+        return totalCost;
+      }
+    }
   }
 
   function amountOfItems() {
-    if ((cartList !== null || cartList !== undefined)) {
-          const itemsAmount = cartList.reduce((amount, product) => {
-            return amount + product.cartAmount;
+    if (cartList !== null) {
+      if (cartList !== undefined) {
+        const itemsAmount = cartList.reduce((amount, product) => {
+          return amount + product.cartAmount;
         }, 0);
-     return itemsAmount;
+        return itemsAmount;
+      }
     }
   }
 
