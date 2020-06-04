@@ -14,8 +14,6 @@ const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const {
-    setUser,
-    authenticateUser,
     openCart,
     isCartOpen,
     cartList,
