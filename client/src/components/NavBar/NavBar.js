@@ -124,7 +124,6 @@ const NavBar = (props) => {
         <Categories className={classes.desktopLinks} item>
           <Hidden smUp implementation="css">
             <Drawer
-              container={container}
               variant="temporary"
               open={mobileOpen}
               onClose={handleDrawerToggle}
@@ -171,30 +170,33 @@ const NavBar = (props) => {
           >
             Edit Products
           </NavButton>
-        )}
-        <NavButton
-          aria-label="sign up"
-          onClick={() => history.push("/register")}
-        >
-          Sign up
+          <NavButton
+            aria-label="sign up"
+            onClick={() => history.push("/register")}
+          >
+            Sign up
           </NavButton>
-        <NavButton aria-label="login" onClick={() => history.push("/login")}>
-          Login
+          <NavButton aria-label="login" onClick={() => history.push("/login")}>
+            Login
           </NavButton>
-          {userData.email && {window.location.pathname !== "/checkout" ? (
-            <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-              <IconButton
-                style={{
-                  width: "4rem",
-                  color: "#333",
-                }}
-                edge="start"
-                onClick={openCart}
-              >
-                <ShoppingCartIcon />
-              </IconButton>
-            </StyledBadge>
-          )}
+          {window.location.pathname !== "/checkout" ? (
+              userData.email && (
+                <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+                  <IconButton
+                    style={{
+                      width: "4rem",
+                      color: "#333",
+                    }}
+                    edge="start"
+                    onClick={openCart}
+                  >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                </StyledBadge>
+              )
+          )
+          :
+          null}
         </Grid>
       </Toolbar>
     </NavAppBar >
