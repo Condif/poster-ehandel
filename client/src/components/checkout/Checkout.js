@@ -1,23 +1,13 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useHistory } from "react-router-dom";
-import {
-  Container,
-  Radio,
-  RadioGroup,
-  FormControlLabel,
-  FormControl,
-  FormLabel,
-  Typography,
-  Button,
-  TextField,
-  Grid,
-} from "@material-ui/core";
+import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
 import { CheckoutContext } from "../../Contexts/CheckoutContext";
 import ProductCard from "../ProductCard/ProductCard";
 import ShipmentAlternatives from "../ShipmentAlternatives/ShipmentAlternatives";
 import ErrorIcon from "@material-ui/icons/Error";
 import PaymentInformation from "./PaymentInformation";
+import TotalCost from "../TotalCost/TotalCost";
 
 //styles
 import useStyles from "./CheckOutStyles";
@@ -40,8 +30,6 @@ const Checkout = () => {
     checkErrorsInInfo,
     setInputToState,
     validateInputs,
-    shipmentAlternatives,
-    getShipmentCost,
   } = useContext(CheckoutContext);
 
   const redirectToSummery = () => {
@@ -59,26 +47,8 @@ const Checkout = () => {
         ))}
       </Container>
       <ShipmentAlternatives />
-      <PaymentInformation></PaymentInformation>
-      <Container className={classes.containerDiv}>
-        {shipmentAlternatives.length > 0 && (
-          <div style={{ width: "12rem" }}>
-            <Typography variant="h6" paragraph>
-              Total cost
-            </Typography>
-            <Typography>Items: {amountOfItems()}</Typography>
-            <Typography>Products: {totalCost()} SEK </Typography>
-            <Typography>VAT {totalCost() * 0.2} SEK</Typography>
-            <Typography className={classes.border}>
-              Shipment: {getShipmentCost()} SEK
-            </Typography>
-            <Typography className={classes.text}>
-              Totalkostnad {totalCost() + getShipmentCost()} SEK
-            </Typography>
-          </div>
-        )}
-      </Container>
-      <Container></Container>
+      <PaymentInformation />
+      <TotalCost />
       <Grid item xs={12}>
         {checkErrorsInInfo() ? (
           <div className={classes.errorMsg}>
