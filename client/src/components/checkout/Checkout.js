@@ -34,7 +34,7 @@ const Checkout = () => {
       credentials: "include"
     }).then(async (response) => {
       const data = await response.json();
-      if (!data.success) {
+      if (data.success === false) {
         // Reset user data when session has ended
         if (userData !== "") {
           setUser("");
@@ -47,6 +47,7 @@ const Checkout = () => {
         setUser(data);
       }
       authenticateUser(data);
+      history.push("/summery");
     })
   };
 

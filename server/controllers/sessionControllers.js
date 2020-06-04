@@ -50,7 +50,6 @@ exports.login = async (req, res) => {
 exports.checkLoginSession = (req, res, next) => {
   let user;
   if (req.session.id && req.session.id !== undefined) {
-    console.log(req.session.id)
     user = {
       email: req.session.email,
       role: req.session.role,
