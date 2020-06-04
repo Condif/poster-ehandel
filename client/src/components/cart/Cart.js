@@ -14,6 +14,8 @@ const Cart = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const {
+    setUser,
+    authenticateUser,
     openCart,
     isCartOpen,
     cartList,
@@ -24,7 +26,25 @@ const Cart = (props) => {
   function redirectToCheckOut() {
     if(cartList !== undefined){   
       if(cartList !== null) {
-        history.push("/checkout")
+ 
+    const checkLoginSession = () => {
+      fetch("http://localhost:8080/sessions/checkLoginSession", {
+        method: "GET",
+        credentials: "include"
+      }).then(async (response) => {
+        if (response.status === 200) {
+          const dataFromBackend = await response.json();
+          setUser(dataFromBackend);
+          authenticateUser(dataFromBackend);
+          history.push("/checkout");
+        }
+        if (response.status === 403) {
+          let messageResponse = await response.json();
+          console.log(JSON.stringify(messageResponse))
+          alert(JSON.stringify(messageResponse.err.login + "checkout"));
+        }
+      })
+    }
       }
     } 
   }

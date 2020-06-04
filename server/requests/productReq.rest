@@ -14,19 +14,19 @@ Content-Disposition: form-data; name="productBody"
 Content-Type: application/json
 
 {
-    "price": "229",
-    "name": "Sea Shore of Maldives",
-    "category": "Sea",
-    "description": "The deep blue water on the shore of the Maldives",
-    "inventory": "8",
+    "price": "279",
+    "name": "Mountains at Dusk",
+    "category": "Mountains",
+    "description": "A snow-covered mountain surrounded by pine trees",
+    "inventory": "5",
     "cartAmount": "0"
 }
 
 --FormDataRow
-Content-Disposition: form-data; name="image"; filename="splash.jpg"
+Content-Disposition: form-data; name="image"; filename="mountain-forest.jpg"
 Content-Type: image/jpeg
 
-< ./splash.jpg
+< ./mountain-forest.jpg
 
 --FormDataRow--
 

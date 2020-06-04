@@ -74,7 +74,6 @@ exports.getImageById = async (req, res, imageId) => {
 
     // End response when stream has finished
     downloadStream.on('end', () => {
-        console.log("Finished streaming image to client");
         res.end();
     });
 }
