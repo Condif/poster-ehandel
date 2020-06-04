@@ -10,9 +10,13 @@ import {
   Typography,
   Button,
   TextField,
+  Grid,
 } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
+import { CheckoutContext } from "../../Contexts/CheckoutContext";
 import ProductCard from "../ProductCard/ProductCard";
+import ErrorIcon from "@material-ui/icons/Error";
+import PaymentInformation from "./PaymentInformation";
 
 //styles
 import useStyles from "./CheckOutStyles";
@@ -20,34 +24,27 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { userData, cartList, totalCost, amountOfItems } = useContext(
-    UserContext
+  const { cartList, totalCost, amountOfItems } = useContext(
+    UserContext,
   );
 
+  const { validationInputs, validateInputFields, checkErrorsInInfo, handleInputChange } = useContext(
+    CheckoutContext
+  )
+
+
   const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
-  const [inputValues, setInputValues] = useState({
-    choosenShipment: "DHL",
-    phoneNr: "",
-    // address: userData.deliveryAddress.address,
-    // zipcode: userData.deliveryAddress.zipcode,
-    // city: userData.deliveryAddress.city,
-  });
 
   useEffect(() => {
     getShipmentAlternatives();
     // totalCost();
   }, []);
 
-  function handleChange(event, anchor) {
-    setInputValues({
-      ...inputValues,
-      [anchor]: event.target.value,
-    });
-  }
-
   const redirectToSummery = () => {
-    history.push("/summery");
-    console.log(inputValues, "här är värdena");
+    const validated = validateInputFields()
+    if (validated) {
+      history.push("/summery");
+    }
   };
 
   function getShipmentAlternatives() {
@@ -62,15 +59,13 @@ const Checkout = () => {
 
   function getShipmentCost() {
     const shipment = shipmentAlternatives.filter((currentShipment) => {
-      console.log(currentShipment, "nuvarande skeppning");
-      return currentShipment.alternative === inputValues.choosenShipment;
+      return currentShipment.alternative === validationInputs.choosenShipment.value;
     });
 
     if (!shipmentAlternatives.length == 0) {
       return shipment[0].cost;
     }
   }
-
   return (
     <div className={classes.mainDiv}>
       <Container>
@@ -78,7 +73,6 @@ const Checkout = () => {
           <ProductCard
             case="checkout"
             product={product}
-            // handleChange={handleChange}
           ></ProductCard>
         ))}
       </Container>
@@ -90,8 +84,8 @@ const Checkout = () => {
           className={classes.containerDiv}
           aria-label="ShippingAlternative"
           name="shipping1"
-          value={inputValues.choosenShipment}
-          onChange={(event) => handleChange(event, "choosenShipment")}
+          value={validationInputs.choosenShipment.value}
+          onChange={(event) => handleInputChange(event, "choosenShipment")}
         >
           {shipmentAlternatives.map((shipment, index) => (
             <div key={index} className={classes.containerDiv}>
@@ -108,39 +102,7 @@ const Checkout = () => {
           ))}
         </RadioGroup>
       </FormControl>
-      {/* <FormControl className={classes.containerDiv}>
-        <FormLabel className={classes.labelText}>Deliveryaddress</FormLabel>
-        <TextField
-          className={classes.containerDiv}
-          variant="outlined"
-          size="small"
-          type="text"
-          required
-          label="Address"
-          value={inputValues.address}
-          onChange={(event) => handleChange(event, "address")}
-        ></TextField>
-        <TextField
-          className={classes.containerDiv}
-          variant="outlined"
-          size="small"
-          type="text"
-          required
-          label="Zipcode"
-          value={inputValues.zipcode}
-          onChange={(event) => handleChange(event, "zipcode")}
-        ></TextField>
-        <TextField
-          className={classes.containerDiv}
-          variant="outlined"
-          size="small"
-          type="text"
-          required
-          label="City"
-          value={inputValues.city}
-          onChange={(event) => handleChange(event, "city")}
-        ></TextField>
-      </FormControl> */}
+      <PaymentInformation></PaymentInformation>
       <Container className={classes.containerDiv}>
         {shipmentAlternatives.length > 0 && (
           <div style={{ width: "12rem" }}>
@@ -160,27 +122,18 @@ const Checkout = () => {
         )}
       </Container>
       <Container>
-        <FormControl className={classes.containerDiv}>
-          <FormLabel className={classes.labelText}>Swish</FormLabel>
-          <TextField
-            variant="outlined"
-            size="small"
-            type="tel"
-            required
-            label="Phone number"
-            value={inputValues.phoneNr}
-            onChange={(event) => handleChange(event, "phoneNr")}
-          ></TextField>
-        </FormControl>
       </Container>
+      <Grid item xs={12}>
+        {checkErrorsInInfo() ? (
+          <div className={classes.errorMsg}>
+            <ErrorIcon fontSize="small" />
+            <Typography variant="body2" align="center">
+              Error in "Your Information"
+                  </Typography>
+          </div>
+        ) : null}
+      </Grid>
       <Button
-        disabled={
-          !inputValues.choosenShipment ||
-          !inputValues.phoneNr ||
-          !inputValues.address ||
-          !inputValues.zipcode ||
-          !inputValues.city
-        }
         className={classes.submitButton}
         variant="contained"
         color="primary"

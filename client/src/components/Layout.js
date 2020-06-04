@@ -88,10 +88,31 @@ const Layout = () => {
                       path={`/product/${createSlug(product.name)}`}
                     >
                       <ProductCard
+                        case={"productview"}
                         product={product}
                         path={`/product/${createSlug(product.name)}`}
                       />
                     </Route>
+                  );
+                })}
+              {/* Get routes for category pages */}
+              {products !== null &&
+                products.length !== 0 &&
+                products &&
+                getCategories(products).map((category) => {
+                  return (
+                    <Route
+                      exact
+                      key={category}
+                      path={`/category/${createSlug(category)}`}
+                      render={() => (
+                        <CategoryPage
+                          createSlug={createSlug}
+                          products={products}
+                          category={category}
+                        />
+                      )}
+                    />
                   );
                 })}
               {/* Get routes for category pages */}
