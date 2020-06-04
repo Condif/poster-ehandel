@@ -14,11 +14,11 @@ router.get('/checkLoginSession', controller.checkLoginSession)
 router.post('/login', controller.findUserByName, controller.login)
 
 //If delete '/logout', process logout
-router.delete('/logout', (req, res) => {
-    req.session = null
+router.post('/logout', (req, res) => {
+    res.clearCookie('LoginSession')
+    res.clearCookie('LoginSession.sig')
     console.log('Destroyed client session');
-    
-    res.json('Logged out!')
+    res.json({ success: true })
 })
 
 module.exports = router;

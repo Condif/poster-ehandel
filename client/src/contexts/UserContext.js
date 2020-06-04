@@ -100,8 +100,7 @@ const UserContextProvider = (props) => {
   };
 
   const setUser = (user) => {
-    console.log(user);
-    if (user === "" || user.success === false) {
+    if (user === "" || user.error) {
       setUserData("");
       return;
     }
