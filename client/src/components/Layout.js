@@ -31,7 +31,6 @@ const Layout = () => {
     }
     getProducts();
     checkLoginSession()
-    console.log(window.location.pathname)
     console.log(userData)
     // checkLoginSession()
   }, []);
@@ -58,19 +57,14 @@ const Layout = () => {
       method: "GET",
       credentials: "include"
     }).then(async (response) => {
-      if (response.status === 200) {
-        const dataFromBackend = await response.json();
-        console.log(JSON.stringify(dataFromBackend))
-        setUser(dataFromBackend);
-        authenticateUser(dataFromBackend);
+      const data = await response.json();
+      if (data.err) {
+        return;
       }
-      if (response.status === 403) {
-        let messageResponse = await response.json();
-        alert(JSON.stringify(messageResponse.err.login));
-      }
+      setUser(data);
+      authenticateUser(data);
     })
   }
-
 
   return (
     <Router>

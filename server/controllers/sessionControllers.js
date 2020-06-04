@@ -48,7 +48,6 @@ exports.login = async (req, res) => {
 };
 // console.log(window.location.pathname)
 exports.checkLoginSession = async (req, res, next) => {
-  console.log("reached")
   let user;
   if (req.session.id) {
     user = {
@@ -57,12 +56,8 @@ exports.checkLoginSession = async (req, res, next) => {
       deliveryAddress: req.session.deliveryAddress,
     };
     res.session = user;
-    res.json(user)
-    // next();
+    res.json(user);
   } else {
-    
-    console.log("reached2")
     res.json({ err: { login: "Please sign in before " } });
   }
-  // res.json(res.session);
 };
