@@ -114,14 +114,15 @@ const NavBar = (props) => {
       method: "POST",
       credentials: "include"
     }).then(response => response.json())
-    .then(data => {
-      if (data.success) {
-        setUser("");
-        alert("You have been logged out");
-        if (window.location.pathname !== "/") {
-          history.push("/");
+      .then(data => {
+        if (data.success) {
+          setUser("");
+          alert("You have been logged out");
+          if (window.location.pathname !== "/") {
+            history.push("/");
+          }
         }
-      }})
+      })
   }
 
   return (
@@ -170,7 +171,7 @@ const NavBar = (props) => {
           })}
         </Categories>
 
-        <Grid justifycontent="flex-end" item>  
+        <Grid justifycontent="flex-end" item>
           {userData.role === "admin" ? (
             <>
               <NavButton
@@ -179,25 +180,34 @@ const NavBar = (props) => {
               >
                 See all orders
             </NavButton>
-            <NavButton
-              className={classes.desktopLinks}
-              aria-label="edit products"
-              onClick={() => history.push("/adminProductPage")}
-            >
-              Edit Products
+              <NavButton
+                className={classes.desktopLinks}
+                aria-label="edit products"
+                onClick={() => history.push("/adminProductPage")}
+              >
+                Edit Products
             </NavButton>
-          )}
-          {userData === "" &&
+            </>
+          )
+            :
+            null
+          }
+          {userData === "" ? (
+            <>
             <NavButton
               aria-label="sign up"
               onClick={() => history.push("/register")}
             >
               Sign up
           </NavButton>
-          }
-          <NavButton aria-label="login" onClick={() => history.push("/login")}>
-            Login
+              <NavButton aria-label="login" onClick={() => history.push("/login")}>
+                Login
           </NavButton>
+            </>
+          )
+            :
+            null
+          }
           {userData !== "" &&
             <NavButton
               aria-label="log out"
