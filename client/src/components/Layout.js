@@ -61,64 +61,82 @@ const Layout = () => {
               categories={getCategories(products)}
             />
           </Grid>
-          <Container style={{ marginTop: "8px" }} maxWidth="md">
-            <Paper>
-              <Switch>
-                <Route exact path="/">
-                  <ProductGrid products={products} createSlug={createSlug} />
-                </Route>
-                <Route path="/login" component={Login} />
-                <Route path="/register" component={Register} />
-                <Route path="/checkout" component={Checkout} />
-                {/* <PrivateRoute
+          <Container style={{ marginTop: "20px" }} maxWidth="md">
+            <Switch>
+              <Route exact path="/">
+                <ProductGrid products={products} createSlug={createSlug} />
+              </Route>
+              <Route path="/login" component={Login} />
+              <Route path="/register" component={Register} />
+              <Route path="/checkout" component={Checkout} />
+              {/* <PrivateRoute
                   path="/adminProductPage"
                   render={(props) => <AdminProductPage products={products} />}
                 /> */}
-                <PrivateRoute path="/adminProductPage">
-                  <AdminProductPage products={products} />
-                </PrivateRoute>
-                {/* Get routes for each product */}
-                {products !== null &&
-                  products.length !== 0 &&
-                  products &&
-                  products.map((product) => {
-                    return (
-                      <Route
-                        exact
-                        key={product._id}
+              <PrivateRoute path="/adminProductPage">
+                <AdminProductPage products={products} />
+              </PrivateRoute>
+              {/* Get routes for each product */}
+              {products !== null &&
+                products.length !== 0 &&
+                products &&
+                products.map((product) => {
+                  return (
+                    <Route
+                      exact
+                      key={product._id}
+                      path={`/product/${createSlug(product.name)}`}
+                    >
+                      <ProductCard
+                        case={"productview"}
+                        product={product}
                         path={`/product/${createSlug(product.name)}`}
-                      >
-                        <ProductCard
-                          case={'productview'}
-                          product={product}
-                          path={`/product/${createSlug(product.name)}`}
-                        />
-                      </Route>
-                    );
-                  })}
-                {/* Get routes for category pages */}
-                {products !== null &&
-                  products.length !== 0 &&
-                  products &&
-                  getCategories(products).map((category) => {
-                    return (
-                      <Route
-                        exact
-                        key={category}
-                        path={`/category/${createSlug(category)}`}
-                        render={() => (
-                          <CategoryPage
-                            createSlug={createSlug}
-                            products={products}
-                            category={category}
-                          />
-                        )}
                       />
-                    );
-                  })}
-                {/* <Route exact path="/orders" component={UserOrders} /> */}
-              </Switch>
-            </Paper>
+                    </Route>
+                  );
+                })}
+              {/* Get routes for category pages */}
+              {products !== null &&
+                products.length !== 0 &&
+                products &&
+                getCategories(products).map((category) => {
+                  return (
+                    <Route
+                      exact
+                      key={category}
+                      path={`/category/${createSlug(category)}`}
+                      render={() => (
+                        <CategoryPage
+                          createSlug={createSlug}
+                          products={products}
+                          category={category}
+                        />
+                      )}
+                    />
+                  );
+                })}
+              {/* Get routes for category pages */}
+              {products !== null &&
+                products.length !== 0 &&
+                products &&
+                getCategories(products).map((category) => {
+                  return (
+                    <Route
+                      exact
+                      key={category}
+                      path={`/category/${createSlug(category)}`}
+                      render={() => (
+                        <CategoryPage
+                          createSlug={createSlug}
+                          products={products}
+                          category={category}
+                        />
+                      )}
+                    />
+                  );
+                })}
+              {/* <Route exact path="/orders" component={UserOrders} /> */}
+            </Switch>
           </Container>
         </Grid>
       </div>

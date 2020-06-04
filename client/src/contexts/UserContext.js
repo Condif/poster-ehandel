@@ -107,24 +107,20 @@ const UserContextProvider = (props) => {
     });
   };
 
-  // Logga in
-  // Logga ut
-  // Se senaste beställning
-
   function totalCost() {
     if (cartList !== null) {
-      if(cartList !== undefined) {
+      if (cartList !== undefined) {
         const totalCost = cartList.reduce((total, product) => {
           return total + product.cartAmount * product.price;
         }, 0);
         return totalCost;
-      } 
+      }
     }
   }
 
   function amountOfItems() {
     if (cartList !== null) {
-      if(cartList !== undefined) {
+      if (cartList !== undefined) {
         const itemsAmount = cartList.reduce((amount, product) => {
           return amount + product.cartAmount;
         }, 0);
