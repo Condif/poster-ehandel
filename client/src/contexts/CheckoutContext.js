@@ -25,6 +25,28 @@ const CheckoutContextProvider = (props) => {
         } 
 
     })
+    const handleInputChange = (event, id) => {
+        if (
+          id === 'city'
+        ) {
+          if (validateInputs(event.target.value, true)) {
+            setInputToState(event.target.value, id, true);
+          } else {
+            setInputToState(event.target.value, id, false);
+          }
+        } else if (
+          id === 'zipcode' ||
+          id === 'phoneNr'
+        )
+          if (validateInputs(event.target.value, false)) {
+            setInputToState(event.target.value, id, true);
+          } else {
+            setInputToState(event.target.value, id, false);
+          }
+        else {
+          setInputToState(event.target.value, id, true)
+        }
+      }
 
     const validateInputFields = () => {
         let shouldProgress = true
@@ -88,6 +110,7 @@ const CheckoutContextProvider = (props) => {
             value={{
                 validationInputs,
 
+                handleInputChange,
                 validateInputFields,
                 checkErrorsInInfo,
                 setInputToState,
