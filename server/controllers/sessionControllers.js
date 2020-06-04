@@ -61,5 +61,5 @@ exports.checkLoginSession = (req, res, next) => {
     res.json(user);
     return;
   }
-  res.json({ err: { message: "Please sign in before" } });
+  res.json({ success: false });
 };

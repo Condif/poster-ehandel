@@ -15,7 +15,7 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList } = useContext(UserContext);
+  const { cartList, userData, setUser, authenticateUser } = useContext(UserContext);
 
   const {
     validateInputFields,
@@ -25,8 +25,29 @@ const Checkout = () => {
   const redirectToSummery = () => {
     const validated = validateInputFields();
     if (validated) {
-      history.push("/summery");
+      
     }
+
+
+    fetch("http://localhost:8080/sessions/checkLoginSession", {
+      method: "GET",
+      credentials: "include"
+    }).then(async (response) => {
+      const data = await response.json();
+      if (!data.success) {
+        // Reset user data when session has ended
+        if (userData !== "") {
+          setUser("");
+        }
+        alert(`You need to be a member to make a purchase.
+          Would you like to sign up?`)
+        return;
+      }
+      if (userData.id !== data.id) {
+        setUser(data);
+      }
+      authenticateUser(data);
+    })
   };
 
   return (
