@@ -66,9 +66,11 @@ const Cart = (props) => {
             <Typography className={classes.totalCostText}>
               Total cost excluding shipment: {totalCost()} SEK
             </Typography>
-            <Typography className={classes.totalCostText}>
-              VAT: {totalCost() * 0.2} SEK
-            </Typography>
+            {cartList !== null && cartList !== undefined && (
+              <Typography className={classes.totalCostText}>
+                VAT: {(totalCost() * 0.2).toFixed(2)} SEK
+              </Typography>
+            )}
           </Grid>
         </div>
         <Button

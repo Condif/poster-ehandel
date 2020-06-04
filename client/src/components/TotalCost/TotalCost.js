@@ -20,7 +20,7 @@ const TotalCost = () => {
           </Typography>
           <Typography>Items: {amountOfItems()}</Typography>
           <Typography>Products: {totalCost()} SEK </Typography>
-          <Typography>VAT {totalCost() * 0.2} SEK</Typography>
+          <Typography>VAT {(totalCost() * 0.2).toFixed(2)} SEK</Typography>
           <Typography className={classes.border}>
             Shipment: {getShipmentCost()} SEK
           </Typography>
