@@ -25,8 +25,8 @@ const ProductCard = (props) => {
   );
 
   const handleClick = () => {
-    if (!props.case === "cart" || !props.case === "checkout") {
-      return history.push(path);
+    if (props.case !== "cart" || props.case !== "checkout") {
+      history.push(path);
     }
   };
 
