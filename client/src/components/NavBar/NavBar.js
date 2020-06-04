@@ -117,8 +117,10 @@ const NavBar = (props) => {
     .then(data => {
       if (data.success) {
         setUser("");
-        alert(JSON.stringify(data));
-        history.push("/");
+        alert("You have been logged out");
+        if (window.location.pathname !== "/") {
+          history.push("/");
+        }
       }})
   }
 
