@@ -16,6 +16,9 @@ const useStyles = makeStyles({
     paddingTop: "30%",
     paddingLeft: "22%",
   },
+  cartDisplay: {
+    display: "flex",
+  },
 });
 
 export default useStyles;

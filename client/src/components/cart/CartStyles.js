@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(0, 4),
   },
   listWrapper: {
+    padding: "1rem",
     position: "relative",
     height: "calc(100% - 5rem)",
     top: "4rem",

@@ -36,10 +36,12 @@ const ProductCard = (props) => {
 
   return (
     <Card style={{ height: "100%" }}>
-      <CardActionArea onClick={handleClick}>
+      <CardActionArea
+        className={props.case === "cart" ? classes.cartDisplay : null}
+        onClick={handleClick}
+      >
         <CardMedia
           className={props.case === "cart" ? classes.cartmedia : classes.media}
-          // className={classes.media}
           image={`http://localhost:8080/api/image/product/${product._id}`}
         />
         <CardHeader
@@ -56,15 +58,15 @@ const ProductCard = (props) => {
         ) : null}
         {props.case === "cart" || props.case === "checkout"
           ? product.cartAmount > 1 && (
-              <Typography>{product.cartAmount} items</Typography>
+              <Typography>{product.cartAmount} items&nbsp;</Typography>
             )
           : null}
         {props.case === "cart" || props.case === "checkout"
           ? product.cartAmount === 1 && (
-              <Typography>{product.cartAmount} item</Typography>
+              <Typography>{product.cartAmount} item&nbsp;</Typography>
             )
           : null}
-        <Typography>{product.price}SEK</Typography>
+        <Typography>á {product.price} SEK</Typography>
       </CardActionArea>
       <CardActions>
         {props.case === "main" ? (
