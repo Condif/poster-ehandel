@@ -15,6 +15,7 @@ import {
 import { UserContext } from "../../Contexts/UserContext";
 import { CheckoutContext } from "../../Contexts/CheckoutContext";
 import ProductCard from "../ProductCard/ProductCard";
+import ShipmentAlternatives from "../ShipmentAlternatives/ShipmentAlternatives";
 import ErrorIcon from "@material-ui/icons/Error";
 
 //styles
@@ -23,109 +24,51 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList, totalCost, amountOfItems } = useContext(
-    UserContext,
-  );
+  const { cartList, totalCost, amountOfItems } = useContext(UserContext);
 
-  const { validationInputs, validateInputFields, checkErrorsInInfo, setInputToState, validateInputs } = useContext(
-    CheckoutContext
-  )
-
-
-  const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
-
-  useEffect(() => {
-    getShipmentAlternatives();
-    // totalCost();
-  }, []);
+  const {
+    validationInputs,
+    validateInputFields,
+    checkErrorsInInfo,
+    setInputToState,
+    validateInputs,
+    shipmentAlternatives,
+    getShipmentCost,
+  } = useContext(CheckoutContext);
 
   const redirectToSummery = () => {
-    const validated = validateInputFields()
+    const validated = validateInputFields();
     if (validated) {
       history.push("/summery");
     }
   };
 
-  function getShipmentAlternatives() {
-    fetch("http://localhost:8080/api/shipments", {
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((shipmentAlternatives) => {
-        setShipmentAlternatives(shipmentAlternatives);
-      });
-  }
-
-  function getShipmentCost() {
-    const shipment = shipmentAlternatives.filter((currentShipment) => {
-      return currentShipment.alternative === validationInputs.choosenShipment.value;
-    });
-
-    if (!shipmentAlternatives.length == 0) {
-      return shipment[0].cost;
-    }
-  }
-
   const handleInputChange = (event, id) => {
-
-    if (
-      id === 'city'
-    ) {
+    if (id === "city") {
       if (validateInputs(event.target.value, true)) {
         setInputToState(event.target.value, id, true);
       } else {
         setInputToState(event.target.value, id, false);
       }
-    } else if (
-      id === 'zipcode' ||
-      id === 'phoneNr'
-    )
+    } else if (id === "zipcode" || id === "phoneNr")
       if (validateInputs(event.target.value, false)) {
         setInputToState(event.target.value, id, true);
       } else {
         setInputToState(event.target.value, id, false);
       }
     else {
-      setInputToState(event.target.value, id, true)
+      setInputToState(event.target.value, id, true);
     }
-  }
+  };
 
   return (
     <div className={classes.mainDiv}>
       <Container>
         {cartList.map((product) => (
-          <ProductCard
-            case="checkout"
-            product={product}
-          ></ProductCard>
+          <ProductCard case="checkout" product={product}></ProductCard>
         ))}
       </Container>
-      <FormControl>
-        <FormLabel className={classes.labelText}>
-          Shipping Alternatives
-        </FormLabel>
-        <RadioGroup
-          className={classes.containerDiv}
-          aria-label="ShippingAlternative"
-          name="shipping1"
-          value={validationInputs.choosenShipment.value}
-          onChange={(event) => handleInputChange(event, "choosenShipment")}
-        >
-          {shipmentAlternatives.map((shipment, index) => (
-            <div key={index} className={classes.containerDiv}>
-              <FormControlLabel
-                value={shipment.alternative}
-                control={<Radio />}
-                label={shipment.alternative}
-              />
-              <Typography>Price: {shipment.cost} kr</Typography>
-              <Typography>
-                Deliverytime: {shipment.deliveryTime} days
-              </Typography>
-            </div>
-          ))}
-        </RadioGroup>
-      </FormControl>
+      <ShipmentAlternatives />
       <FormControl className={classes.containerDiv}>
         <FormLabel className={classes.labelText}>Deliveryaddress</FormLabel>
         <TextField
@@ -199,7 +142,11 @@ const Checkout = () => {
             inputProps={{
               maxLength: 10,
             }}
-            helperText={validationInputs.phoneNr.error ? "Enter a valid phone number" : null}
+            helperText={
+              validationInputs.phoneNr.error
+                ? "Enter a valid phone number"
+                : null
+            }
             required
             label="Phone number"
             onChange={(event) => handleInputChange(event, "phoneNr")}
@@ -212,7 +159,7 @@ const Checkout = () => {
             <ErrorIcon fontSize="small" />
             <Typography variant="body2" align="center">
               Error in "Your Information"
-                  </Typography>
+            </Typography>
           </div>
         ) : null}
       </Grid>
