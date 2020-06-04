@@ -24,6 +24,7 @@ const getProducts = ({ category, products }) => {
     if (product.category === category) {
       categoryProducts.push(product);
     }
+    return categoryProducts
   });
   return categoryProducts;
 };
