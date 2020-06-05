@@ -58,12 +58,13 @@ const NavBar = (props) => {
 
   const [mobileOpen, setMobileOpen] = React.useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
-  const { openCart, userData, amountOfItems, setUser } = useContext(UserContext);
+  const { openCart, userData, amountOfItems, setUser } = useContext(
+    UserContext
+  );
 
   const handleDrawerToggle = (props) => {
     setMobileOpen(!mobileOpen);
   };
-
 
   const drawer = (
     <div className={classes.drawer}>
@@ -112,9 +113,10 @@ const NavBar = (props) => {
   const logout = async () => {
     await fetch("http://localhost:8080/sessions/logout", {
       method: "POST",
-      credentials: "include"
-    }).then(response => response.json())
-      .then(data => {
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => {
         if (data.success) {
           setUser("");
           alert("You have been logged out");
@@ -122,8 +124,8 @@ const NavBar = (props) => {
             history.push("/");
           }
         }
-      })
-  }
+      });
+  };
 
   return (
     <NavAppBar position="static">
@@ -179,63 +181,56 @@ const NavBar = (props) => {
                 onClick={() => history.push("/orders")}
               >
                 See all orders
-            </NavButton>
+              </NavButton>
               <NavButton
                 className={classes.desktopLinks}
                 aria-label="edit products"
                 onClick={() => history.push("/adminProductPage")}
               >
                 Edit Products
-            </NavButton>
+              </NavButton>
             </>
-          )
-            :
-            null
-          }
+          ) : null}
           {userData === "" ? (
             <>
-            <NavButton
-              aria-label="sign up"
-              onClick={() => history.push("/register")}
-            >
-              Sign up
-          </NavButton>
-              <NavButton aria-label="login" onClick={() => history.push("/login")}>
+              <NavButton
+                aria-label="sign up"
+                onClick={() => history.push("/register")}
+              >
+                Sign up
+              </NavButton>
+              <NavButton
+                aria-label="login"
+                onClick={() => history.push("/login")}
+              >
                 Login
-          </NavButton>
+              </NavButton>
             </>
-          )
-            :
-            null
-          }
-          {userData !== "" &&
-            <NavButton
-              aria-label="log out"
-              onClick={logout}
-            >
+          ) : null}
+          {userData !== "" && (
+            <NavButton aria-label="log out" onClick={logout}>
               Logout
-            </NavButton>}
-          {window.location.pathname !== "/checkout" ? (
-            userData.email && (
-              <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-                <IconButton
-                  style={{
-                    width: "4rem",
-                    color: "#333",
-                  }}
-                  edge="start"
-                  onClick={openCart}
-                >
-                  <ShoppingCartIcon />
-                </IconButton>
-              </StyledBadge>
-            )
-          )
-            :
-            null}
+            </NavButton>
+          )}
+          {window.location.pathname !== "/checkout"
+            ? userData.email && (
+                <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+                  <IconButton
+                    style={{
+                      width: "4rem",
+                      color: "#333",
+                    }}
+                    edge="start"
+                    onClick={openCart}
+                  >
+                    <ShoppingCartIcon />
+                  </IconButton>
+                </StyledBadge>
+              )
+            : null}
         </Grid>
       </Toolbar>
-    </NavAppBar >
+    </NavAppBar>
   );
 };
 
