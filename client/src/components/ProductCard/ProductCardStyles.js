@@ -20,10 +20,16 @@ const useStyles = makeStyles((theme) => ({
     paddingLeft: "22%",
   },
   productpagemedia: {
-    width: "0px",
-    paddingTop: "100%",
-    paddingLeft: "70%",
-    margin: "0 auto",
+    [theme.breakpoints.up("sm")]: {
+      width: "0px",
+      paddingTop: "100%",
+      paddingLeft: "70%",
+      margin: "0 auto",
+    },
+    [theme.breakpoints.down("sm")]: {
+      height: 0,
+      paddingTop: "130%",
+    },
   },
   cartDisplay: {
     display: "flex",
