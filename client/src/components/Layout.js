@@ -66,8 +66,7 @@ const Layout = () => {
           props.children
         ) : (
           <>
-            {/* {alert("Please log in")} */}
-            <Redirect to="/" />
+            <Redirect to="/login" />
           </>
         )
       }
