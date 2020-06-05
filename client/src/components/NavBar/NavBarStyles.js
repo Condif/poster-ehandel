@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
+    color: "white",
     marginRight: theme.spacing(2),
     [theme.breakpoints.up("md")]: {
       display: "none",

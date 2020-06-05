@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ProductCard from "../ProductCard/ProductCard";
+import Grid from "@material-ui/core/Grid";
 
 export default function UpdateInventory(props) {
   const [inputValues, setInputValues] = useState({
@@ -37,11 +38,13 @@ export default function UpdateInventory(props) {
   }
 
   return (
-    <ProductCard
-      case="updateInventory"
-      product={product}
-      updateProduct={updateProduct}
-      handleChange={handleChange}
-    ></ProductCard>
+    <Grid key={product._id} item sm={4}>
+      <ProductCard
+        case="updateInventory"
+        product={product}
+        updateProduct={updateProduct}
+        handleChange={handleChange}
+      ></ProductCard>
+    </Grid>
   );
 }
