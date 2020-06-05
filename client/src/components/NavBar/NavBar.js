@@ -138,7 +138,7 @@ const NavBar = (props) => {
 
   return (
     <>
-{hasError.error && <AlertMessage type="success">{hasError.message}</AlertMessage>}
+      {hasError.error && <AlertMessage type="success">{hasError.message}</AlertMessage>}
       <NavAppBar position="static">
         <Toolbar className={classes.toolbar}>
           <IconButton
@@ -184,47 +184,47 @@ const NavBar = (props) => {
             })}
           </Categories>
 
-        <Grid justifycontent="flex-end" item>
-          {userData.role === "admin" ? (
-            <>
-              <NavButton
-                aria-label="orders"
-                onClick={() => history.push("/orders")}
-              >
-                See all orders
+          <Grid justifycontent="flex-end" item>
+            {userData.role === "admin" ? (
+              <>
+                <NavButton
+                  aria-label="orders"
+                  onClick={() => history.push("/orders")}
+                >
+                  See all orders
               </NavButton>
-              <NavButton
-                className={classes.desktopLinks}
-                aria-label="edit products"
-                onClick={() => history.push("/adminProductPage")}
-              >
-                Edit Products
+                <NavButton
+                  className={classes.desktopLinks}
+                  aria-label="edit products"
+                  onClick={() => history.push("/adminProductPage")}
+                >
+                  Edit Products
               </NavButton>
-            </>
-          ) : null}
-          {userData === "" ? (
-            <>
-              <NavButton
-                aria-label="sign up"
-                onClick={() => history.push("/register")}
-              >
-                Sign up
+              </>
+            ) : null}
+            {userData === "" ? (
+              <>
+                <NavButton
+                  aria-label="sign up"
+                  onClick={() => history.push("/register")}
+                >
+                  Sign up
               </NavButton>
-              <NavButton
-                aria-label="login"
-                onClick={() => history.push("/login")}
-              >
-                Login
+                <NavButton
+                  aria-label="login"
+                  onClick={() => history.push("/login")}
+                >
+                  Login
               </NavButton>
-            </>
-          ) : null}
-          {userData !== "" && (
-            <NavButton aria-label="log out" onClick={logout}>
-              Logout
-            </NavButton>
-          )}
-          {window.location.pathname !== "/checkout"
-            ? userData.email && (
+              </>
+            ) : null}
+            {userData !== "" && (
+              <NavButton aria-label="log out" onClick={logout}>
+                Logout
+              </NavButton>
+            )}
+            {window.location.pathname !== "/checkout"
+              ? userData.email && (
                 <StyledBadge color="secondary" badgeContent={amountOfItems()}>
                   <IconButton
                     style={{
@@ -238,10 +238,11 @@ const NavBar = (props) => {
                   </IconButton>
                 </StyledBadge>
               )
-            : null}
-        </Grid>
-      </Toolbar>
-    </NavAppBar>
+              : null}
+          </Grid>
+        </Toolbar>
+      </NavAppBar>
+    </>
   );
 };
 
