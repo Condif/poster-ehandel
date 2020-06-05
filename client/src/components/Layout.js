@@ -23,9 +23,7 @@ import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
 
 const Layout = () => {
-  const { setUser, userData, authenticateUser, isAuthenticated } = useContext(
-    UserContext
-  );
+  const { setUser, isAdmin, userData } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
 
@@ -44,7 +42,9 @@ const Layout = () => {
     <Route
       path={props.path}
       render={() =>
-        isAuthenticated.isAuthenticated === true ? (
+        fetchingUserData === true ? (
+          <p>Loading</p>
+        ) : isAdmin() ? (
           props.children
         ) : (
           <>
@@ -62,11 +62,11 @@ const Layout = () => {
       render={() =>
         fetchingUserData === true ? (
           <p>Loading</p>
-        ) : fetchingUserData === false && userData ? (
+        ) : userData ? (
           props.children
         ) : (
           <>
-            {alert("Please log in")}
+            {/* {alert("Please log in")} */}
             <Redirect to="/" />
           </>
         )
@@ -75,20 +75,21 @@ const Layout = () => {
   );
 
   const checkLoginSession = () => {
+    setfetchingUserData(true);
     fetch("http://localhost:8080/sessions/checkLoginSession", {
       method: "GET",
       credentials: "include",
     }).then(async (response) => {
       const data = await response.json();
       if (data.error) {
+        setfetchingUserData(false);
         return;
       }
       // setisUserLoggedIn(true);
-
       setUser(data);
-      authenticateUser(data);
+      // authenticateUser(data);
+      setfetchingUserData(false);
     });
-    setfetchingUserData(false);
   };
 
   return (

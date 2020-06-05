@@ -4,7 +4,6 @@ export const UserContext = createContext();
 const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [userData, setUserData] = useState("");
-  const [isAuthenticated, setAuthentication] = useState(false);
   // CartStates
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem("products" || []))
@@ -91,12 +90,8 @@ const UserContextProvider = (props) => {
     setIsCartOpen(!isCartOpen);
   };
 
-  const authenticateUser = (user) => {
-    if (user.role === "admin") {
-      setAuthentication({
-        isAuthenticated: true,
-      });
-    }
+  const isAdmin = () => {
+    return userData.role === "admin";
   };
 
   const setUser = (user) => {
@@ -141,12 +136,11 @@ const UserContextProvider = (props) => {
         isCartOpen,
         userData,
         cartList,
-        isAuthenticated,
+        isAdmin,
         openCart,
         setUser,
         addToCartAndLocalStorage,
         setCartList,
-        authenticateUser,
         updateCounter,
         clearCartAndLocalStorage,
         deleteProduct,
