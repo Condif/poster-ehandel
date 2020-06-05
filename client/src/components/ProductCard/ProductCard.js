@@ -38,7 +38,9 @@ const ProductCard = (props) => {
     <Card style={{ height: "100%" }}>
       <CardActionArea
         className={
-          props.case === "cart" || props.case === "checkout" || props.case === "orders"
+          props.case === "cart" ||
+          props.case === "checkout" ||
+          props.case === "orders"
             ? classes.cartDisplay
             : null
         }
@@ -46,13 +48,24 @@ const ProductCard = (props) => {
       >
         <CardMedia
           className={
-            props.case === "cart" || props.case === "checkout" || props.case === "orders"
+            props.case === "cart" ||
+            props.case === "checkout" ||
+            props.case === "orders"
               ? classes.cartmedia
+              : props.case === "productview"
+              ? classes.productpagemedia
               : classes.media
           }
           image={`http://localhost:8080/api/image/product/${product._id}`}
         />
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            textAlign: "center",
+          }}
+        >
           <CardHeader
             title={product.name}
             titleTypographyProps={{ variant: "h6" }}
@@ -63,7 +76,7 @@ const ProductCard = (props) => {
             }
           />
           {props.case === "main" || props.case === "productview" ? (
-            <Typography style={{ marginLeft: "1rem" }}>
+            <Typography style={{ padding: "1rem" }}>
               {product.description}
             </Typography>
           ) : null}
@@ -83,10 +96,8 @@ const ProductCard = (props) => {
                 )
               : null}
             {props.case === "main" || props.case === "productview" ? (
-              <Typography style={{ marginLeft: "1rem" }}>
-                {product.price} SEK
-              </Typography>
-            ) : (
+              <Typography>{product.price} SEK</Typography>
+            ) : props.case === "updateInventory" ? null : (
               <Typography className={classes.cartSmallText}>
                 á {product.price} SEK
               </Typography>
@@ -94,7 +105,7 @@ const ProductCard = (props) => {
           </div>
         </div>
       </CardActionArea>
-      <CardActions>
+      <CardActions style={{ justifyContent: "center" }}>
         {props.case === "main" ? (
           <Button size="small" onClick={handleClick}>
             View product
@@ -105,7 +116,10 @@ const ProductCard = (props) => {
             Add to cart
           </Button>
         ) : props.case === "updateInventory" ? (
-          <form onSubmit={props.updateProduct}>
+          <form
+            style={{ display: "flex", alignItems: "center" }}
+            onSubmit={props.updateProduct}
+          >
             <TextField
               name={product._id}
               style={{ width: 40 }}

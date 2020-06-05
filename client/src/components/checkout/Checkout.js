@@ -29,7 +29,7 @@ const Checkout = () => {
     if (validated) {
       fetch("http://localhost:8080/sessions/checkLoginSession", {
         method: "GET",
-        credentials: "include"
+        credentials: "include",
       }).then(async (response) => {
         const data = await response.json();
         if (data.error) {
@@ -38,7 +38,7 @@ const Checkout = () => {
             setUser("");
           }
           alert(`You need to be a member to make a purchase.
-          Would you like to sign up?`)
+          Would you like to sign up?`);
           return;
         }
         if (userData.id !== data.id) {
@@ -89,9 +89,28 @@ const Checkout = () => {
     <div className={classes.mainDiv}>
       <Container>
         {cartList.map((product) => (
-          <ProductCard key={product._id} case="checkout" product={product}></ProductCard>
+          <ProductCard
+            key={product._id}
+            case="checkout"
+            product={product}
+          ></ProductCard>
         ))}
       </Container>
+      {cartList.length === 0 && (
+        <Container className={classes.goBackDiv}>
+          <Typography className={classes.text}>
+            Your cart is empty. Go back and add items.
+          </Typography>
+          <Button
+            className={classes.submitButton}
+            variant="contained"
+            color="primary"
+            onClick={() => history.push("/")}
+          >
+            Add items
+          </Button>
+        </Container>
+      )}
       <ShipmentAlternatives />
       <PaymentInformation />
       <TotalCost />
