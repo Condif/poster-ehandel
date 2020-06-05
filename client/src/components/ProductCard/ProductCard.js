@@ -58,7 +58,14 @@ const ProductCard = (props) => {
           }
           image={`http://localhost:8080/api/image/product/${product._id}`}
         />
-        <div>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            flexDirection: "column",
+            textAlign: "center",
+          }}
+        >
           <CardHeader
             title={product.name}
             titleTypographyProps={{ variant: "h6" }}
@@ -69,9 +76,7 @@ const ProductCard = (props) => {
             }
           />
           {props.case === "main" || props.case === "productview" ? (
-            <Typography style={{ marginLeft: "1rem" }}>
-              {product.description}
-            </Typography>
+            <Typography>{product.description}</Typography>
           ) : null}
           <div style={{ display: "flex", marginLeft: "1rem" }}>
             {props.case === "cart" || props.case === "checkout"
@@ -89,9 +94,7 @@ const ProductCard = (props) => {
                 )
               : null}
             {props.case === "main" || props.case === "productview" ? (
-              <Typography style={{ marginLeft: "1rem" }}>
-                {product.price} SEK
-              </Typography>
+              <Typography>{product.price} SEK</Typography>
             ) : (
               <Typography className={classes.cartSmallText}>
                 á {product.price} SEK
@@ -100,7 +103,7 @@ const ProductCard = (props) => {
           </div>
         </div>
       </CardActionArea>
-      <CardActions>
+      <CardActions style={{ justifyContent: "center" }}>
         {props.case === "main" ? (
           <Button size="small" onClick={handleClick}>
             View product
