@@ -19,6 +19,7 @@ import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
 import Orders from "./Orders/Orders"
+import Receipt from "./Orders/Receipt"
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
 
@@ -91,6 +92,7 @@ const Layout = () => {
               <Route path="/register" component={Register} />
               <Route path="/checkout" component={Checkout} />
               <Route path="/orders" component={Orders} />
+              <Route path="/receipt" component={Receipt} />
               {/* <PrivateRoute
                   path="/adminProductPage"
                   render={(props) => <AdminProductPage products={products} />}
