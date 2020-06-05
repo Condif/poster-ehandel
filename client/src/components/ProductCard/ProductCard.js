@@ -76,7 +76,9 @@ const ProductCard = (props) => {
             }
           />
           {props.case === "main" || props.case === "productview" ? (
-            <Typography>{product.description}</Typography>
+            <Typography style={{ padding: "1rem" }}>
+              {product.description}
+            </Typography>
           ) : null}
           <div style={{ display: "flex", marginLeft: "1rem" }}>
             {props.case === "cart" || props.case === "checkout"
