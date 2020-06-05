@@ -58,50 +58,47 @@ const ProductCard = (props) => {
           }
           image={`http://localhost:8080/api/image/product/${product._id}`}
         />
-        {/* <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        > */}
-        <CardHeader
-          title={product.name}
-          titleTypographyProps={{ variant: "h6" }}
-          classes={
-            props.case === "cart"
-              ? { title: classes.titleCart }
-              : { title: classes.title }
-          }
-        />
-        {props.case === "main" || props.case === "productview" ? (
-          <Typography style={{ marginLeft: "1rem" }}>
-            {product.description}
-          </Typography>
-        ) : null}
-        {props.case === "cart" || props.case === "checkout"
-          ? product.cartAmount > 1 && (
-              <Typography className={classes.cartSmallText}>
-                {product.cartAmount} items&nbsp;
+        <div>
+          <CardHeader
+            title={product.name}
+            titleTypographyProps={{ variant: "h6" }}
+            classes={
+              props.case === "cart"
+                ? { title: classes.titleCart }
+                : { title: classes.title }
+            }
+          />
+          {props.case === "main" || props.case === "productview" ? (
+            <Typography style={{ marginLeft: "1rem" }}>
+              {product.description}
+            </Typography>
+          ) : null}
+          <div style={{ display: "flex", marginLeft: "1rem" }}>
+            {props.case === "cart" || props.case === "checkout"
+              ? product.cartAmount > 1 && (
+                  <Typography className={classes.cartSmallText}>
+                    {product.cartAmount} items&nbsp;
+                  </Typography>
+                )
+              : null}
+            {props.case === "cart" || props.case === "checkout"
+              ? product.cartAmount === 1 && (
+                  <Typography className={classes.cartSmallText}>
+                    {product.cartAmount} item&nbsp;
+                  </Typography>
+                )
+              : null}
+            {props.case === "main" || props.case === "productview" ? (
+              <Typography style={{ marginLeft: "1rem" }}>
+                {product.price} SEK
               </Typography>
-            )
-          : null}
-        {props.case === "cart" || props.case === "checkout"
-          ? product.cartAmount === 1 && (
+            ) : (
               <Typography className={classes.cartSmallText}>
-                {product.cartAmount} item&nbsp;
+                á {product.price} SEK
               </Typography>
-            )
-          : null}
-        {props.case === "main" || props.case === "productview" ? (
-          <Typography style={{ marginLeft: "1rem" }}>
-            {product.price} SEK
-          </Typography>
-        ) : (
-          <Typography className={classes.cartSmallText}>
-            á {product.price} SEK
-          </Typography>
-        )}
+            )}
+          </div>
+        </div>
       </CardActionArea>
       <CardActions>
         {props.case === "main" ? (
