@@ -95,7 +95,7 @@ const ProductCard = (props) => {
               : null}
             {props.case === "main" || props.case === "productview" ? (
               <Typography>{product.price} SEK</Typography>
-            ) : (
+            ) : props.case === "updateInventory" ? null : (
               <Typography className={classes.cartSmallText}>
                 á {product.price} SEK
               </Typography>
@@ -114,7 +114,10 @@ const ProductCard = (props) => {
             Add to cart
           </Button>
         ) : props.case === "updateInventory" ? (
-          <form onSubmit={props.updateProduct}>
+          <form
+            style={{ display: "flex", alignItems: "center" }}
+            onSubmit={props.updateProduct}
+          >
             <TextField
               name={product._id}
               style={{ width: 40 }}
