@@ -18,7 +18,18 @@ exports.getOrderByUserId = async (req, res) => {
 };
 
 exports.createOrder = async (req, res) => {
-  const newOrder = req.body;
+  const newOrder = {
+    products: req.body.products,
+    user: req.session.id,
+    shipment: req.body.shipment,
+    totalPrice: req.body.totalPrice,
+    deliveryAddress: {
+      address: req.body.deliveryAddress.address,
+      zipcode: req.body.deliveryAddress.zipcode,
+      city: req.body.deliveryAddress.city
+    }
+  }
+  
   if (!newOrder || newOrder.length === 0) {
     throw new ServerError("The order was not created", 400);
   }
