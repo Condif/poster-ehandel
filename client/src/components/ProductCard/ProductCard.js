@@ -38,7 +38,9 @@ const ProductCard = (props) => {
     <Card style={{ height: "100%" }}>
       <CardActionArea
         className={
-          props.case === "cart" || props.case === "checkout" || props.case === "orders"
+          props.case === "cart" ||
+          props.case === "checkout" ||
+          props.case === "orders"
             ? classes.cartDisplay
             : null
         }
@@ -46,8 +48,12 @@ const ProductCard = (props) => {
       >
         <CardMedia
           className={
-            props.case === "cart" || props.case === "checkout" || props.case === "orders"
+            props.case === "cart" ||
+            props.case === "checkout" ||
+            props.case === "orders"
               ? classes.cartmedia
+              : props.case === "productview"
+              ? classes.productpagemedia
               : classes.media
           }
           image={`http://localhost:8080/api/image/product/${product._id}`}

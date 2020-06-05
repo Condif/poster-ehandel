@@ -19,6 +19,12 @@ const useStyles = makeStyles((theme) => ({
     paddingTop: "30%",
     paddingLeft: "22%",
   },
+  productpagemedia: {
+    width: "0px",
+    paddingTop: "100%",
+    paddingLeft: "70%",
+    margin: "0 auto",
+  },
   cartDisplay: {
     display: "flex",
   },
