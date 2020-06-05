@@ -5,6 +5,7 @@ import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Contexts/UserContext";
 import useStyles from "./LoginStyles";
+import AlertMessage from "../AlertMessage/AlertMessage";
 
 export default function Login() {
   const classes = useStyles();
@@ -12,6 +13,11 @@ export default function Login() {
   const [inputValues, setInputValues] = useState({
     userEmail: "",
     userPassword: "",
+  });
+
+  const [hasError, setError] = useState({
+    error: false,
+    message: null
   });
 
   const { setUser } = useContext(UserContext);
@@ -48,18 +54,20 @@ export default function Login() {
         setUser(dataFromBackend);
         redirectToMain();
       }
-      if (response.status === 401) {
+      if (response.status === 401 || response.status === 404) {
         let messageResponse = await response.json();
-        alert(messageResponse.err);
+        setError({ error: true, message: messageResponse.message });
+        setTimeout(() => {
+          setError({ error: false, message: null });
+        }, 5100);
       }
-      if (response.status === 404) {
-        alert("Wrong username or password");
-      }
-    });
+    }
+    )
   }
 
   return (
     <Container className={classes.flexedContainer} maxWidth="sm">
+      {hasError.error && <AlertMessage type="error">{hasError.message}</AlertMessage>}
       <TextField
         fullWidth
         variant="outlined"

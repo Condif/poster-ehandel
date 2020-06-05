@@ -1,5 +1,5 @@
 // Hämta useContext för att använda funktioner i UserContext.
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -21,6 +21,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
 import useStyles from "./NavBarStyles";
+import AlertMessage from "../AlertMessage/AlertMessage";
 
 const NavAppBar = withStyles({
   root: {
@@ -56,7 +57,12 @@ const NavBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [hasError, setError] = useState({
+    error: false,
+    message: null
+  });
+
+  const [mobileOpen, setMobileOpen] = useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
   const { openCart, userData, amountOfItems, setUser } = useContext(
     UserContext
@@ -119,59 +125,64 @@ const NavBar = (props) => {
       .then((data) => {
         if (data.success) {
           setUser("");
-          alert("You have been logged out");
           if (window.location.pathname !== "/") {
             history.push("/");
           }
+          setError({ error: true, message: data.message });
+          setTimeout(() => {
+            setError({ error: false, message: null });
+          }, 5100);
         }
       });
   };
 
   return (
-    <NavAppBar position="static">
-      <Toolbar className={classes.toolbar}>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          className={classes.menuButton}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Categories className={classes.desktopLinks} item>
-          <Hidden smUp implementation="css">
-            <Drawer
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-          <NavButton aria-label="homepage" onClick={() => history.push("/")}>
-            Home
-          </NavButton>
-          {props.categories.map((category) => {
-            return (
-              <NavButton
-                aria-label={`category ${category}`}
-                key={category}
-                onClick={() =>
-                  history.push(`/category/${props.createSlug(category)}`)
-                }
+    <>
+{hasError.error && <AlertMessage type="success">{hasError.message}</AlertMessage>}
+      <NavAppBar position="static">
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Categories className={classes.desktopLinks} item>
+            <Hidden smUp implementation="css">
+              <Drawer
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+                }}
               >
-                {category}
-              </NavButton>
-            );
-          })}
-        </Categories>
+                {drawer}
+              </Drawer>
+            </Hidden>
+            <NavButton aria-label="homepage" onClick={() => history.push("/")}>
+              Home
+          </NavButton>
+            {props.categories.map((category) => {
+              return (
+                <NavButton
+                  aria-label={`category ${category}`}
+                  key={category}
+                  onClick={() =>
+                    history.push(`/category/${props.createSlug(category)}`)
+                  }
+                >
+                  {category}
+                </NavButton>
+              );
+            })}
+          </Categories>
 
         <Grid justifycontent="flex-end" item>
           {userData.role === "admin" ? (
