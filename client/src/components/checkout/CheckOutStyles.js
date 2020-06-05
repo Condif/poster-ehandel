@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) => ({
   text: {
     fontWeight: "bold",
   },
+  goBackDiv: {
+    margin: "3rem 0",
+  },
 }));
 
 export default useStyles;
