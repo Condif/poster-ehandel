@@ -15,14 +15,16 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList, userData, setUser, authenticateUser } = useContext(UserContext);
+  const { cartList, userData, setUser, authenticateUser, totalCost} = useContext(UserContext);
 
   const {
     validateInputFields,
     checkErrorsInInfo,
+    validationInputs,
+    shipmentAlternatives
   } = useContext(CheckoutContext);
 
-  const redirectToSummery = () => {
+  const redirectToReceipt = () => {
     const validated = validateInputFields();
     if (validated) {
       fetch("http://localhost:8080/sessions/checkLoginSession", {
@@ -43,10 +45,45 @@ const Checkout = () => {
           setUser(data);
         }
         authenticateUser(data);
-        history.push("/orders");
+        createNewOrder()
+        history.push("/receipt");
       })
     }
   };
+
+  const createNewOrder = () => {
+      const newShipment = shipmentAlternatives.filter((currentShipment) => {
+      return (
+        currentShipment.alternative === validationInputs.choosenShipment.value
+      );
+    });
+    
+    let newOrder = {
+      products: cartList,
+      shipment: {
+        alternative: newShipment[0].alternative,
+        cost: newShipment[0].cost,
+        deliveryTime: newShipment[0].deliveryTime,
+      }, 
+      totalPrice: totalCost(),
+      deliveryAddress: {
+        address: validationInputs.address.value,
+        zipcode: validationInputs.zipcode.value,
+        city: validationInputs.city.value
+      }
+    }
+
+    fetch("http://localhost:8080/api/orders", {
+      method: "POST",
+      headers: {
+            "Content-Type": "application/json",
+          },
+      credentials: "include",
+      body: JSON.stringify(newOrder),
+    }).then(async (response) => {
+      const data = await response.json()
+    })
+  }
 
   return (
     <div className={classes.mainDiv}>
@@ -72,7 +109,7 @@ const Checkout = () => {
         className={classes.submitButton}
         variant="contained"
         color="primary"
-        onClick={() => redirectToSummery()}
+        onClick={() => redirectToReceipt()}
       >
         Make purchase
       </Button>
