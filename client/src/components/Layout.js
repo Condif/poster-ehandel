@@ -18,30 +18,33 @@ import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
-import Orders from "./Orders/Orders"
+import Orders from "./Orders/Orders";
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
 
 const Layout = () => {
-  const { setUser, userData, authenticateUser, isAuthenticated } = useContext(
-    UserContext
-  );
+  const { setUser, isAdmin, userData } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
+
+  const [fetchingUserData, setfetchingUserData] = useState(true);
+
   // Fetch products "on mount"
   useEffect(() => {
     async function fetchOnLoad() {
-      setProducts(await getAllProducts());
       checkLoginSession();
+      setProducts(await getAllProducts());
     }
     fetchOnLoad();
   }, []);
 
-  const PrivateRoute = (props) => (
+  const AdminRoute = (props) => (
     <Route
       path={props.path}
       render={() =>
-        isAuthenticated.isAuthenticated === true ? (
+        fetchingUserData === true ? (
+          <p>Loading</p>
+        ) : isAdmin() ? (
           props.children
         ) : (
           <>
@@ -53,17 +56,36 @@ const Layout = () => {
     />
   );
 
+  const LoggedInRoute = (props) => (
+    <Route
+      path={props.path}
+      render={() =>
+        fetchingUserData === true ? (
+          <p>Loading</p>
+        ) : userData ? (
+          props.children
+        ) : (
+          <>
+            <Redirect to="/login" />
+          </>
+        )
+      }
+    />
+  );
+
   const checkLoginSession = () => {
+    setfetchingUserData(true);
     fetch("http://localhost:8080/sessions/checkLoginSession", {
       method: "GET",
       credentials: "include",
     }).then(async (response) => {
       const data = await response.json();
       if (data.error) {
+        setfetchingUserData(false);
         return;
       }
       setUser(data);
-      authenticateUser(data);
+      setfetchingUserData(false);
     });
   };
 
@@ -89,15 +111,13 @@ const Layout = () => {
               </Route>
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route path="/checkout" component={Checkout} />
               <Route path="/orders" component={Orders} />
-              {/* <PrivateRoute
-                  path="/adminProductPage"
-                  render={(props) => <AdminProductPage products={products} />}
-                /> */}
-              <PrivateRoute path="/adminProductPage">
+              <LoggedInRoute path="/checkout">
+                <Checkout />
+              </LoggedInRoute>
+              <AdminRoute path="/adminProductPage">
                 <AdminProductPage products={products} />
-              </PrivateRoute>
+              </AdminRoute>
               {/* Get routes for each product */}
               {products !== null &&
                 products.length !== 0 &&
