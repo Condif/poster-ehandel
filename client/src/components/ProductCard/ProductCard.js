@@ -58,110 +58,109 @@ const ProductCard = (props) => {
           }
           image={`http://localhost:8080/api/image/product/${product._id}`}
         />
-        <div
+        {/* <div
           style={{
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
           }}
-        >
-          <CardHeader
-            title={product.name}
-            titleTypographyProps={{ variant: "h6" }}
-            classes={
-              props.case === "cart"
-                ? { title: classes.titleCart }
-                : { title: classes.title }
-            }
-          />
-          {props.case === "main" || props.case === "productview" ? (
-            <Typography style={{ marginLeft: "1rem" }}>
-              {product.description}
-            </Typography>
-          ) : null}
-          {props.case === "cart" || props.case === "checkout"
-            ? product.cartAmount > 1 && (
-                <Typography className={classes.cartSmallText}>
-                  {product.cartAmount} items&nbsp;
-                </Typography>
-              )
-            : null}
-          {props.case === "cart" || props.case === "checkout"
-            ? product.cartAmount === 1 && (
-                <Typography className={classes.cartSmallText}>
-                  {product.cartAmount} item&nbsp;
-                </Typography>
-              )
-            : null}
-          {props.case === "main" || props.case === "productview" ? (
-            <Typography style={{ marginLeft: "1rem" }}>
-              {product.price} SEK
-            </Typography>
-          ) : (
-            <Typography className={classes.cartSmallText}>
-              á {product.price} SEK
-            </Typography>
-          )}
-        </CardActionArea>
-        <CardActions>
-          {props.case === "main" ? (
-            <Button size="small" onClick={handleClick}>
-              View product
+        > */}
+        <CardHeader
+          title={product.name}
+          titleTypographyProps={{ variant: "h6" }}
+          classes={
+            props.case === "cart"
+              ? { title: classes.titleCart }
+              : { title: classes.title }
+          }
+        />
+        {props.case === "main" || props.case === "productview" ? (
+          <Typography style={{ marginLeft: "1rem" }}>
+            {product.description}
+          </Typography>
+        ) : null}
+        {props.case === "cart" || props.case === "checkout"
+          ? product.cartAmount > 1 && (
+              <Typography className={classes.cartSmallText}>
+                {product.cartAmount} items&nbsp;
+              </Typography>
+            )
+          : null}
+        {props.case === "cart" || props.case === "checkout"
+          ? product.cartAmount === 1 && (
+              <Typography className={classes.cartSmallText}>
+                {product.cartAmount} item&nbsp;
+              </Typography>
+            )
+          : null}
+        {props.case === "main" || props.case === "productview" ? (
+          <Typography style={{ marginLeft: "1rem" }}>
+            {product.price} SEK
+          </Typography>
+        ) : (
+          <Typography className={classes.cartSmallText}>
+            á {product.price} SEK
+          </Typography>
+        )}
+      </CardActionArea>
+      <CardActions>
+        {props.case === "main" ? (
+          <Button size="small" onClick={handleClick}>
+            View product
+          </Button>
+        ) : null}
+        {props.case === "main" || props.case === "productview" ? (
+          <Button size="small" onClick={handleAddToCart}>
+            Add to cart
+          </Button>
+        ) : props.case === "updateInventory" ? (
+          <form onSubmit={props.updateProduct}>
+            <TextField
+              name={product._id}
+              style={{ width: 40 }}
+              label="Inventory"
+              type="number"
+              defaultValue={product.inventory}
+              onChange={(event) => props.handleChange(event, product._id)}
+            ></TextField>
+            <Button
+              type="submit"
+              style={{ marginLeft: "1rem" }}
+              size="small"
+              className={classes.submitButton}
+              variant="contained"
+              color="primary"
+            >
+              Update
             </Button>
-          ) : null}
-          {props.case === "main" || props.case === "productview" ? (
-            <Button size="small" onClick={handleAddToCart}>
-              Add to cart
+          </form>
+        ) : null}
+        {props.case === "cart" || props.case === "checkout" ? (
+          <div className={classes.flexedDiv}>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => updateCounter(product, "add")}
+            >
+              <AddCircleOutlineIcon />
             </Button>
-          ) : props.case === "updateInventory" ? (
-            <form onSubmit={props.updateProduct}>
-              <TextField
-                name={product._id}
-                style={{ width: 40 }}
-                label="Inventory"
-                type="number"
-                defaultValue={product.inventory}
-                onChange={(event) => props.handleChange(event, product._id)}
-              ></TextField>
-              <Button
-                type="submit"
-                style={{ marginLeft: "1rem" }}
-                size="small"
-                className={classes.submitButton}
-                variant="contained"
-                color="primary"
-              >
-                Update
-              </Button>
-            </form>
-          ) : null}
-          {props.case === "cart" || props.case === "checkout" ? (
-            <div className={classes.flexedDiv}>
-              <Button
-                variant="contained"
-                size="small"
-                onClick={() => updateCounter(product, "add")}
-              >
-                <AddCircleOutlineIcon />
-              </Button>
-              <Button
-                variant="contained"
-                size="small"
-                onClick={() => updateCounter(product, "remove")}
-              >
-                <RemoveCircleOutlineIcon />
-              </Button>
-              <Button
-                variant="contained"
-                size="small"
-                onClick={() => deleteProduct(product)}
-              >
-                <DeleteIcon />
-              </Button>
-            </div>
-          ) : null}
-        </CardActions>
-      </div>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => updateCounter(product, "remove")}
+            >
+              <RemoveCircleOutlineIcon />
+            </Button>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() => deleteProduct(product)}
+            >
+              <DeleteIcon />
+            </Button>
+          </div>
+        ) : null}
+      </CardActions>
     </Card>
   );
 };
