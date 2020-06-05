@@ -18,7 +18,7 @@ import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
-import Orders from "./Orders/Orders"
+import Orders from "./Orders/Orders";
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
 
@@ -28,16 +28,17 @@ const Layout = () => {
   );
 
   const [products, setProducts] = useState([]);
+
   // Fetch products "on mount"
   useEffect(() => {
     async function fetchOnLoad() {
+      // checkLoginSession();
       setProducts(await getAllProducts());
-      checkLoginSession();
     }
     fetchOnLoad();
   }, []);
 
-  const PrivateRoute = (props) => (
+  const AdminRoute = (props) => (
     <Route
       path={props.path}
       render={() =>
@@ -53,22 +54,40 @@ const Layout = () => {
     />
   );
 
-  const checkLoginSession = () => {
-    fetch("http://localhost:8080/sessions/checkLoginSession", {
-      method: "GET",
-      credentials: "include",
-    }).then(async (response) => {
-      const data = await response.json();
-      if (data.error) {
-        return;
+  const LoggedInRoute = (props) => (
+    <Route
+      path={props.path}
+      render={() =>
+        userData ? (
+          props.children
+        ) : (
+          <>
+            {alert("Please log in")}
+            <Redirect to="/" />
+          </>
+        )
       }
-      setUser(data);
-      authenticateUser(data);
-    });
-  };
+    />
+  );
+
+  // const checkLoginSession = () => {
+  //   fetch("http://localhost:8080/sessions/checkLoginSession", {
+  //     method: "GET",
+  //     credentials: "include",
+  //   }).then(async (response) => {
+  //     const data = await response.json();
+  //     if (data.error) {
+  //       return;
+  //     }
+  //     // setisUserLoggedIn(true);
+  //     setUser(data);
+  //     authenticateUser(data);
+  //   });
+  // };
 
   return (
     <Router>
+      {console.log("UserData: ", userData)}
       <div className="App">
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
@@ -89,15 +108,13 @@ const Layout = () => {
               </Route>
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route path="/checkout" component={Checkout} />
               <Route path="/orders" component={Orders} />
-              {/* <PrivateRoute
-                  path="/adminProductPage"
-                  render={(props) => <AdminProductPage products={products} />}
-                /> */}
-              <PrivateRoute path="/adminProductPage">
+              <LoggedInRoute path="/checkout">
+                <Checkout />
+              </LoggedInRoute>
+              <AdminRoute path="/adminProductPage">
                 <AdminProductPage products={products} />
-              </PrivateRoute>
+              </AdminRoute>
               {/* Get routes for each product */}
               {products !== null &&
                 products.length !== 0 &&
