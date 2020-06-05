@@ -12,7 +12,6 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  toolbar: theme.mixins.toolbar,
   drawer: {
     width: 240,
     flexShrink: 0,

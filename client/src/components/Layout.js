@@ -85,17 +85,13 @@ const Layout = () => {
         setfetchingUserData(false);
         return;
       }
-      // setisUserLoggedIn(true);
       setUser(data);
-      // authenticateUser(data);
       setfetchingUserData(false);
     });
   };
 
   return (
     <Router>
-      {console.log("UserData: ", userData)}
-      {console.log("Fetching data: ", fetchingUserData)}
       <div className="App">
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
