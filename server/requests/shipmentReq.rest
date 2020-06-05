@@ -18,7 +18,7 @@ POST http://localhost:8080/api/shipments
 Content-Type: application/json
 
 {
-    "alternative": "Schenker",
-    "cost": "79",
-    "deliveryTime": 1
+    "alternative": "Postnord",
+    "cost": "0",
+    "deliveryTime": 3
 }
