@@ -29,10 +29,12 @@ const Layout = () => {
 
   const [products, setProducts] = useState([]);
 
+  const [fetchingUserData, setfetchingUserData] = useState(true);
+
   // Fetch products "on mount"
   useEffect(() => {
     async function fetchOnLoad() {
-      // checkLoginSession();
+      checkLoginSession();
       setProducts(await getAllProducts());
     }
     fetchOnLoad();
@@ -58,7 +60,9 @@ const Layout = () => {
     <Route
       path={props.path}
       render={() =>
-        userData ? (
+        fetchingUserData === true ? (
+          <p>Loading</p>
+        ) : fetchingUserData === false && userData ? (
           props.children
         ) : (
           <>
@@ -70,24 +74,27 @@ const Layout = () => {
     />
   );
 
-  // const checkLoginSession = () => {
-  //   fetch("http://localhost:8080/sessions/checkLoginSession", {
-  //     method: "GET",
-  //     credentials: "include",
-  //   }).then(async (response) => {
-  //     const data = await response.json();
-  //     if (data.error) {
-  //       return;
-  //     }
-  //     // setisUserLoggedIn(true);
-  //     setUser(data);
-  //     authenticateUser(data);
-  //   });
-  // };
+  const checkLoginSession = () => {
+    fetch("http://localhost:8080/sessions/checkLoginSession", {
+      method: "GET",
+      credentials: "include",
+    }).then(async (response) => {
+      const data = await response.json();
+      if (data.error) {
+        return;
+      }
+      // setisUserLoggedIn(true);
+
+      setUser(data);
+      authenticateUser(data);
+    });
+    setfetchingUserData(false);
+  };
 
   return (
     <Router>
       {console.log("UserData: ", userData)}
+      {console.log("Fetching data: ", fetchingUserData)}
       <div className="App">
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
