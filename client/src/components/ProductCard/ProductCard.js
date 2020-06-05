@@ -38,7 +38,7 @@ const ProductCard = (props) => {
     <Card style={{ height: "100%" }}>
       <CardActionArea
         className={
-          props.case === "cart" || props.case === "checkout"
+          props.case === "cart" || props.case === "checkout" || props.case === "orders"
             ? classes.cartDisplay
             : null
         }
@@ -46,7 +46,7 @@ const ProductCard = (props) => {
       >
         <CardMedia
           className={
-            props.case === "cart" || props.case === "checkout"
+            props.case === "cart" || props.case === "checkout" || props.case === "orders"
               ? classes.cartmedia
               : classes.media
           }

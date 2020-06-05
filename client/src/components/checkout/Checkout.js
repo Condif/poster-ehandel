@@ -1,4 +1,4 @@
-import React, {  useContext } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
@@ -25,30 +25,27 @@ const Checkout = () => {
   const redirectToSummery = () => {
     const validated = validateInputFields();
     if (validated) {
-      
-    }
-
-
-    fetch("http://localhost:8080/sessions/checkLoginSession", {
-      method: "GET",
-      credentials: "include"
-    }).then(async (response) => {
-      const data = await response.json();
-      if (data.error) {
-        // Reset user data when session has ended
-        if (userData !== "") {
-          setUser("");
-        }
-        alert(`You need to be a member to make a purchase.
+      fetch("http://localhost:8080/sessions/checkLoginSession", {
+        method: "GET",
+        credentials: "include"
+      }).then(async (response) => {
+        const data = await response.json();
+        if (data.error) {
+          // Reset user data when session has ended
+          if (userData !== "") {
+            setUser("");
+          }
+          alert(`You need to be a member to make a purchase.
           Would you like to sign up?`)
-        return;
-      }
-      if (userData.id !== data.id) {
-        setUser(data);
-      }
-      authenticateUser(data);
-      history.push("/summery");
-    })
+          return;
+        }
+        if (userData.id !== data.id) {
+          setUser(data);
+        }
+        authenticateUser(data);
+        history.push("/orders");
+      })
+    }
   };
 
   return (

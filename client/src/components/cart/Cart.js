@@ -23,10 +23,10 @@ const Cart = (props) => {
 
   const { createSlug } = props;
   function redirectToCheckOut() {
-    if (cartList !== undefined || cartList !== undefined) {
-      openCart();
-      history.push("/checkout");
-    }
+    if((cartList !== undefined || cartList !== undefined)){   
+        openCart()
+        history.push("/checkout")
+    } 
   }
 
   return (
