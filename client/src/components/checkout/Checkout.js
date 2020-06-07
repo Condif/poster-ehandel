@@ -44,7 +44,7 @@ const Checkout = () => {
         if (userData.id !== data.id) {
           setUser(data);
         }
-        authenticateUser(data);
+        // authenticateUser(data);
         createNewOrder()
         history.push("/receipt");
       })
@@ -80,8 +80,6 @@ const Checkout = () => {
           },
       credentials: "include",
       body: JSON.stringify(newOrder),
-    }).then(async (response) => {
-      const data = await response.json()
     })
   }
 
