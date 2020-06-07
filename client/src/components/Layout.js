@@ -24,15 +24,9 @@ import Footer from "./Footer/Footer";
 import AlertMessage from "./AlertMessage/AlertMessage";
 
 const Layout = () => {
-  const { setUser, isAdmin, userData } = useContext(UserContext);
+  const { setUser, isAdmin, userData, alert, setAlert } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
-
-  const [alert, setAlert] = useState({
-    showAlert: false,
-    type: null,
-    message: null
-  });
 
   const [fetchingUserData, setfetchingUserData] = useState(true);
 
@@ -99,7 +93,7 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
-        {alert.showAlert === true && <AlertMessage type={alert.type}>{alert.message}</AlertMessage>}
+      {alert.showAlert && <AlertMessage setAlert={setAlert} alert={alert} show={alert.showAlert} clickAway={() => setAlert({ showAlert: false, type: null, message: null })} type={alert.type}>{alert.message}</AlertMessage>}
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />
@@ -224,8 +218,9 @@ const getCategories = (products) => {
   const categories = [];
   products.map((product) => {
     if (!categories.includes(product.category)) {
-      categories.push(product.category);
+      return categories.push(product.category);
     }
+    return null;
   });
 
   return categories;

@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useStyles from './AlertMessageStyles';
-import { Alert } from '@material-ui/lab';
 import Fade from "@material-ui/core/Fade";
+import { Alert } from '@material-ui/lab';
 import { ClickAwayListener } from "@material-ui/core";
 
 const AlertMessage = (props) => {
@@ -15,10 +15,19 @@ const AlertMessage = (props) => {
 
     animationTimeout();
 
+    useEffect((props) => {
+        if (props.show === true) {
+            setTimeout(() => {
+                props.setAlert({ showAlert: false, type: null, message: null });
+            }, 5100);
+            return;
+        }
+    }, [props.show]);
+
     const handleClickAway = () => {
         setFadeIn(false);
         clearTimeout(animationTimeout);
-        props.clickAway(false);
+        props.clickAway();
     }
 
     return (
