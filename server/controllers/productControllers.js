@@ -27,19 +27,14 @@ exports.createNewProduct = async (req, res) => {
     description: body.description,
     inventory: body.inventory,
     cartAmount: body.cartAmount,
-    imageId: file.id
+    imageId: file.id,
   });
-  // if (Product.va) {
-  //   throw new ServerError("The product was not created", 400);
-  // }
 
   const newProduct = await product.save();
   res.status(201).json(newProduct);
-
 };
 
 // Update product
-//TODO hur gör vi felhanteringen här??
 exports.updateProduct = async (req, res) => {
   const product = await Product.findById(req.params.productId);
   if (!product) {
@@ -47,7 +42,7 @@ exports.updateProduct = async (req, res) => {
   }
 
   if (req.params.productId !== req.body._id) {
-    throw new ServerError("Forbidden!", 403);
+    throw new ServerError("You can not update product", 403);
   }
   const updatedProduct = new Product(Object.assign(product, req.body));
   await updatedProduct.save();
@@ -75,19 +70,32 @@ exports.getProductById = async (req, res) => {
   res.json(product);
 };
 
-//TODO hur gör vi felhanteringen här?
+//Update productstock when items are sold
 exports.updateProductStock = async (req, res) => {
-  try {
-    console.log("REQ.BODY: ", req.body);
-    req.body.forEach(async (product) => {
-      console.log("PRODUCT: ", product);
-      await Product.updateOne(
-        { _id: product._id },
-        { $inc: { inventory: -product.cartAmount } }
-      );
-    });
-    res.json("Product inventory updated");
-  } catch (err) {
-    res.status(400).json({ message: err.message });
+  let products = req.body;
+  console.log(products, "här är products");
+  if (products.length === 0 || Object.keys(products) == 0) {
+    throw new ServerError("The product does not exist", 404);
   }
+  products.forEach(async (product) => {
+    const productInStock = await Product.findOne({ _id: product._id });
+    if (!productInStock) {
+      throw new ServerError("No such product", 404);
+    }
+    console.log("PRODUCT: ", productInStock);
+    let currentAvlible = productInStock.inventory - product.cartAmount;
+    console.log(currentAvlible, "Current");
+    product.inventory = currentAvlible;
+    product.cartAmount = 0;
+
+    const updatedProduct = new Product(Object.assign(productInStock, product));
+    console.log(updatedProduct, "uppdateringen");
+    await updatedProduct.save();
+
+    // Product.updateOne(
+    //   { _id: product._id },
+    //   { $inc: { inventory: -product.cartAmount } }
+    // );
+  });
+  res.json("Product inventory updated");
 };

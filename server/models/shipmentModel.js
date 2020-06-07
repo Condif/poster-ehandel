@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const shipmentSchema = new mongoose.Schema({
   alternative: {
     type: String,
-    unique: true,
     required: true,
   },
   cost: {

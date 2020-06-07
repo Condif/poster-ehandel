@@ -23,6 +23,22 @@ const Checkout = () => {
     CheckoutContext
   );
 
+  const updateInventory = () => {
+    console.log("i update", cartList);
+    fetch("http://localhost:8080/api/products/", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(cartList),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        alert("Product inventory updated.");
+      });
+  };
+
   const redirectToSummery = () => {
     const validated = validateInputFields();
     if (validated) {
@@ -47,6 +63,10 @@ const Checkout = () => {
         history.push("/orders");
       });
     }
+  };
+
+  const nextStep = () => {
+    redirectToSummery();
   };
 
   return (
@@ -92,7 +112,7 @@ const Checkout = () => {
         className={classes.submitButton}
         variant="contained"
         color="primary"
-        onClick={() => redirectToSummery()}
+        onClick={() => updateInventory()}
       >
         Make purchase
       </Button>
