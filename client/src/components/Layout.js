@@ -21,11 +21,18 @@ import CategoryPage from "./CategoryPage/CategoryPage";
 import Orders from "./Orders/Orders";
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
+import AlertMessage from "./AlertMessage/AlertMessage";
 
 const Layout = () => {
   const { setUser, isAdmin, userData } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
+
+  const [alert, setAlert] = useState({
+    showAlert: false,
+    type: null,
+    message: null
+  });
 
   const [fetchingUserData, setfetchingUserData] = useState(true);
 
@@ -47,11 +54,11 @@ const Layout = () => {
         ) : isAdmin() ? (
           props.children
         ) : (
-          <>
-            {alert("You are not authorized")}
-            <Redirect to="/" />
-          </>
-        )
+              <>
+                {alert("You are not authorized")}
+                <Redirect to="/" />
+              </>
+            )
       }
     />
   );
@@ -65,10 +72,10 @@ const Layout = () => {
         ) : userData ? (
           props.children
         ) : (
-          <>
-            <Redirect to="/login" />
-          </>
-        )
+              <>
+                <Redirect to="/login" />
+              </>
+            )
       }
     />
   );
@@ -92,6 +99,7 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
+        {alert.showAlert === true && <AlertMessage type={alert.type}>{alert.message}</AlertMessage>}
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />

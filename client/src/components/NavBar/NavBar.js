@@ -22,6 +22,8 @@ import MenuIcon from "@material-ui/icons/Menu";
 import { useHistory } from "react-router-dom";
 import useStyles from "./NavBarStyles";
 import AlertMessage from "../AlertMessage/AlertMessage";
+import { ErrorHandling } from '../withErrorHandling';
+import { AlertContext } from "../../Contexts/AlertContext";
 
 const NavAppBar = withStyles({
   root: {
@@ -57,20 +59,21 @@ const NavBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
 
-  const [hasError, setError] = useState({
-    error: false,
-    message: null
-  });
-
+  
   const [mobileOpen, setMobileOpen] = useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
   const { openCart, userData, amountOfItems, setUser } = useContext(
     UserContext
-  );
+    );
+    const { alert, setAlert } = useContext(AlertContext);
 
   const handleDrawerToggle = (props) => {
     setMobileOpen(!mobileOpen);
   };
+
+  function handleClickAway(callback) {
+    setAlert(callback);
+  }
 
   const drawer = (
     <div className={classes.drawer}>
@@ -128,9 +131,9 @@ const NavBar = (props) => {
           if (window.location.pathname !== "/") {
             history.push("/");
           }
-          setError({ error: true, message: data.message });
+          // setAlert({ showAlert: true, type: "error", message: data.message });
           setTimeout(() => {
-            setError({ error: false, message: null });
+            setAlert({ alert: false, message: null });
           }, 5100);
         }
       });
@@ -138,7 +141,6 @@ const NavBar = (props) => {
 
   return (
     <>
-      {hasError.error && <AlertMessage type="success">{hasError.message}</AlertMessage>}
       <NavAppBar position="static">
         <Toolbar className={classes.toolbar}>
           <IconButton

@@ -7,6 +7,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import green from "@material-ui/core/colors/green";
 import UserContextProvider from "./Contexts/UserContext";
 import CheckoutContextProvider from "./Contexts/CheckoutContext";
+import AlertContextProvider from "./Contexts/AlertContext";
 
 const theme = createMuiTheme({
   palette: {
@@ -19,10 +20,12 @@ function App() {
     <>
       <UserContextProvider>
         <CheckoutContextProvider>
-          <MuiThemeProvider theme={theme}>
-            <CssBaseline />
-            <Layout />
-          </MuiThemeProvider>
+          {/* <AlertContextProvider> */}
+            <MuiThemeProvider theme={theme}>
+              <CssBaseline />
+              <Layout />
+            </MuiThemeProvider>
+          {/* </AlertContextProvider> */}
         </CheckoutContextProvider>
       </UserContextProvider>
     </>
