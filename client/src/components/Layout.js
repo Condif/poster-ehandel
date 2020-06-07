@@ -18,7 +18,8 @@ import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
-import Orders from "./Orders/Orders";
+import Orders from "./Orders/Orders"
+import Receipt from "./Orders/Receipt"
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
 import AlertMessage from "./AlertMessage/AlertMessage";
@@ -114,6 +115,7 @@ const Layout = () => {
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
               <Route path="/orders" component={Orders} />
+              <Route path="/receipt" component={Receipt} />
               <LoggedInRoute path="/checkout">
                 <Checkout />
               </LoggedInRoute>
