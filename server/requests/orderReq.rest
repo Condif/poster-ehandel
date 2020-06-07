@@ -17,9 +17,7 @@ POST http://localhost:8080/api/orders
 Content-Type: application/json
 
 {
-    "products": "Skål",
-    "user": "Kicki",
-    "orderDate": "10 maj",
+    "products": ["Skål"],
     "shipment": "DHL",
     "totalPrice": 999,
     "deliveryAddress": {
