@@ -7,6 +7,7 @@ import {
   Route,
   Switch,
   Redirect,
+  useHistory,
 } from "react-router-dom";
 import ProductGrid from "./ProductGrid";
 import Cart from "./Cart/Cart";
@@ -40,6 +41,10 @@ const Layout = () => {
     fetchOnLoad();
   }, []);
 
+/*
+window.location.pathname === "/adminProductPage" && await setAlert({ showAlert: true, type: "error", message: "You are not authorized" })
+*/
+
   const AdminRoute = (props) => (
     <Route
       path={props.path}
@@ -48,13 +53,8 @@ const Layout = () => {
           <p>Loading</p>
         ) : isAdmin() ? (
           props.children
-        ) : (
-              <>
-                {setAlert({ showAlert: true, type: "error", message: "You are not authorized" })}
-                <Redirect to="/" />
-              </>
-            )
-      }
+        ) : <Redirect to={{ pathname: "/", state: { from: window.location.pathname }}} />
+        }
     />
   );
 
@@ -110,7 +110,7 @@ const Layout = () => {
           >
             <Switch>
               <Route exact path="/">
-                <ProductGrid products={products} createSlug={createSlug} />
+                <ProductGrid products={products} createSlug={createSlug} setAlert={setAlert} />
               </Route>
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />

@@ -119,10 +119,11 @@ const NavBar = (props) => {
       .then((data) => {
         if (data.success) {
           setUser("");
+          setAlert({ showAlert: true, type: "success", message: data.message });
           if (window.location.pathname !== "/") {
             history.push("/");
+            return;
           }
-          setAlert({ showAlert: true, type: "success", message: data.message });
         }
       });
   };
