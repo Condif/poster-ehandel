@@ -30,6 +30,7 @@ const Checkout = () => {
     shipmentAlternatives,
   } = useContext(CheckoutContext);
 
+  //updates inventory of each product when a purches is made
   const updateInventory = () => {
     console.log("i update", cartList);
     fetch("http://localhost:8080/api/products/", {
@@ -66,7 +67,7 @@ const Checkout = () => {
         if (userData.id !== data.id) {
           setUser(data);
         }
-        authenticateUser(data);
+        // authenticateUser(data);
         updateInventory();
         createNewOrder();
         history.push("/receipt");

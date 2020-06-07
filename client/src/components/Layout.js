@@ -18,8 +18,8 @@ import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
-import Orders from "./Orders/Orders"
-import Receipt from "./Orders/Receipt"
+import Orders from "./Orders/Orders";
+import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
 
