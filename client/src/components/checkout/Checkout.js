@@ -59,14 +59,11 @@ const Checkout = () => {
         if (userData.id !== data.id) {
           setUser(data);
         }
-        authenticateUser(data);
+        // authenticateUser(data);
+        updateInventory();
         history.push("/orders");
       });
     }
-  };
-
-  const nextStep = () => {
-    redirectToSummery();
   };
 
   return (
@@ -112,7 +109,7 @@ const Checkout = () => {
         className={classes.submitButton}
         variant="contained"
         color="primary"
-        onClick={() => updateInventory()}
+        onClick={() => redirectToSummery()}
       >
         Make purchase
       </Button>
