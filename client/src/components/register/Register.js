@@ -1,11 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
 import useStyles from "./RegisterStyles";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
-import AlertMessage from "../AlertMessage/AlertMessage";
+import { UserContext } from "../../Contexts/UserContext";
 
 const Register = () => {
   const [inputValues, setInputValues] = useState({
@@ -19,15 +19,11 @@ const Register = () => {
     city: "",
   });
 
-  const [hasAlert, setAlert] = useState({
-    alert: false,
-    type: null,
-    message: null
-  });
-
   const classes = useStyles();
 
   const history = useHistory();
+
+  const { setAlert } = useContext(UserContext);
 
   function handleSubmit() {
     createNewUser();
@@ -67,141 +63,135 @@ const Register = () => {
       body: JSON.stringify(newUser),
     }).then(async (response) => {
       if (response.status === 409) {
-        setAlert({ alert: true, type: "warning", message: "Something went wrong" });
+        setAlert({ showAlert: true, type: "warning", message: "Something went wrong" });
       }
       if (response.status === 201) {
-        await setAlert({ alert: true, type: "success", message: "Successfully registered user" })
+        await setAlert({ showAlert: true, type: "success", message: "Successfully registered user" })
         redirectToLogin();
       }
       if (response.status === 500) {
-        setAlert({ alert: true, type: "error", message: "There is already a user registered with that email." });
+        setAlert({ showAlert: true, type: "error", message: "There is already a user registered with that email." });
       }
-      setTimeout(() => {
-        setAlert({ alert: false, type: null, message: null });
-      }, 5100);
       return;
     });
   }
 
   return (
-    <>
-      {hasAlert.alert && <AlertMessage type="error">{hasAlert.message}</AlertMessage>}
-      <Container className={classes.flexedContainer} maxWidth="sm">
-        <ValidatorForm
-          onSubmit={handleSubmit}
-          onError={(errors) => console.log(errors)}
+    <Container className={classes.flexedContainer} maxWidth="sm">
+      <ValidatorForm
+        onSubmit={handleSubmit}
+        onError={(errors) => console.log(errors)}
+      >
+        <TextValidator
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          size="small"
+          type="text"
+          label="Name"
+          name="name"
+          value={inputValues.name}
+          onChange={(event) => handleInputChange(event, "name")}
+          validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
+          errorMessages={["this field is required", "only letters"]}
+        ></TextValidator>
+        <TextValidator
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          size="small"
+          type="text"
+          label="Lastname"
+          name="lastname"
+          value={inputValues.lastname}
+          validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
+          errorMessages={["this field is required", "only letters"]}
+          onChange={(event) => handleInputChange(event, "lastname")}
+        ></TextValidator>
+        <TextValidator
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          size="small"
+          label="Email"
+          onChange={(event) => handleInputChange(event, "email")}
+          name="email"
+          value={inputValues.email}
+          validators={["required", "isEmail"]}
+          errorMessages={["this field is required", "email is not valid"]}
+        />
+        <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          size="small"
+          type="password"
+          label="Password"
+          value={inputValues.password}
+          onChange={(event) => handleInputChange(event, "password")}
+        ></TextField>
+        <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          size="small"
+          type="text"
+          label="Adress"
+          value={inputValues.address}
+          onChange={(event) => handleInputChange(event, "address")}
+        ></TextField>
+        <TextValidator
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          size="small"
+          label="Zipcode"
+          onChange={(event) => handleInputChange(event, "zipcode")}
+          name="zipcode"
+          inputProps={{
+            maxLength: 5,
+          }}
+          value={inputValues.zipcode}
+          validators={[
+            "minNumber:0",
+            "maxNumber:99999",
+            "matchRegexp:^[0-9]+$",
+          ]}
+          errorMessages={["only numbers"]}
+        />
+        <TextValidator
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          size="small"
+          type="text"
+          label="City"
+          name="city"
+          value={inputValues.city}
+          onChange={(event) => handleInputChange(event, "city")}
+          validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
+          errorMessages={["this field is required", "only letters"]}
+        ></TextValidator>
+        <Button
+          type="submit"
+          disabled={
+            !inputValues.name ||
+            !inputValues.lastname ||
+            !inputValues.email ||
+            !inputValues.password ||
+            !inputValues.address ||
+            !inputValues.zipcode ||
+            !inputValues.city
+          }
+          className={classes.submitButton}
+          variant="contained"
+          color="primary"
+          fullWidth
         >
-          <TextValidator
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            size="small"
-            type="text"
-            label="Name"
-            name="name"
-            value={inputValues.name}
-            onChange={(event) => handleInputChange(event, "name")}
-            validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
-            errorMessages={["this field is required", "only letters"]}
-          ></TextValidator>
-          <TextValidator
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            size="small"
-            type="text"
-            label="Lastname"
-            name="lastname"
-            value={inputValues.lastname}
-            validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
-            errorMessages={["this field is required", "only letters"]}
-            onChange={(event) => handleInputChange(event, "lastname")}
-          ></TextValidator>
-          <TextValidator
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            size="small"
-            label="Email"
-            onChange={(event) => handleInputChange(event, "email")}
-            name="email"
-            value={inputValues.email}
-            validators={["required", "isEmail"]}
-            errorMessages={["this field is required", "email is not valid"]}
-          />
-          <TextField
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            size="small"
-            type="password"
-            label="Password"
-            value={inputValues.password}
-            onChange={(event) => handleInputChange(event, "password")}
-          ></TextField>
-          <TextField
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            size="small"
-            type="text"
-            label="Adress"
-            value={inputValues.address}
-            onChange={(event) => handleInputChange(event, "address")}
-          ></TextField>
-          <TextValidator
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            size="small"
-            label="Zipcode"
-            onChange={(event) => handleInputChange(event, "zipcode")}
-            name="zipcode"
-            inputProps={{
-              maxLength: 5,
-            }}
-            value={inputValues.zipcode}
-            validators={[
-              "minNumber:0",
-              "maxNumber:99999",
-              "matchRegexp:^[0-9]+$",
-            ]}
-            errorMessages={["only numbers"]}
-          />
-          <TextValidator
-            fullWidth
-            variant="outlined"
-            margin="normal"
-            size="small"
-            type="text"
-            label="City"
-            name="city"
-            value={inputValues.city}
-            onChange={(event) => handleInputChange(event, "city")}
-            validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
-            errorMessages={["this field is required", "only letters"]}
-          ></TextValidator>
-          <Button
-            type="submit"
-            disabled={
-              !inputValues.name ||
-              !inputValues.lastname ||
-              !inputValues.email ||
-              !inputValues.password ||
-              !inputValues.address ||
-              !inputValues.zipcode ||
-              !inputValues.city
-            }
-            className={classes.submitButton}
-            variant="contained"
-            color="primary"
-            fullWidth
-          >
-            Submit
+          Submit
         </Button>
-        </ValidatorForm>
-      </Container>
-    </>
+      </ValidatorForm>
+    </Container>
   );
 };
 

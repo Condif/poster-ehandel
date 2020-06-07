@@ -55,7 +55,6 @@ const NavButton = withStyles({
 const NavBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
-
   
   const [mobileOpen, setMobileOpen] = useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
@@ -114,7 +113,7 @@ const NavBar = (props) => {
   const logout = async () => {
     await fetch("http://localhost:8080/sessions/logout", {
       method: "POST",
-      credentials: "include",
+      credentials: "include"
     })
       .then((response) => response.json())
       .then((data) => {

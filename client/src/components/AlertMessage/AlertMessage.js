@@ -9,25 +9,29 @@ const AlertMessage = (props) => {
 
     const [fadeIn, setFadeIn] = useState(true);
 
-    const animationTimeout = () => setTimeout(() => {
+
+    let animationTimeout = () => setTimeout(() => {
+        props.setAlert({ showAlert: false, type: null, message: null });
         setFadeIn(false);
-    }, 5000);
+        clear();
+        animationTimeout = null;
+    }, 5100);
 
-    animationTimeout();
+    const clear = () => { clearTimeout(animationTimeout); animationTimeout = null };
 
-    useEffect((props) => {
-        if (props.show === true) {
-            setTimeout(() => {
-                props.setAlert({ showAlert: false, type: null, message: null });
-            }, 5100);
-            return;
+    useEffect(() => clear());
+
+    useEffect(() => {
+        if (props.show === true && animationTimeout !== null) {
+            animationTimeout();
         }
+        return clear();
     }, [props.show]);
 
     const handleClickAway = () => {
+        clear();
         setFadeIn(false);
-        clearTimeout(animationTimeout);
-        props.clickAway();
+        props.clickAway(animationTimeout);
     }
 
     return (

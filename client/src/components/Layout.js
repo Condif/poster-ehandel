@@ -50,7 +50,7 @@ const Layout = () => {
           props.children
         ) : (
               <>
-                {alert("You are not authorized")}
+                {setAlert({ showAlert: true, type: "error", message: "You are not authorized" })}
                 <Redirect to="/" />
               </>
             )
@@ -94,7 +94,7 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
-      {alert.showAlert && <AlertMessage setAlert={setAlert} alert={alert} show={alert.showAlert} clickAway={() => setAlert({ showAlert: false, type: null, message: null })} type={alert.type}>{alert.message}</AlertMessage>}
+        {alert.showAlert && <AlertMessage setAlert={setAlert} alert={alert} show={alert.showAlert} clickAway={(timeout) => { clearTimeout(timeout); setAlert({ showAlert: false, type: null, message: null }) }} type={alert.type}>{alert.message}</AlertMessage>}
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />
