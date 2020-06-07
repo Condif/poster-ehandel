@@ -22,6 +22,7 @@ const AlertMessage = (props) => {
 
     useEffect(() => clear());
 
+    // eslint-disable-next-line
     useEffect(() => { timeout(); }, [props.show]);
 
     const handleClickAway = () => {

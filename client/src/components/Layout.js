@@ -6,8 +6,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect,
-  useHistory,
+  Redirect
 } from "react-router-dom";
 import ProductGrid from "./ProductGrid";
 import Cart from "./Cart/Cart";
@@ -39,11 +38,8 @@ const Layout = () => {
       setProducts(await getAllProducts());
     }
     fetchOnLoad();
+    // eslint-disable-next-line
   }, []);
-
-/*
-window.location.pathname === "/adminProductPage" && await setAlert({ showAlert: true, type: "error", message: "You are not authorized" })
-*/
 
   const AdminRoute = (props) => (
     <Route
@@ -53,7 +49,7 @@ window.location.pathname === "/adminProductPage" && await setAlert({ showAlert: 
           <p>Loading</p>
         ) : isAdmin() ? (
           props.children
-        ) : <Redirect to={{ pathname: "/", state: { from: window.location.pathname }}} />
+        ) : <Redirect to={{ pathname: "/", state: { redirectedFrom: window.location.pathname }}} />
         }
     />
   );

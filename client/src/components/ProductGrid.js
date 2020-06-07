@@ -8,16 +8,19 @@ const Main = (props) => {
   const { products, createSlug, setAlert } = props;
 
   const location = useLocation();
-  let from;
+  
+  let redirectedFrom;
+
   if (location.state) {
-    from = location.state.from;
+    redirectedFrom = location.state.redirectedFrom;
   }
 
   useEffect(() => {
-    if (from === "/adminProductPage") {
+    if (redirectedFrom === "/adminProductPage") {
       setAlert({ showAlert: true, type: "error", message: "You are not authorized to view that page." })
     }
-  }, [from])
+    // eslint-disable-next-line
+  }, [redirectedFrom])
 
 
   return (
