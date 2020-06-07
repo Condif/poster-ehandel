@@ -14,7 +14,7 @@ export default function Login() {
     userPassword: "",
   });
 
-  const { setUser, authenticateUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -28,7 +28,7 @@ export default function Login() {
       [anchor]: event.target.value,
     });
   }
-  
+
   function logIn() {
     let user = {
       email: inputValues.userEmail,
@@ -46,7 +46,6 @@ export default function Login() {
       if (response.status === 200) {
         let dataFromBackend = await response.json();
         setUser(dataFromBackend);
-        authenticateUser(dataFromBackend);
         redirectToMain();
       }
       if (response.status === 401) {

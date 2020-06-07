@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   menuButton: {
+    color: "white",
     marginRight: theme.spacing(2),
     [theme.breakpoints.up("md")]: {
       display: "none",
@@ -12,7 +13,6 @@ const useStyles = makeStyles((theme) => ({
       display: "none",
     },
   },
-  toolbar: theme.mixins.toolbar,
   drawer: {
     width: 240,
     flexShrink: 0,
