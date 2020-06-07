@@ -6,27 +6,23 @@ import { ClickAwayListener } from "@material-ui/core";
 
 const AlertMessage = (props) => {
     const classes = useStyles();
-
     const [fadeIn, setFadeIn] = useState(true);
 
+    let animationTimeout;
 
-    let animationTimeout = () => setTimeout(() => {
-        props.setAlert({ showAlert: false, type: null, message: null });
-        setFadeIn(false);
-        clear();
-        animationTimeout = null;
-    }, 5100);
+    function timeout() {
+        animationTimeout = setTimeout(() => {
+            setFadeIn(false);
+            clear();
+            props.setAlert({ showAlert: false, type: null, message: null });
+        }, 5000)
+    }
 
-    const clear = () => { clearTimeout(animationTimeout); animationTimeout = null };
+    const clear = () => { clearTimeout(animationTimeout); };
 
     useEffect(() => clear());
 
-    useEffect(() => {
-        if (props.show === true && animationTimeout !== null) {
-            animationTimeout();
-        }
-        return clear();
-    }, [props.show]);
+    useEffect(() => { timeout(); }, [props.show]);
 
     const handleClickAway = () => {
         clear();
@@ -36,7 +32,7 @@ const AlertMessage = (props) => {
 
     return (
         <ClickAwayListener onClickAway={handleClickAway}>
-            <Fade in={fadeIn} timeout={200}>
+            <Fade in={fadeIn} timeout={700}>
                 <Alert
                     elevation={1}
                     className={classes.root}
