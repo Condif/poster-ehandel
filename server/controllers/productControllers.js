@@ -74,9 +74,9 @@ exports.getProductById = async (req, res) => {
 exports.updateProductStock = async (req, res) => {
   let products = req.body;
   console.log(products, "här är products");
-  if (products.length === 0 || Object.keys(products) == 0) {
-    throw new ServerError("The product does not exist", 404);
-  }
+  // if (products.length === 0 || Object.keys(products) == 0) {
+  //   throw new ServerError("The product does not exist", 404);
+  // }
   products.forEach(async (product) => {
     const productInStock = await Product.findOne({ _id: product._id });
     if (!productInStock) {
