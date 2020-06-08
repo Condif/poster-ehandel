@@ -1,10 +1,10 @@
 import React, { useContext, useState, useEffect } from "react";
 import useStyles from "./OrdersStyles";
 import { Grid, Typography, Paper } from "@material-ui/core";
-import { UserContext } from '../../Contexts/UserContext'
+import { UserContext } from "../../Contexts/UserContext";
 const Receipt = () => {
   const classes = useStyles();
-  const { receipt, showReceipt } = useContext(UserContext);
+  const { receipt, showReceipt, receipt, clearCartAndLocalStorage } = useContext(UserContext);
   const [specificOrders, setSpecificOrders] = useState();
 
   const getSpecificOrders = async () => {
@@ -24,7 +24,8 @@ const Receipt = () => {
   }
 
   useEffect(() => {
-    setupSpecificOrders()
+    setupSpecificOrders()   
+    clearCartAndLocalStorage();
   }, []);
 
   return (
@@ -117,4 +118,4 @@ const Receipt = () => {
   )
 }
 
-export default Receipt
+export default Receipt;

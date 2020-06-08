@@ -83,9 +83,9 @@ exports.updateProductStock = async (req, res) => {
       throw new ServerError("No such product in stock", 404);
     }
     console.log("PRODUCT: ", productInStock);
-    let currentAvlible = productInStock.inventory - product.cartAmount;
-    console.log(currentAvlible, "Current");
-    product.inventory = currentAvlible;
+    let currentAvalible = productInStock.inventory - product.cartAmount;
+    console.log(currentAvalible, "Current");
+    product.inventory = currentAvalible;
     product.cartAmount = 0;
 
     const updatedProduct = new Product(Object.assign(productInStock, product));
