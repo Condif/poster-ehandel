@@ -136,7 +136,9 @@ const Layout = () => {
               </Route>
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route path="/orders" component={Orders} />
+              <AdminRoute path="/orders">
+                <Orders />
+              </AdminRoute>
               <Route path="/receipt" component={Receipt} />
               <LoggedInRoute path="/checkout">
                 <Checkout />
