@@ -70,42 +70,42 @@ This part is only for our teacher's reference, not the actual grading of the ass
 
 ### Passing grades:
 
-- All sites should be responsive.(Completed)
-  The site is fully responsive, from desktop to mobile. 
-- The project should be implemented with a React frontend and an Express backend. (Completed)
-  See above.
-- Make an ER-diagram and a codediagram. These should be handed over at the idéapproval. (Completed)
-- Describe your business idea in a short text presentation. This should be handed over at the idéapproval.(Completed)
-- All content should be saved in MongoDB. (Completed) 
-  We are using MongoDB atlas. 
-- You should be able to login as an administrator. (Completed)
-  Each user has a role, which is saved in the user document in the database. When the user logs in we do a role validation check. If the   user is approved as an admin, they get access to admin features. 
-- All passwords should be encrypted in the database. (Completed)
-  We are using bcrypt, and all the passwords in the database are hashed. 
-- A user should be able to order products from the site, which updates the inventory in the database. (Completed) 
-  When the user makes a purchase, a PUT is triggered, which sends an array of objects. We find each product via its id and then subtract   the current inventory with the cartAmount. Then we replace the old object with the new updated one. 
-- An administrator should be allowed to update the inventory from the admin part of the site. (Completed)
-  An administrator can update the inventory by clicking “Edit Products”. There the admin can add or remove items in the inventory. By     pushing the “update” button, the old object is replaced with the new, through a PUT, and the inventory in the database is updated.
-- Administrators can see a list of all orders that have been made. (Completed)
-  By clicking “see orders” the admin can see all orders.
-- The products on the site should be divided into categories. A product ought to belong to at least one category. (Completed)
-  Every product has a category property. In layout the products are mapped through and gets divided into their different categories.       Each category gets its own Route with a CategoryPage (and slugs are also created). So, when the user clicks “Forrest”, all the           pictures with the category forrest is shown etc. 
-- The user should be able to see a list of all products, but also just one category. (Completed)
-  When the user visits the page, or click “home”, all products are shown. But then when a category is clicked, only products under that   category are displayed. 
-- The user should be able to put items in a cart, which is saved on local storage. (Completed)
+- All sites should be responsive.(Completed) </br>
+  The site is fully responsive, from desktop to mobile. </br>
+- The project should be implemented with a React frontend and an Express backend. (Completed)</br>
+  See above.</br>
+- Make an ER-diagram and a codediagram. These should be handed over at the idéapproval. (Completed)</br>
+- Describe your business idea in a short text presentation. This should be handed over at the idéapproval.(Completed)</br>
+- All content should be saved in MongoDB. (Completed) </br>
+  We are using MongoDB atlas. </br>
+- You should be able to login as an administrator. (Completed)</br>
+  Each user has a role, which is saved in the user document in the database. When the user logs in we do a role validation check. If the   user is approved as an admin, they get access to admin features. </br>
+- All passwords should be encrypted in the database. (Completed)</br>
+  We are using bcrypt, and all the passwords in the database are hashed. </br>
+- A user should be able to order products from the site, which updates the inventory in the database. (Completed) </br>
+  When the user makes a purchase, a PUT is triggered, which sends an array of objects. We find each product via its id and then subtract   the current inventory with the cartAmount. Then we replace the old object with the new updated one. </br>
+- An administrator should be allowed to update the inventory from the admin part of the site. (Completed)</br>
+  An administrator can update the inventory by clicking “Edit Products”. There the admin can add or remove items in the inventory. By     pushing the “update” button, the old object is replaced with the new, through a PUT, and the inventory in the database is updated.</br>
+- Administrators can see a list of all orders that have been made. (Completed)</br>
+  By clicking “see orders” the admin can see all orders.</br>
+- The products on the site should be divided into categories. A product ought to belong to at least one category. (Completed)</br>
+  Every product has a category property. In layout the products are mapped through and gets divided into their different categories.       Each category gets its own Route with a CategoryPage (and slugs are also created). So, when the user clicks “Forrest”, all the           pictures with the category forrest is shown etc. </br>
+- The user should be able to see a list of all products, but also just one category. (Completed)</br>
+  When the user visits the page, or click “home”, all products are shown. But then when a category is clicked, only products under that   category are displayed. </br>
+- The user should be able to put items in a cart, which is saved on local storage. (Completed)</br>
   The user can add an item to a cart, which is an array that we keep in our userContext. When a user adds an item in the cart, the item   is set in localstorage. 
-- A user making an order should be presented the opportunity to register and login, and must be logged in, as a customer, before the       order is created. 
-  They user can add products to the cart, but when they click the “to payment” they get a warning that they have to be logged in or       register. 
-- The user should be allowed to choose one out of several shipment alternatives. (Completed)
-  The user can choose from DHL, Posten or Schenker during the checkout. 
-- The shipment alternatives should be retrieved from the database. (Completed)
-  In our checkout component we GET all the shipping alternatives from the database and maps through them, so that the user can choose a   shipment. 
-- The checkout, in the frontend application, should have validation on all fields. (Completed)
-  The user can not make a purchase if the fields does not contain the right type of information. An error message will be displayed if     the input is incorrect. 
+- A user making an order should be presented the opportunity to register and login, and must be logged in, as a customer, before the       order is created. (Completed)</br>
+  They user can add products to the cart, but when they click the “to payment” they get a warning that they have to be logged in or       register. </br>
+- The user should be allowed to choose one out of several shipment alternatives. (Completed)</br>
+  The user can choose from DHL, Posten or Schenker during the checkout. </br>
+- The shipment alternatives should be retrieved from the database. (Completed)</br>
+  In our checkout component we GET all the shipping alternatives from the database and maps through them, so that the user can choose a   shipment. </br>
+- The checkout, in the frontend application, should have validation on all fields. (Completed)</br>
+  The user can not make a purchase if the fields does not contain the right type of information. An error message will be displayed if     the input is incorrect. </br>
 
 ### Extra credits
 
-- The backend application must have a working global error handler. (Completed)
+- The backend application must have a working global error handler. (Completed)</br>
   In our expressApp we have a middleware that handles global errors. We also have a ServerError class that throws a new error if           something goes wrong. 
  
 ### Inlog
