@@ -15,14 +15,9 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const {
-    cartList,
-    userData,
-    setUser,
-    authenticateUser,
-    totalCost,
-    setAlert,
-  } = useContext(UserContext);
+  const { cartList, userData, setUser, totalCost, setAlert } = useContext(
+    UserContext
+  );
 
   const {
     validateInputFields,
@@ -72,7 +67,6 @@ const Checkout = () => {
         if (userData.id !== data.id) {
           setUser(data);
         }
-        // authenticateUser(data);
         updateInventory();
         createNewOrder();
         history.push("/receipt");
