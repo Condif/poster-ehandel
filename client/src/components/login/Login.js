@@ -14,7 +14,7 @@ export default function Login() {
     userPassword: "",
   });
 
-  const { setUser } = useContext(UserContext);
+  const { setUser, setAlert } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -48,48 +48,45 @@ export default function Login() {
         setUser(dataFromBackend);
         redirectToMain();
       }
-      if (response.status === 401) {
-        let messageResponse = await response.json();
-        alert(messageResponse.err);
+      if (response.status === 401 || response.status === 404) {
+        setAlert({ showAlert: true, type: "error", message: "You have entered the wrong username or password." });
       }
-      if (response.status === 404) {
-        alert("Wrong username or password");
-      }
-    });
+    }
+    )
   }
 
   return (
-    <Container className={classes.flexedContainer} maxWidth="sm">
-      <TextField
-        fullWidth
-        variant="outlined"
-        margin="normal"
-        size="small"
-        type="email"
-        required
-        label="E-mail"
-        onChange={(event) => handleChange(event, "userEmail")}
-      ></TextField>
-      <TextField
-        fullWidth
-        variant="outlined"
-        margin="normal"
-        size="small"
-        type="password"
-        required
-        label="Password"
-        onChange={(event) => handleChange(event, "userPassword")}
-      ></TextField>
-      <Button
-        disabled={!inputValues.userEmail || !inputValues.userPassword}
-        className={classes.submitButton}
-        variant="contained"
-        color="primary"
-        fullWidth
-        onClick={() => logIn()}
-      >
-        Sign in
+      <Container className={classes.flexedContainer} maxWidth="sm">
+        <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          size="small"
+          type="email"
+          required
+          label="E-mail"
+          onChange={(event) => handleChange(event, "userEmail")}
+        ></TextField>
+        <TextField
+          fullWidth
+          variant="outlined"
+          margin="normal"
+          size="small"
+          type="password"
+          required
+          label="Password"
+          onChange={(event) => handleChange(event, "userPassword")}
+        ></TextField>
+        <Button
+          disabled={!inputValues.userEmail || !inputValues.userPassword}
+          className={classes.submitButton}
+          variant="contained"
+          color="primary"
+          fullWidth
+          onClick={() => logIn()}
+        >
+          Sign in
       </Button>
-    </Container>
+      </Container>
   );
 }

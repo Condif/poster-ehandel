@@ -19,13 +19,31 @@ const Cart = (props) => {
     cartList,
     clearCartAndLocalStorage,
     totalCost,
+    userData,
+    setUser,
+    authenticateUser
   } = useContext(UserContext);
 
   const { createSlug } = props;
   function redirectToCheckOut() {
     if((cartList !== undefined || cartList !== undefined)){   
-        openCart()
-        history.push("/checkout")
+      fetch("http://localhost:8080/sessions/checkLoginSession", {
+        method: "GET",
+        credentials: "include",
+      }).then(async (response) => {
+        const data = await response.json();
+        if (data.error) {
+          // Reset user data when session has ended
+          if (userData !== "") {
+            setUser("");
+          }
+          alert(`You need to be a member to place an order.
+          Would you like to sign up?`);
+          return;
+        }
+        openCart();
+        history.push("/checkout");
+      })
     } 
   }
 

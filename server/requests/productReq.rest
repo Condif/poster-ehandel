@@ -39,12 +39,12 @@ Content-Type: image/jpeg
 ###
 
 // Update a product
-PUT http://localhost:8080/api/products/5ecfd07aabe87203ec813aa5
+PUT http://localhost:8080/api/products/5ed7903574c28384bc088f01
 Content-Type: application/json
 
 {
-    "inventory": "9",
-    "_id": "5ecfd07aabe87203ec813aa5"
+    "inventory": "18",
+    "_id": "5ed7903574c28384bc088f01"
 }
 
 ###
@@ -65,12 +65,24 @@ Content-Type: application/json
 
 [
 {
-    "_id": "5ec7cdd8dfbbcd4930b76b3c",
-    "quantity": 2
+    "_id": "5ed7a92d25f95d92f2ae1790",
+    "price": 279,
+    "name": "Iceberg",
+    "category": "Water",
+    "description": "Aerial view of an iceberg floating in the turquoise sea of Sermersooq, Greenland",
+    "inventory": 10,
+    "cartAmount": 1,
+    "imageId": "5ed7a92c25f95d92f2ae174e"
 },
 {
-    "_id": "5ec7d87e2e3c8232a853dc36",
-    "quantity": 1
+    "_id": "5ed7ad3625f95d92f2ae17aa",
+    "price": 229,
+    "name": "Autumn Waterfall",
+    "category": "Water",
+    "description": "A lively yet calm waterfall during autumn in Portland, USA",
+    "inventory": 10,
+    "cartAmount": 1,
+    "imageId": "5ed7ad3625f95d92f2ae1757"
 }
 ]
 

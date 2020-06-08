@@ -4,6 +4,12 @@ export const UserContext = createContext();
 const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [userData, setUserData] = useState("");
+  const [alert, setAlert] = useState({
+    showAlert: false,
+    type: null,
+    message: null
+  });
+
   const [receipt, setReceipt] = useState("");
   
   const handleReceipt = (newReceipt) => {
@@ -153,7 +159,7 @@ const UserContextProvider = (props) => {
         deleteProduct,
         totalCost,
         amountOfItems,
-        
+        alert, setAlert
       }}
     >
       {props.children}

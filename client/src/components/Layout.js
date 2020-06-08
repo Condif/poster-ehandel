@@ -18,13 +18,16 @@ import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
-import Orders from "./Orders/Orders"
-import Receipt from "./Orders/Receipt"
+import Orders from "./Orders/Orders";
+import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
+import AlertMessage from "./AlertMessage/AlertMessage";
 
 const Layout = () => {
-  const { setUser, isAdmin, userData } = useContext(UserContext);
+  const { setUser, isAdmin, userData, alert, setAlert } = useContext(
+    UserContext
+  );
 
   const [products, setProducts] = useState([]);
 
@@ -37,6 +40,7 @@ const Layout = () => {
       setProducts(await getAllProducts());
     }
     fetchOnLoad();
+    // eslint-disable-next-line
   }, []);
 
   const AdminRoute = (props) => (
@@ -48,10 +52,12 @@ const Layout = () => {
         ) : isAdmin() ? (
           props.children
         ) : (
-          <>
-            {alert("You are not authorized")}
-            <Redirect to="/" />
-          </>
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { redirectedFrom: window.location.pathname },
+            }}
+          />
         )
       }
     />
@@ -93,6 +99,20 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
+        {alert.showAlert && (
+          <AlertMessage
+            setAlert={setAlert}
+            alert={alert}
+            show={alert.showAlert}
+            clickAway={(timeout) => {
+              clearTimeout(timeout);
+              setAlert({ showAlert: false, type: null, message: null });
+            }}
+            type={alert.type}
+          >
+            {alert.message}
+          </AlertMessage>
+        )}
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />
@@ -108,7 +128,11 @@ const Layout = () => {
           >
             <Switch>
               <Route exact path="/">
-                <ProductGrid products={products} createSlug={createSlug} />
+                <ProductGrid
+                  products={products}
+                  createSlug={createSlug}
+                  setAlert={setAlert}
+                />
               </Route>
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
@@ -218,8 +242,9 @@ const getCategories = (products) => {
   const categories = [];
   products.map((product) => {
     if (!categories.includes(product.category)) {
-      categories.push(product.category);
+      return categories.push(product.category);
     }
+    return null;
   });
 
   return categories;
