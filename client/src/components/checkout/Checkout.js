@@ -34,7 +34,6 @@ const Checkout = () => {
 
   //updates inventory of each product when a purches is made
   const updateInventory = () => {
-    console.log("i update", cartList);
     fetch("http://localhost:8080/api/products/", {
       method: "PUT",
       headers: {
