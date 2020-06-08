@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "@material-ui/core/Button";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
 import useStyles from "./RegisterStyles";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
+import { UserContext } from "../../Contexts/UserContext";
 
 const Register = () => {
   const [inputValues, setInputValues] = useState({
@@ -21,6 +22,8 @@ const Register = () => {
   const classes = useStyles();
 
   const history = useHistory();
+
+  const { setAlert } = useContext(UserContext);
 
   function handleSubmit() {
     createNewUser();
@@ -60,15 +63,16 @@ const Register = () => {
       body: JSON.stringify(newUser),
     }).then(async (response) => {
       if (response.status === 409) {
-        alert("Något gick fel");
+        setAlert({ showAlert: true, type: "warning", message: "Something went wrong" });
       }
       if (response.status === 201) {
-        alert("User created");
+        await setAlert({ showAlert: true, type: "success", message: "Successfully registered user" })
         redirectToLogin();
       }
       if (response.status === 500) {
-        alert("There is already a user registered with that email.");
+        setAlert({ showAlert: true, type: "error", message: "There is already a user registered with that email." });
       }
+      return;
     });
   }
 

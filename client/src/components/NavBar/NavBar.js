@@ -1,5 +1,5 @@
 // Hämta useContext för att använda funktioner i UserContext.
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -55,12 +55,12 @@ const NavButton = withStyles({
 const NavBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
-
-  const [mobileOpen, setMobileOpen] = React.useState(false);
+  
+  const [mobileOpen, setMobileOpen] = useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
-  const { openCart, userData, amountOfItems, setUser } = useContext(
+  const { openCart, userData, amountOfItems, setUser, setAlert } = useContext(
     UserContext
-  );
+    );
 
   const handleDrawerToggle = (props) => {
     setMobileOpen(!mobileOpen);
@@ -113,107 +113,109 @@ const NavBar = (props) => {
   const logout = async () => {
     await fetch("http://localhost:8080/sessions/logout", {
       method: "POST",
-      credentials: "include",
+      credentials: "include"
     })
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
           setUser("");
-          alert("You have been logged out");
+          setAlert({ showAlert: true, type: "success", message: data.message });
           if (window.location.pathname !== "/") {
             history.push("/");
+            return;
           }
         }
       });
   };
 
   return (
-    <NavAppBar position="static">
-      <Toolbar className={classes.toolbar}>
-        <IconButton
-          color="inherit"
-          aria-label="open drawer"
-          edge="start"
-          onClick={handleDrawerToggle}
-          className={classes.menuButton}
-        >
-          <MenuIcon />
-        </IconButton>
-        <Categories className={classes.desktopLinks} item>
-          <Hidden smUp implementation="css">
-            <Drawer
-              variant="temporary"
-              open={mobileOpen}
-              onClose={handleDrawerToggle}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-              ModalProps={{
-                keepMounted: true, // Better open performance on mobile.
-              }}
-            >
-              {drawer}
-            </Drawer>
-          </Hidden>
-          <NavButton aria-label="homepage" onClick={() => history.push("/")}>
-            Home
+    <>
+      <NavAppBar position="static">
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            edge="start"
+            onClick={handleDrawerToggle}
+            className={classes.menuButton}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Categories className={classes.desktopLinks} item>
+            <Hidden smUp implementation="css">
+              <Drawer
+                variant="temporary"
+                open={mobileOpen}
+                onClose={handleDrawerToggle}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+                ModalProps={{
+                  keepMounted: true, // Better open performance on mobile.
+                }}
+              >
+                {drawer}
+              </Drawer>
+            </Hidden>
+            <NavButton aria-label="homepage" onClick={() => history.push("/")}>
+              Home
           </NavButton>
-          {props.categories.map((category) => {
-            return (
-              <NavButton
-                aria-label={`category ${category}`}
-                key={category}
-                onClick={() =>
-                  history.push(`/category/${props.createSlug(category)}`)
-                }
-              >
-                {category}
-              </NavButton>
-            );
-          })}
-        </Categories>
+            {props.categories.map((category) => {
+              return (
+                <NavButton
+                  aria-label={`category ${category}`}
+                  key={category}
+                  onClick={() =>
+                    history.push(`/category/${props.createSlug(category)}`)
+                  }
+                >
+                  {category}
+                </NavButton>
+              );
+            })}
+          </Categories>
 
-        <Grid justifycontent="flex-end" item>
-          {userData.role === "admin" ? (
-            <>
-              <NavButton
-                aria-label="orders"
-                onClick={() => history.push("/orders")}
-              >
-                See all orders
+          <Grid justifycontent="flex-end" item>
+            {userData.role === "admin" ? (
+              <>
+                <NavButton
+                  aria-label="orders"
+                  onClick={() => history.push("/orders")}
+                >
+                  See all orders
               </NavButton>
-              <NavButton
-                className={classes.desktopLinks}
-                aria-label="edit products"
-                onClick={() => history.push("/adminProductPage")}
-              >
-                Edit Products
+                <NavButton
+                  className={classes.desktopLinks}
+                  aria-label="edit products"
+                  onClick={() => history.push("/adminProductPage")}
+                >
+                  Edit Products
               </NavButton>
-            </>
-          ) : null}
-          {userData === "" ? (
-            <>
-              <NavButton
-                aria-label="sign up"
-                onClick={() => history.push("/register")}
-              >
-                Sign up
+              </>
+            ) : null}
+            {userData === "" ? (
+              <>
+                <NavButton
+                  aria-label="sign up"
+                  onClick={() => history.push("/register")}
+                >
+                  Sign up
               </NavButton>
-              <NavButton
-                aria-label="login"
-                onClick={() => history.push("/login")}
-              >
-                Login
+                <NavButton
+                  aria-label="login"
+                  onClick={() => history.push("/login")}
+                >
+                  Login
               </NavButton>
-            </>
-          ) : null}
-          {userData !== "" && (
-            <NavButton aria-label="log out" onClick={logout}>
-              Logout
-            </NavButton>
-          )}
-          {window.location.pathname !== "/checkout"
-            ? userData.email && (
+              </>
+            ) : null}
+            {userData !== "" && (
+              <NavButton aria-label="log out" onClick={logout}>
+                Logout
+              </NavButton>
+            )}
+            {window.location.pathname !== "/checkout"
+              ? userData.email && (
                 <StyledBadge color="secondary" badgeContent={amountOfItems()}>
                   <IconButton
                     style={{
@@ -227,10 +229,11 @@ const NavBar = (props) => {
                   </IconButton>
                 </StyledBadge>
               )
-            : null}
-        </Grid>
-      </Toolbar>
-    </NavAppBar>
+              : null}
+          </Grid>
+        </Toolbar>
+      </NavAppBar>
+    </>
   );
 };
 
