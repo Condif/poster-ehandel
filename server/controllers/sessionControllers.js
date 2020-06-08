@@ -10,7 +10,7 @@ exports.findUserByName = async (req, res, next) => {
 
   user = await User.findOne({ email: condition });
   if (!user) {
-    throw new ServerError("User was not found", 404);
+    throw new ServerError("Wrong username or password", 404);
   }
 
   res.user = user;
@@ -45,6 +45,7 @@ exports.login = async (req, res) => {
       deliveryAddress: res.user.deliveryAddress,
     });
   });
+  console.log("reached")
 };
 
 exports.checkLoginSession = (req, res, next) => {

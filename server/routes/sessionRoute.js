@@ -18,7 +18,7 @@ router.post('/logout', (req, res) => {
     res.clearCookie('LoginSession')
     res.clearCookie('LoginSession.sig')
     console.log('Destroyed client session');
-    res.json({ success: true })
+    res.json({ success: true, message: "You have been logged out" })
 })
 
 module.exports = router;

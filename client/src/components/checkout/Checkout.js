@@ -21,6 +21,7 @@ const Checkout = () => {
     setUser,
     authenticateUser,
     totalCost,
+    setAlert,
   } = useContext(UserContext);
 
   const {
@@ -60,8 +61,12 @@ const Checkout = () => {
           if (userData !== "") {
             setUser("");
           }
-          alert(`You need to be a member to make a purchase.
-          Would you like to sign up?`);
+          setAlert({
+            showAlert: true,
+            type: "info",
+            message: `You need to be a member to make a purchase.
+          Would you like to sign up?`,
+          });
           return;
         }
         if (userData.id !== data.id) {

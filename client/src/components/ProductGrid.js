@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 // import { useHistory } from 'react-router-dom';
 import Grid from "@material-ui/core/Grid";
 import ProductCard from "./ProductCard/ProductCard";
+import { useLocation } from "react-router-dom";
 
 const Main = (props) => {
-  const { products, createSlug } = props;
+  const { products, createSlug, setAlert } = props;
+
+  const location = useLocation();
+  
+  let redirectedFrom;
+
+  if (location.state) {
+    redirectedFrom = location.state.redirectedFrom;
+  }
+
+  useEffect(() => {
+    if (redirectedFrom === "/adminProductPage") {
+      setAlert({ showAlert: true, type: "error", message: "You are not authorized to view that page." })
+    }
+    // eslint-disable-next-line
+  }, [redirectedFrom])
+
+
   return (
     <Grid container spacing={2} alignItems="stretch">
       {products !== null &&
@@ -13,7 +31,6 @@ const Main = (props) => {
     </Grid>
   );
 };
-
 /**
  * Render each product
  * @param {string} caseStyle
