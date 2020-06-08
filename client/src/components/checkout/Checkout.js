@@ -15,14 +15,38 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList, userData, setUser, authenticateUser, totalCost, setAlert } = useContext(UserContext);
+  const {
+    cartList,
+    userData,
+    setUser,
+    authenticateUser,
+    totalCost,
+    setAlert,
+  } = useContext(UserContext);
 
   const {
     validateInputFields,
     checkErrorsInInfo,
     validationInputs,
-    shipmentAlternatives
+    shipmentAlternatives,
   } = useContext(CheckoutContext);
+
+  //updates inventory of each product when a purches is made
+  const updateInventory = () => {
+    console.log("i update", cartList);
+    fetch("http://localhost:8080/api/products/", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(cartList),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        alert("Product inventory updated.");
+      });
+  };
 
   const redirectToReceipt = () => {
     const validated = validateInputFields();
@@ -37,51 +61,58 @@ const Checkout = () => {
           if (userData !== "") {
             setUser("");
           }
-          setAlert({ showAlert: true, type: "info", message: `You need to be a member to make a purchase.
-          Would you like to sign up?` });
+          setAlert({
+            showAlert: true,
+            type: "info",
+            message: `You need to be a member to make a purchase.
+          Would you like to sign up?`,
+          });
           return;
         }
         if (userData.id !== data.id) {
           setUser(data);
         }
         // authenticateUser(data);
-        createNewOrder()
+        updateInventory();
+        createNewOrder();
         history.push("/receipt");
-      })
+      });
     }
   };
 
   const createNewOrder = () => {
-      const newShipment = shipmentAlternatives.filter((currentShipment) => {
+    const newShipment = shipmentAlternatives.filter((currentShipment) => {
       return (
         currentShipment.alternative === validationInputs.choosenShipment.value
       );
     });
-    
+
     let newOrder = {
       products: cartList,
       shipment: {
         alternative: newShipment[0].alternative,
         cost: newShipment[0].cost,
         deliveryTime: newShipment[0].deliveryTime,
-      }, 
+      },
       totalPrice: totalCost(),
       deliveryAddress: {
         address: validationInputs.address.value,
         zipcode: validationInputs.zipcode.value,
-        city: validationInputs.city.value
-      }
-    }
+        city: validationInputs.city.value,
+      },
+    };
 
     fetch("http://localhost:8080/api/orders", {
       method: "POST",
       headers: {
-            "Content-Type": "application/json",
-          },
+        "Content-Type": "application/json",
+      },
       credentials: "include",
       body: JSON.stringify(newOrder),
-    })
-  }
+    }).then(async (response) => {
+      const data = await response.json();
+    });
+  };
 
   return (
     <div className={classes.mainDiv}>

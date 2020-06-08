@@ -36,7 +36,11 @@ export default function UpdateInventory(props) {
     })
       .then((res) => res.json())
       .then(() => {
-        setAlert({ showAlert: true, type: "success", message: "Product inventory updated." });
+        setAlert({
+          showAlert: true,
+          type: "success",
+          message: "Product inventory updated.",
+        });
       });
   }
 
