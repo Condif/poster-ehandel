@@ -32,7 +32,7 @@ const ProductCard = (props) => {
 
   const handleAddToCart = () => {
     console.log(product);
-    
+
     addToCartAndLocalStorage(product);
   };
 
@@ -114,8 +114,12 @@ const ProductCard = (props) => {
           </Button>
         ) : null}
         {props.case === "main" || props.case === "productview" ? (
-          <Button size="small" onClick={handleAddToCart}>
-            Add to cart
+          <Button
+            disabled={product.inventory === 0}
+            size="small"
+            onClick={handleAddToCart}
+          >
+            {product.inventory === 0 ? "Not in stock" : "Add to cart"}
           </Button>
         ) : props.case === "updateInventory" ? (
           <form
