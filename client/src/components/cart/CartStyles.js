@@ -27,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     height: "calc(100% - 5rem)",
     top: "4rem",
-    // width: "30rem",
     overflowY: "auto",
     [theme.breakpoints.down("sm")]: {
       width: "100vw",
