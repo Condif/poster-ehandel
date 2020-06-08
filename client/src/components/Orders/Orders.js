@@ -71,7 +71,6 @@ const Orders = () => {
 
   return (
     <>
-      {console.log(shipped)}
       {orders != undefined
         ? orders.map((order) => (
             <Grid
@@ -135,7 +134,7 @@ const Orders = () => {
                       <FormControl component="fieldset">
                         <RadioGroup
                           row
-                          defaultValue={order.shipped}
+                          defaultValue={"true"}
                           aria-label="shipped"
                           onChange={handleChange}
                         >
