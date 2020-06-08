@@ -1,11 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { Grid, Typography, Paper, Container } from "@material-ui/core";
+import React, { useState, useEffect, useContext } from "react";
+import { Grid, Typography, Paper, Button } from "@material-ui/core";
 import useStyles from "./OrdersStyles";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
+import { UserContext } from "../../Contexts/UserContext";
 
 const Orders = () => {
   const classes = useStyles();
 
+  const { setAlert } = useContext(UserContext);
+
   const [orders, setOrders] = useState();
+  const [shipped, setShipped] = React.useState("false");
 
   const getAllOrders = async () => {
     const allOrders = await fetch("http://localhost:8080/api/orders", {
@@ -19,6 +27,39 @@ const Orders = () => {
     return allOrders;
   };
 
+  const updateOrder = (event) => {
+    event.preventDefault();
+    const order = {
+      _id:
+        event.target.parentElement.parentElement.parentElement.parentElement
+          .dataset.id,
+      shipped: shipped,
+    };
+
+    console.log(order);
+
+    fetch("http://localhost:8080/api/orders/" + order._id, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(order),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setAlert({
+          showAlert: true,
+          type: "success",
+          message: "Order updated.",
+        });
+      });
+  };
+
+  const handleChange = (event) => {
+    setShipped(event.target.value);
+  };
+
   const setupOrders = async () => {
     const allOrders = await getAllOrders();
     setOrders(allOrders);
@@ -29,10 +70,16 @@ const Orders = () => {
   }, []);
 
   return (
-    <Grid container>
+    <>
+      {console.log(shipped)}
       {orders != undefined
         ? orders.map((order) => (
-            <Grid container key={order._id} className={classes.orderContainer}>
+            <Grid
+              container
+              key={order._id}
+              data-id={order._id}
+              className={classes.orderContainer}
+            >
               <Paper className={classes.paper} style={{ width: " 100%" }}>
                 <Grid item xs={12} className={classes.information}>
                   <Typography className={classes.heading} variant="h6">
@@ -73,16 +120,55 @@ const Orders = () => {
                     <Typography>
                       Days to delivery: {order.shipment.deliveryTime}
                     </Typography>
+                    <Typography>
+                      Shipped:{" "}
+                      {order.shipped === false ? "Not shipped" : "Shipped"}
+                    </Typography>
                   </Grid>
                 </Grid>
-                <Grid item className={classes.total}>
-                  <Typography>Total cost: {order.totalPrice} SEK </Typography>
+                <Grid container className={classes.priceAndShipped}>
+                  <Grid item item xs={12} sm={6} className={classes.total}>
+                    <Typography>Total cost: {order.totalPrice} SEK </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={6}>
+                    <form onSubmit={updateOrder}>
+                      <FormControl component="fieldset">
+                        <RadioGroup
+                          row
+                          defaultValue={order.shipped}
+                          aria-label="shipped"
+                          onChange={handleChange}
+                        >
+                          <FormControlLabel
+                            value="true"
+                            control={<Radio />}
+                            label="Shipped"
+                          />
+                          <FormControlLabel
+                            value="false"
+                            control={<Radio />}
+                            label="Not shipped"
+                          />
+                          <Button
+                            type="submit"
+                            style={{ marginLeft: "1rem" }}
+                            size="small"
+                            className={classes.submitButton}
+                            variant="contained"
+                            color="primary"
+                          >
+                            Update
+                          </Button>
+                        </RadioGroup>
+                      </FormControl>
+                    </form>
+                  </Grid>
                 </Grid>
               </Paper>
             </Grid>
           ))
         : null}
-    </Grid>
+    </>
   );
 };
 

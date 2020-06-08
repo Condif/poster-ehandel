@@ -18,9 +18,11 @@ const useStyles = makeStyles((theme) => ({
   information: {},
   products: {},
   delivery: {},
-  total: {
-    background: "white",
-    margin: "1rem 0 2rem 1rem",
+  priceAndShipped: {
+    textAlign: "center",
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: "1rem",
   },
 }));
 
