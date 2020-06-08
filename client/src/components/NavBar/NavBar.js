@@ -55,12 +55,12 @@ const NavButton = withStyles({
 const NavBar = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  
+
   const [mobileOpen, setMobileOpen] = useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
   const { openCart, userData, amountOfItems, setUser, setAlert, setShowReceipt } = useContext(
     UserContext
-    );
+  );
 
   const handleDrawerToggle = (props) => {
     setMobileOpen(!mobileOpen);
@@ -97,15 +97,26 @@ const NavBar = (props) => {
       <Divider />
       <List>
         {userData.role === "admin" && (
-          <ListItem
-            button
-            onClick={function (event) {
-              history.push("/adminProductPage");
-              handleDrawerToggle();
-            }}
-          >
-            Edit Products
-          </ListItem>
+          <>
+            <ListItem
+              button
+              onClick={function (event) {
+                history.push("/adminProductPage");
+                handleDrawerToggle();
+              }}
+            >
+              Edit Products
+            </ListItem>
+            <ListItem
+              button
+              onClick={function (event) {
+                history.push("/orders");
+                handleDrawerToggle();
+              }}
+            >
+              See all orders
+            </ListItem>
+          </>
         )}
       </List>
     </div>
@@ -114,7 +125,7 @@ const NavBar = (props) => {
   const logout = async () => {
     await fetch("http://localhost:8080/sessions/logout", {
       method: "POST",
-      credentials: "include"
+      credentials: "include",
     })
       .then((response) => response.json())
       .then((data) => {
@@ -165,7 +176,7 @@ const NavBar = (props) => {
             </Hidden>
             <NavButton aria-label="homepage" onClick={() => history.push("/")}>
               Home
-          </NavButton>
+            </NavButton>
             {props.categories.map((category) => {
               return (
                 <NavButton
@@ -185,18 +196,19 @@ const NavBar = (props) => {
             {userData.role === "admin" ? (
               <>
                 <NavButton
+                  className={classes.desktopLinks}
                   aria-label="orders"
                   onClick={() => history.push("/orders")}
                 >
                   See all orders
-              </NavButton>
+                </NavButton>
                 <NavButton
                   className={classes.desktopLinks}
                   aria-label="edit products"
                   onClick={() => history.push("/adminProductPage")}
                 >
                   Edit Products
-              </NavButton>
+                </NavButton>
               </>
             ) : 
             <NavButton
@@ -213,13 +225,13 @@ const NavBar = (props) => {
                   onClick={() => history.push("/register")}
                 >
                   Sign up
-              </NavButton>
+                </NavButton>
                 <NavButton
                   aria-label="login"
                   onClick={() => history.push("/login")}
                 >
                   Login
-              </NavButton>
+                </NavButton>
               </>
             ) : null}
             {userData !== "" && (
@@ -229,19 +241,19 @@ const NavBar = (props) => {
             )}
             {window.location.pathname !== "/checkout"
               ? userData.email && (
-                <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-                  <IconButton
-                    style={{
-                      width: "4rem",
-                      color: "#333",
-                    }}
-                    edge="start"
-                    onClick={openCart}
-                  >
-                    <ShoppingCartIcon />
-                  </IconButton>
-                </StyledBadge>
-              )
+                  <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+                    <IconButton
+                      style={{
+                        width: "4rem",
+                        color: "#333",
+                      }}
+                      edge="start"
+                      onClick={openCart}
+                    >
+                      <ShoppingCartIcon />
+                    </IconButton>
+                  </StyledBadge>
+                )
               : null}
           </Grid>
         </Toolbar>
