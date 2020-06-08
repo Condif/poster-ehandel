@@ -35,7 +35,7 @@ const Orders = () => {
       </Grid>
       {orders != undefined ? (
         orders.map((order) => (
-          <Grid container className={classes.orderContainer}>
+          <Grid container key={order._id}className={classes.orderContainer}>
             <Paper className={classes.paper}style={{ width: " 100%" }}>
               <Grid item xs={12} className={classes.information}>
                 <Typography variant="h4">Order: {order._id} </Typography>
@@ -43,8 +43,8 @@ const Orders = () => {
               <Grid container className={classes.orderItems}>
                 <Grid item xs={4} className={classes.information}>
                   <Typography variant="h5">Information: </Typography>
-                  <Typography>Namn: </Typography>
-                  <Typography>Efternamn: </Typography>
+                  <Typography>Namn: {order.name}</Typography>
+                  <Typography>Efternamn: {order.lastname}</Typography>
                 </Grid>
                 <Grid item xs={4} >
                   <Grid container className={classes.products}>

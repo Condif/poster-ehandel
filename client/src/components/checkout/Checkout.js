@@ -19,6 +19,7 @@ const Checkout = () => {
     cartList,
     userData,
     setUser,
+    handleReceipt,
     authenticateUser,
     totalCost,
     setAlert,
@@ -74,14 +75,18 @@ const Checkout = () => {
         }
         // authenticateUser(data);
         updateInventory();
-        createNewOrder();
-        history.push("/receipt");
-      });
+        
+        const receipt = await createNewOrder()
+
+        
+        handleReceipt(receipt)
+        history.push('/receipt')
+      })
     }
   };
 
-  const createNewOrder = () => {
-    const newShipment = shipmentAlternatives.filter((currentShipment) => {
+  const createNewOrder = async () => {
+      const newShipment = shipmentAlternatives.filter((currentShipment) => {
       return (
         currentShipment.alternative === validationInputs.choosenShipment.value
       );
@@ -102,17 +107,22 @@ const Checkout = () => {
       },
     };
 
-    fetch("http://localhost:8080/api/orders", {
+    const receipt = await fetch("http://localhost:8080/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
       body: JSON.stringify(newOrder),
-    }).then(async (response) => {
-      const data = await response.json();
-    });
-  };
+    })
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
+      return data
+    })
+  return receipt
+  }
 
   return (
     <div className={classes.mainDiv}>

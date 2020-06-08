@@ -21,6 +21,8 @@ exports.createOrder = async (req, res) => {
   const newOrder = {
     products: req.body.products,
     user: req.session.id,
+    name: req.session.name,
+    lastname: req.session.lastname,
     shipment: req.body.shipment,
     totalPrice: req.body.totalPrice,
     deliveryAddress: {
@@ -29,6 +31,7 @@ exports.createOrder = async (req, res) => {
       city: req.body.deliveryAddress.city
     }
   }
+  
   
   if (!newOrder || newOrder.length === 0) {
     throw new ServerError("The order was not created", 400);
