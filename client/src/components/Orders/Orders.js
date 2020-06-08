@@ -75,7 +75,7 @@ const Orders = () => {
                     </Typography>
                   </Grid>
                 </Grid>
-                <Grid container className={classes.total}>
+                <Grid item className={classes.total}>
                   <Typography>Total cost: {order.totalPrice} SEK </Typography>
                 </Grid>
               </Paper>
