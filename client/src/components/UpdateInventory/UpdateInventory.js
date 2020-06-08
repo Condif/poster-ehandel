@@ -45,7 +45,7 @@ export default function UpdateInventory(props) {
   }
 
   return (
-    <Grid key={product._id} item sm={4}>
+    <Grid key={product._id} item style={{ width: "100%" }} sm={4}>
       <ProductCard
         case="updateInventory"
         product={product}

@@ -8,7 +8,7 @@ const Main = (props) => {
   const { products, createSlug, setAlert } = props;
 
   const location = useLocation();
-  
+
   let redirectedFrom;
 
   if (location.state) {
@@ -17,11 +17,14 @@ const Main = (props) => {
 
   useEffect(() => {
     if (redirectedFrom === "/adminProductPage") {
-      setAlert({ showAlert: true, type: "error", message: "You are not authorized to view that page." })
+      setAlert({
+        showAlert: true,
+        type: "error",
+        message: "You are not authorized to view that page.",
+      });
     }
     // eslint-disable-next-line
-  }, [redirectedFrom])
-
+  }, [redirectedFrom]);
 
   return (
     <Grid container spacing={2} alignItems="stretch">
@@ -41,7 +44,7 @@ const Main = (props) => {
 export const renderProducts = (caseStyle, products, createSlug) => {
   return products.map((product) => {
     return (
-      <Grid key={product._id} item sm={6}>
+      <Grid key={product._id} style={{ width: "100%" }} item sm={6}>
         <ProductCard
           case={caseStyle}
           product={product}
