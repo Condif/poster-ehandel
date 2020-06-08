@@ -28,3 +28,11 @@ Content-Type: application/json
 }
 
 ###
+
+PUT http://localhost:8080/api/orders/5ede4f864c32783e4801497f
+Content-Type: application/json
+
+{
+    "shipped": "true",
+    "_id": "5ede4f864c32783e4801497f"
+}

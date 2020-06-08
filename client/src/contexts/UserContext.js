@@ -11,9 +11,11 @@ const UserContextProvider = (props) => {
   });
 
   const [receipt, setReceipt] = useState("");
+  const [showReceipt, setShowReceipt] = useState(false);
   
   const handleReceipt = (newReceipt) => {
       setReceipt(newReceipt)
+      setShowReceipt(true)
   }
   // CartStates
   const [cartList, setCartList] = useState(
@@ -148,7 +150,10 @@ const UserContextProvider = (props) => {
         userData,
         cartList,
         receipt,
+        showReceipt,
+        setShowReceipt,
         handleReceipt,
+        setReceipt,
         isAdmin,
         openCart,
         setUser,
