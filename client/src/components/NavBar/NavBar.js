@@ -58,13 +58,14 @@ const NavBar = (props) => {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
-  const { openCart, userData, amountOfItems, setUser, setAlert } = useContext(
+  const { openCart, userData, amountOfItems, setUser, setAlert, setShowReceipt } = useContext(
     UserContext
   );
 
   const handleDrawerToggle = (props) => {
     setMobileOpen(!mobileOpen);
   };
+
 
   const drawer = (
     <div className={classes.drawer}>
@@ -139,6 +140,11 @@ const NavBar = (props) => {
       });
   };
 
+  const handleDontShowReceipt = () => {
+    setShowReceipt(false)
+    history.push("/receipt")
+  }
+
   return (
     <>
       <NavAppBar position="static">
@@ -204,7 +210,14 @@ const NavBar = (props) => {
                   Edit Products
                 </NavButton>
               </>
-            ) : null}
+            ) : 
+            <NavButton
+                  aria-label="yourOrders"
+                  onClick={() => handleDontShowReceipt()}
+                >
+                  Your orders
+              </NavButton>
+              }
             {userData === "" ? (
               <>
                 <NavButton

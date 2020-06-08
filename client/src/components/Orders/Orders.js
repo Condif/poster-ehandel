@@ -84,6 +84,9 @@ const Orders = () => {
                   <Typography className={classes.heading} variant="h6">
                     Order: {order._id}{" "}
                   </Typography>
+                  <Typography className={classes.heading} variant="h6">
+                    Order Date: {order.orderDate.split("T")[0]}{" "}
+                  </Typography>
                 </Grid>
                 <Grid container className={classes.orderItems}>
                   <Grid item xs={12} sm={4} className={classes.information}>

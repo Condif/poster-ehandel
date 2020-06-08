@@ -5,7 +5,7 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     background: `${green[800]}`,
     color: "white",
-    padding: "1rem",
+    padding: "0.3rem",
   },
   paper: {},
   orderItems: {
