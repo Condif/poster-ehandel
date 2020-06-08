@@ -1,5 +1,6 @@
 import React, { useState, useContext } from "react";
 import Button from "@material-ui/core/Button";
+import Dialog from "@material-ui/core/Dialog";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
@@ -89,4 +90,12 @@ export default function Login() {
       </Button>
       </Container>
   );
+}
+
+export const LoginDialog = () => {
+  return (
+    <Dialog>
+      <Login />
+    </Dialog>
+  )
 }

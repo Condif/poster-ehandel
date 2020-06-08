@@ -8,6 +8,7 @@ import ShipmentAlternatives from "../ShipmentAlternatives/ShipmentAlternatives";
 import ErrorIcon from "@material-ui/icons/Error";
 import PaymentInformation from "./PaymentInformation";
 import TotalCost from "../TotalCost/TotalCost";
+import { LoginDialog } from "../Login/Login";
 
 //styles
 import useStyles from "./CheckOutStyles";
@@ -15,7 +16,7 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList, userData, setUser, authenticateUser, totalCost, setAlert } = useContext(UserContext);
+  const { cartList, userData, setUser, totalCost} = useContext(UserContext);
 
   const {
     validateInputFields,
