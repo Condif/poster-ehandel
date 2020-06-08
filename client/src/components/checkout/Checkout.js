@@ -15,7 +15,7 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList, userData, setUser, authenticateUser, totalCost} = useContext(UserContext);
+  const { cartList, userData, setUser, authenticateUser, totalCost, setAlert } = useContext(UserContext);
 
   const {
     validateInputFields,
@@ -37,8 +37,8 @@ const Checkout = () => {
           if (userData !== "") {
             setUser("");
           }
-          alert(`You need to be a member to make a purchase.
-          Would you like to sign up?`);
+          setAlert({ showAlert: true, type: "info", message: `You need to be a member to make a purchase.
+          Would you like to sign up?` });
           return;
         }
         if (userData.id !== data.id) {

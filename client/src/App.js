@@ -19,10 +19,10 @@ function App() {
     <>
       <UserContextProvider>
         <CheckoutContextProvider>
-          <MuiThemeProvider theme={theme}>
-            <CssBaseline />
-            <Layout />
-          </MuiThemeProvider>
+            <MuiThemeProvider theme={theme}>
+              <CssBaseline />
+              <Layout />
+            </MuiThemeProvider>
         </CheckoutContextProvider>
       </UserContextProvider>
     </>

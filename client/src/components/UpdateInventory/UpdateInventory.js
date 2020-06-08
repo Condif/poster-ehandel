@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import ProductCard from "../ProductCard/ProductCard";
 import Grid from "@material-ui/core/Grid";
+import { UserContext } from "../../Contexts/UserContext";
 
 export default function UpdateInventory(props) {
   const [inputValues, setInputValues] = useState({
     productId: "",
     productInventory: "",
   });
+
+  const { setAlert } = useContext(UserContext);
 
   const { product } = props;
 
@@ -33,7 +36,7 @@ export default function UpdateInventory(props) {
     })
       .then((res) => res.json())
       .then(() => {
-        alert("Product inventory updated.");
+        setAlert({ showAlert: true, type: "success", message: "Product inventory updated." });
       });
   }
 

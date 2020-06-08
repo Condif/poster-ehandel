@@ -4,6 +4,12 @@ export const UserContext = createContext();
 const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [userData, setUserData] = useState("");
+  const [alert, setAlert] = useState({
+    showAlert: false,
+    type: null,
+    message: null
+  });
+
   // CartStates
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem("products" || []))
@@ -146,6 +152,7 @@ const UserContextProvider = (props) => {
         deleteProduct,
         totalCost,
         amountOfItems,
+        alert, setAlert
       }}
     >
       {props.children}
