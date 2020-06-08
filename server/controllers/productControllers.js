@@ -80,7 +80,7 @@ exports.updateProductStock = async (req, res) => {
   products.forEach(async (product) => {
     const productInStock = await Product.findOne({ _id: product._id });
     if (!productInStock) {
-      throw new ServerError("No such product", 404);
+      throw new ServerError("No such product in stock", 404);
     }
     console.log("PRODUCT: ", productInStock);
     let currentAvlible = productInStock.inventory - product.cartAmount;
@@ -91,11 +91,6 @@ exports.updateProductStock = async (req, res) => {
     const updatedProduct = new Product(Object.assign(productInStock, product));
     console.log(updatedProduct, "uppdateringen");
     await updatedProduct.save();
-
-    // Product.updateOne(
-    //   { _id: product._id },
-    //   { $inc: { inventory: -product.cartAmount } }
-    // );
   });
   res.json("Product inventory updated");
 };
