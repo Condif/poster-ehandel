@@ -5,7 +5,7 @@ const { shipmentSchema } = require("./shipmentModel.js")
 const Address = require("../schemas/addressSchema");
 
 const orderSchema = new mongoose.Schema({
-  products: {  type: [[productSchema]], required: true },
+  products:  {  type: [[productSchema]], required: true },
 
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 
