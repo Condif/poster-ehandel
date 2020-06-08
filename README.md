@@ -66,21 +66,51 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Assignment grading
 
-This part is only for our teacher's reference, not the actual grading of the assignment.
+This part is only for our teacher's reference, not the actual grading of the assignment. 
 
 ### Passing grades:
 
-- Git & GitHub have been used (Completed)
-- The project has a README.md file (look above for more info) (Completed)
-- The project is handed in on time! (Completed)
-- It needs to be atleast two resources with CRUD-Endpoints (Completed)
-- You should be able to register, log in and create content that is related to the user, that's logged in. (Completed)
-- Only logged in users should be able to perform C_UD operations on their content. (Completed)
-- All content should be saved in MongoDB. (Completed)
-
+- All sites should be responsive.(Completed)
+  The site is fully responsive, from desktop to mobile. 
+- The project should be implemented with a React frontend and an Express backend. (Completed)
+  See above.
+- Make an ER-diagram and a codediagram. These should be handed over at the idéapproval. (Completed)
+- Describe your business idea in a short text presentation. This should be handed over at the idéapproval.(Completed)
+- All content should be saved in MongoDB. (Completed) 
+  We are using MongoDB atlas. 
+- You should be able to login as an administrator. (Completed)
+  Each user has a role, which is saved in the user document in the database. When the user logs in we do a role validation check. If the   user is approved as an admin, they get access to admin features. 
+- All passwords should be encrypted in the database. (Completed)
+  We are using bcrypt, and all the passwords in the database are hashed. 
+- A user should be able to order products from the site, which updates the inventory in the database. (Completed) 
+  When the user makes a purchase, a PUT is triggered, which sends an array of objects. We find each product via its id and then subtract   the current inventory with the cartAmount. Then we replace the old object with the new updated one. 
+- An administrator should be allowed to update the inventory from the admin part of the site. (Completed)
+  An administrator can update the inventory by clicking “Edit Products”. There the admin can add or remove items in the inventory. By     pushing the “update” button, the old object is replaced with the new, through a PUT, and the inventory in the database is updated.
+- Administrators can see a list of all orders that have been made. (Completed)
+  By clicking “see orders” the admin can see all orders.
+- The products on the site should be divided into categories. A product ought to belong to at least one category. (Completed)
+  Every product has a category property. In layout the products are mapped through and gets divided into their different categories.       Each category gets its own Route with a CategoryPage (and slugs are also created). So, when the user clicks “Forrest”, all the           pictures with the category forrest is shown etc. 
+- The user should be able to see a list of all products, but also just one category. (Completed)
+  When the user visits the page, or click “home”, all products are shown. But then when a category is clicked, only products under that   category are displayed. 
+- The user should be able to put items in a cart, which is saved on local storage. (Completed)
+  The user can add an item to a cart, which is an array that we keep in our userContext. When a user adds an item in the cart, the item   is set in localstorage. 
+- A user making an order should be presented the opportunity to register and login, and must be logged in, as a customer, before the       order is created. 
+  They user can add products to the cart, but when they click the “to payment” they get a warning that they have to be logged in or       register. 
+- The user should be allowed to choose one out of several shipment alternatives. (Completed)
+  The user can choose from DHL, Posten or Schenker during the checkout. 
+- The shipment alternatives should be retrieved from the database. (Completed)
+  In our checkout component we GET all the shipping alternatives from the database and maps through them, so that the user can choose a   shipment. 
+- The checkout, in the frontend application, should have validation on all fields. (Completed)
+  The user can not make a purchase if the fields does not contain the right type of information. An error message will be displayed if     the input is incorrect. 
 
 ### Extra credits
 
-- All of the passing grades are completed. (Completed)
-- There should be an admin role that has admin privileges for all CRUD operations on all content. (Completed)
-- The admin should have access to a user interface that lists all users and their roles. The admin should be able to use the user interface to remove users and change their roles. (Completed)
+- The backend application must have a working global error handler. (Completed)
+  In our expressApp we have a middleware that handles global errors. We also have a ServerError class that throws a new error if           something goes wrong. 
+ 
+### Inlog
+
+email: admin@gmail.com 
+password: admin
+
+Register yourself as an user to check out the page. 
