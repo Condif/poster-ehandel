@@ -4,7 +4,7 @@ import { Grid, Typography, Paper } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
 const Receipt = () => {
   const classes = useStyles();
-  const { receipt, showReceipt, receipt, clearCartAndLocalStorage } = useContext(UserContext);
+  const { receipt, showReceipt, clearCartAndLocalStorage } = useContext(UserContext);
   const [specificOrders, setSpecificOrders] = useState();
 
   const getSpecificOrders = async () => {
