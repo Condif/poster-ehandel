@@ -5,24 +5,30 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     background: `${green[800]}`,
     color: "white",
-    padding: "0.3rem",
+    padding: "0.3rem 1rem",
   },
   paper: {},
   orderItems: {
     justifyContent: "center",
     alignItems: "center",
     paddingTop: theme.spacing(2),
-    marginLeft: "1rem",
     flexWrap: "wrap",
+    textAlign: "center",
   },
-  information: {},
+  information: {
+    [theme.breakpoints.down("xs")]: {
+      flexDirection: "column",
+    },
+    display: "flex",
+    flexDirection: "row",
+  },
   products: {},
   delivery: {},
   priceAndShipped: {
     textAlign: "center",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: "1rem",
+    padding: "1rem 0 1rem 0",
   },
 }));
 

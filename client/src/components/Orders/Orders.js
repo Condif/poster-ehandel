@@ -89,7 +89,7 @@ const Orders = () => {
                   </Typography>
                 </Grid>
                 <Grid container className={classes.orderItems}>
-                  <Grid item xs={12} sm={4} className={classes.information}>
+                  <Grid item xs={12} sm={4}>
                     <Typography variant="h6">Information: </Typography>
                     <Typography>Name: {order.name}</Typography>
                     <Typography>Lastname: {order.lastname}</Typography>
@@ -107,7 +107,7 @@ const Orders = () => {
                           key={product._id}
                         >
                           <Typography className={classes.title}>
-                            {product.name}
+                            {product.cartAmount} {product.name}
                           </Typography>
                         </Grid>
                       ))}
@@ -137,7 +137,7 @@ const Orders = () => {
                       <FormControl component="fieldset">
                         <RadioGroup
                           row
-                          defaultValue={"true"}
+                          defaultValue={order.shipped.toString()}
                           aria-label="shipped"
                           onChange={handleChange}
                         >
