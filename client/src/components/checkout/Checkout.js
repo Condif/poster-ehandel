@@ -34,7 +34,6 @@ const Checkout = () => {
 
   //updates inventory of each product when a purches is made
   const updateInventory = () => {
-    console.log("i update", cartList);
     fetch("http://localhost:8080/api/products/", {
       method: "PUT",
       headers: {
@@ -73,20 +72,18 @@ const Checkout = () => {
         if (userData.id !== data.id) {
           setUser(data);
         }
-        // authenticateUser(data);
         updateInventory();
-        
-        const receipt = await createNewOrder()
 
-        
-        handleReceipt(receipt)
-        history.push('/receipt')
-      })
+        const receipt = await createNewOrder();
+
+        handleReceipt(receipt);
+        history.push("/receipt");
+      });
     }
   };
 
   const createNewOrder = async () => {
-      const newShipment = shipmentAlternatives.filter((currentShipment) => {
+    const newShipment = shipmentAlternatives.filter((currentShipment) => {
       return (
         currentShipment.alternative === validationInputs.choosenShipment.value
       );
@@ -115,14 +112,14 @@ const Checkout = () => {
       credentials: "include",
       body: JSON.stringify(newOrder),
     })
-    .then((response) => {
-      return response.json()
-    })
-    .then((data) => {
-      return data
-    })
-  return receipt
-  }
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      });
+    return receipt;
+  };
 
   return (
     <div className={classes.mainDiv}>
