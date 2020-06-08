@@ -6,7 +6,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import ProductGrid from "./ProductGrid";
 import Cart from "./Cart/Cart";
@@ -25,7 +25,9 @@ import Footer from "./Footer/Footer";
 import AlertMessage from "./AlertMessage/AlertMessage";
 
 const Layout = () => {
-  const { setUser, isAdmin, userData, alert, setAlert } = useContext(UserContext);
+  const { setUser, isAdmin, userData, alert, setAlert } = useContext(
+    UserContext
+  );
 
   const [products, setProducts] = useState([]);
 
@@ -49,8 +51,15 @@ const Layout = () => {
           <p>Loading</p>
         ) : isAdmin() ? (
           props.children
-        ) : <Redirect to={{ pathname: "/", state: { redirectedFrom: window.location.pathname }}} />
-        }
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { redirectedFrom: window.location.pathname },
+            }}
+          />
+        )
+      }
     />
   );
 
@@ -63,10 +72,10 @@ const Layout = () => {
         ) : userData ? (
           props.children
         ) : (
-              <>
-                <Redirect to="/login" />
-              </>
-            )
+          <>
+            <Redirect to="/login" />
+          </>
+        )
       }
     />
   );
@@ -90,7 +99,20 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
-        {alert.showAlert && <AlertMessage setAlert={setAlert} alert={alert} show={alert.showAlert} clickAway={(timeout) => { clearTimeout(timeout); setAlert({ showAlert: false, type: null, message: null }) }} type={alert.type}>{alert.message}</AlertMessage>}
+        {alert.showAlert && (
+          <AlertMessage
+            setAlert={setAlert}
+            alert={alert}
+            show={alert.showAlert}
+            clickAway={(timeout) => {
+              clearTimeout(timeout);
+              setAlert({ showAlert: false, type: null, message: null });
+            }}
+            type={alert.type}
+          >
+            {alert.message}
+          </AlertMessage>
+        )}
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />
@@ -106,7 +128,11 @@ const Layout = () => {
           >
             <Switch>
               <Route exact path="/">
-                <ProductGrid products={products} createSlug={createSlug} setAlert={setAlert} />
+                <ProductGrid
+                  products={products}
+                  createSlug={createSlug}
+                  setAlert={setAlert}
+                />
               </Route>
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
