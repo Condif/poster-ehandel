@@ -38,7 +38,10 @@ const Orders = () => {
           <Grid container key={order._id}className={classes.orderContainer}>
             <Paper className={classes.paper}style={{ width: " 100%" }}>
               <Grid item xs={12} className={classes.information}>
-                <Typography variant="h4">Order: {order._id} </Typography>
+                <Typography variant="h5">Order: {order._id} </Typography>
+              </Grid>
+              <Grid item xs={12} className={classes.information}>
+                <Typography variant="h5">Order Date: {order.orderDate.split("T")[0]} </Typography>
               </Grid>
               <Grid container className={classes.orderItems}>
                 <Grid item xs={4} className={classes.information}>
@@ -53,7 +56,7 @@ const Orders = () => {
                     </Grid>
                     {order.products[0].map((product) => (
                       <Grid item xs={12} className={classes.orderPaper} key={product._id}>
-                        <Typography className={classes.title}>{product.name}</Typography>
+                        <Typography className={classes.title}>{product.name}: {product.cartAmount}</Typography>
                       </Grid>
                     ))}
                   </Grid>
@@ -67,8 +70,8 @@ const Orders = () => {
               </Grid>
             </Paper>
             <Grid container className={classes.total} justify="space-between">
-              <Typography>Total:</Typography>
-              <Typography>{order.totalPrice}</Typography>
+              <Typography variant="h5">Total:</Typography>
+              <Typography variant="h5">{order.totalPrice}:-</Typography>
             </Grid>
           </Grid>
         ))) : null}
