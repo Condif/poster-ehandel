@@ -15,9 +15,15 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList, userData, setUser, totalCost, setAlert } = useContext(
-    UserContext
-  );
+  const {
+    cartList,
+    userData,
+    setUser,
+    handleReceipt,
+    authenticateUser,
+    totalCost,
+    setAlert,
+  } = useContext(UserContext);
 
   const {
     validateInputFields,
@@ -68,13 +74,16 @@ const Checkout = () => {
           setUser(data);
         }
         updateInventory();
-        createNewOrder();
+
+        const receipt = await createNewOrder();
+
+        handleReceipt(receipt);
         history.push("/receipt");
       });
     }
   };
 
-  const createNewOrder = () => {
+  const createNewOrder = async () => {
     const newShipment = shipmentAlternatives.filter((currentShipment) => {
       return (
         currentShipment.alternative === validationInputs.choosenShipment.value
@@ -96,16 +105,21 @@ const Checkout = () => {
       },
     };
 
-    fetch("http://localhost:8080/api/orders", {
+    const receipt = await fetch("http://localhost:8080/api/orders", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       credentials: "include",
       body: JSON.stringify(newOrder),
-    }).then(async (response) => {
-      const data = await response.json();
-    });
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      });
+    return receipt;
   };
 
   return (
