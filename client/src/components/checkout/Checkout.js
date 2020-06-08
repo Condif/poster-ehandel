@@ -15,13 +15,13 @@ import useStyles from "./CheckOutStyles";
 const Checkout = () => {
   const classes = useStyles();
   const history = useHistory();
-  const { cartList, userData, setUser, authenticateUser, totalCost} = useContext(UserContext);
+  const { cartList, userData, setUser, handleReceipt, totalCost, clearCartAndLocalStorage} = useContext(UserContext);
 
   const {
     validateInputFields,
     checkErrorsInInfo,
     validationInputs,
-    shipmentAlternatives
+    shipmentAlternatives,
   } = useContext(CheckoutContext);
 
   const redirectToReceipt = () => {
@@ -45,13 +45,17 @@ const Checkout = () => {
           setUser(data);
         }
         // authenticateUser(data);
-        createNewOrder()
-        history.push("/receipt");
+        
+        const receipt = await createNewOrder()
+
+        
+        handleReceipt(receipt)
+        history.push('/receipt')
       })
     }
   };
 
-  const createNewOrder = () => {
+  const createNewOrder = async () => {
       const newShipment = shipmentAlternatives.filter((currentShipment) => {
       return (
         currentShipment.alternative === validationInputs.choosenShipment.value
@@ -73,7 +77,7 @@ const Checkout = () => {
       }
     }
 
-    fetch("http://localhost:8080/api/orders", {
+    const receipt = await fetch("http://localhost:8080/api/orders", {
       method: "POST",
       headers: {
             "Content-Type": "application/json",
@@ -81,6 +85,13 @@ const Checkout = () => {
       credentials: "include",
       body: JSON.stringify(newOrder),
     })
+    .then((response) => {
+      return response.json()
+    })
+    .then((data) => {
+      return data
+    })
+  return receipt
   }
 
   return (
