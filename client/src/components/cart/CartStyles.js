@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     marginLeft: "1rem",
     fontSize: "large",
+    cursor: "pointer",
   },
   header: {
     margin: theme.spacing(0, 4),
