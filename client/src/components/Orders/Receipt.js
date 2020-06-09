@@ -25,6 +25,7 @@ const Receipt = () => {
 
   useEffect(() => {
     setupSpecificOrders();
+    // eslint-disable-next-line
   }, []);
         
   return (

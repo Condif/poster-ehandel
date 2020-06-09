@@ -67,6 +67,7 @@ const Orders = () => {
 
   useEffect(() => {
     setupOrders();
+    // eslint-disable-next-line
   }, []);
 
   return (
