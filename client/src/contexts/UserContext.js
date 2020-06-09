@@ -86,6 +86,10 @@ const UserContextProvider = (props) => {
   };
 
   const clearCartAndLocalStorage = () => {
+    const state = [...cartList];
+    state.forEach(product => {
+      product.cartAmount = 0
+    });
     setCartList();
     localStorage.removeItem("products");
   };
@@ -93,6 +97,7 @@ const UserContextProvider = (props) => {
   const deleteProduct = (product) => {
     const state = [...cartList];
     const productIndex = state.findIndex((p) => p.name === product.name);
+    state[productIndex].cartAmount = 0
     state.splice(productIndex, 1);
     setCartList(state);
     localStorage.setItem("products", JSON.stringify(state));
