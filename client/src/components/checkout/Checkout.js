@@ -23,13 +23,14 @@ const Checkout = () => {
     authenticateUser,
     totalCost,
     setAlert,
+    setOrderPlaced
   } = useContext(UserContext);
-
+  console.log("checkout")
   const {
     validateInputFields,
     checkErrorsInInfo,
     validationInputs,
-    shipmentAlternatives,
+    shipmentAlternatives
   } = useContext(CheckoutContext);
 
   //updates inventory of each product when a purches is made
@@ -75,6 +76,8 @@ const Checkout = () => {
         updateInventory();
 
         const receipt = await createNewOrder();
+        
+        setOrderPlaced(Date.now())
 
         handleReceipt(receipt);
         history.push("/receipt");
@@ -120,7 +123,7 @@ const Checkout = () => {
       });
     return receipt;
   };
-
+  
   return (
     <div className={classes.mainDiv}>
       <Container>
@@ -164,7 +167,7 @@ const Checkout = () => {
         className={classes.submitButton}
         variant="contained"
         color="primary"
-        onClick={() => redirectToReceipt()}
+        onClick={redirectToReceipt}
       >
         Make purchase
       </Button>

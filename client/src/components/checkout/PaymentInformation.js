@@ -15,6 +15,7 @@ const PaymentInformation = () => {
     const { validationInputs, handleInputChange} = useContext(
         CheckoutContext
     )
+    console.log("payment")
     return (
         <FormControl className={classes.containerDiv} >
             <FormLabel className={classes.labelText}>Deliveryaddress</FormLabel>

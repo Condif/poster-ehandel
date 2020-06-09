@@ -18,12 +18,9 @@ const ShipmentAlternatives = () => {
     setShipmentAlternatives,
     validationInputs,
     shipmentAlternatives,
-    handleInputChange,
+    handleInputChange
   } = useContext(CheckoutContext);
-
-  useEffect(() => {
-    getShipmentAlternatives();
-  }, []);
+  // const { orderPlaced } = useContext(CheckoutContext)
 
   function getShipmentAlternatives() {
     fetch("http://localhost:8080/api/shipments", {
@@ -35,6 +32,10 @@ const ShipmentAlternatives = () => {
       });
   }
 
+  useEffect(() => {
+    getShipmentAlternatives();
+  }, []);
+
   return (
     <FormControl>
       <FormLabel className={classes.labelText}>Shipping Alternatives</FormLabel>
@@ -45,7 +46,7 @@ const ShipmentAlternatives = () => {
         value={validationInputs.choosenShipment.value}
         onChange={(event) => handleInputChange(event, "choosenShipment")}
       >
-        {shipmentAlternatives.map((shipment, index) => (
+        {shipmentAlternatives.map((shipment) => (
           <div key={shipment._id} className={classes.containerDiv}>
             <FormControlLabel
               value={shipment.alternative}
