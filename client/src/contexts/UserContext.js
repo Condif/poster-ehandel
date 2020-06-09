@@ -7,7 +7,8 @@ const UserContextProvider = (props) => {
   const [alert, setAlert] = useState({
     showAlert: false,
     type: null,
-    message: null
+    message: null,
+    popper: false
   });
 
   const [receipt, setReceipt] = useState("");

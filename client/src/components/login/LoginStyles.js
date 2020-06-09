@@ -9,6 +9,13 @@ const useStyles = makeStyles((theme) => ({
   submitButton: {
     margin: theme.spacing(2, 0),
   },
+  buttonAlert: {
+    backgroundColor: "white",
+    marginBottom: theme.spacing(2),
+  },
+  containerAlert: {
+    backgroundColor: "white"
+  }
 }));
 
 export default useStyles;

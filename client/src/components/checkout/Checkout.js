@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
@@ -8,7 +8,6 @@ import ShipmentAlternatives from "../ShipmentAlternatives/ShipmentAlternatives";
 import ErrorIcon from "@material-ui/icons/Error";
 import PaymentInformation from "./PaymentInformation";
 import TotalCost from "../TotalCost/TotalCost";
-import { LoginDialog } from "../Login/Login";
 
 //styles
 import useStyles from "./CheckOutStyles";
@@ -62,12 +61,7 @@ const Checkout = () => {
           if (userData !== "") {
             setUser("");
           }
-          setAlert({
-            showAlert: true,
-            type: "info",
-            message: `You need to be a member to make a purchase.
-          Would you like to sign up?`,
-          });
+          setAlert({ showAlert: true, type: "info", message: "Please login before making a purchase.", popper: true })
           return;
         }
         if (userData.id !== data.id) {
@@ -123,53 +117,53 @@ const Checkout = () => {
   };
 
   return (
-    <div className={classes.mainDiv}>
-      <Container>
-        {cartList.map((product) => (
-          <ProductCard
-            key={product._id}
-            case="checkout"
-            product={product}
-          ></ProductCard>
-        ))}
-      </Container>
-      {cartList.length === 0 && (
-        <Container className={classes.goBackDiv}>
-          <Typography className={classes.text}>
-            Your cart is empty. Go back and add items.
-          </Typography>
-          <Button
-            className={classes.submitButton}
-            variant="contained"
-            color="primary"
-            onClick={() => history.push("/")}
-          >
-            Add items
-          </Button>
+      <div className={classes.mainDiv}>
+        <Container>
+          {cartList.map((product) => (
+            <ProductCard
+              key={product._id}
+              case="checkout"
+              product={product}
+            ></ProductCard>
+          ))}
         </Container>
-      )}
-      <ShipmentAlternatives />
-      <PaymentInformation />
-      <TotalCost />
-      <Grid item xs={12}>
-        {checkErrorsInInfo() ? (
-          <div className={classes.errorMsg}>
-            <ErrorIcon fontSize="small" />
-            <Typography variant="body2" align="center">
-              Error in "Your Information"
+        {cartList.length === 0 && (
+          <Container className={classes.goBackDiv}>
+            <Typography className={classes.text}>
+              Your cart is empty. Go back and add items.
+          </Typography>
+            <Button
+              className={classes.submitButton}
+              variant="contained"
+              color="primary"
+              onClick={() => history.push("/")}
+            >
+              Add items
+          </Button>
+          </Container>
+        )}
+        <ShipmentAlternatives />
+        <PaymentInformation />
+        <TotalCost />
+        <Grid item xs={12}>
+          {checkErrorsInInfo() ? (
+            <div className={classes.errorMsg}>
+              <ErrorIcon fontSize="small" />
+              <Typography variant="body2" align="center">
+                Error in "Your Information"
             </Typography>
-          </div>
-        ) : null}
-      </Grid>
-      <Button
-        className={classes.submitButton}
-        variant="contained"
-        color="primary"
-        onClick={() => redirectToReceipt()}
-      >
-        Make purchase
+            </div>
+          ) : null}
+        </Grid>
+        <Button
+          className={classes.submitButton}
+          variant="contained"
+          color="primary"
+          onClick={() => redirectToReceipt()}
+        >
+          Make purchase
       </Button>
-    </div>
+      </div>
   );
 };
 

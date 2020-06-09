@@ -1,13 +1,13 @@
 import React, { useState, useContext } from "react";
 import Button from "@material-ui/core/Button";
-import Dialog from "@material-ui/core/Dialog";
+import {Grid} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Contexts/UserContext";
 import useStyles from "./LoginStyles";
 
-export default function Login() {
+export default function Login(props) {
   const classes = useStyles();
 
   const [inputValues, setInputValues] = useState({
@@ -57,7 +57,7 @@ export default function Login() {
   }
 
   return (
-      <Container className={classes.flexedContainer} maxWidth="sm">
+      <Container className={props.alert && classes.containerAlert, classes.flexedContainer} maxWidth="sm">
         <TextField
           fullWidth
           variant="outlined"
@@ -80,7 +80,7 @@ export default function Login() {
         ></TextField>
         <Button
           disabled={!inputValues.userEmail || !inputValues.userPassword}
-          className={classes.submitButton}
+          className={classes.submitButton, classes.buttonAlert}
           variant="contained"
           color="primary"
           fullWidth
@@ -90,12 +90,4 @@ export default function Login() {
       </Button>
       </Container>
   );
-}
-
-export const LoginDialog = () => {
-  return (
-    <Dialog>
-      <Login />
-    </Dialog>
-  )
 }

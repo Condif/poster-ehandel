@@ -21,7 +21,7 @@ const Cart = (props) => {
     totalCost,
     userData,
     setUser,
-    authenticateUser
+    setAlert
   } = useContext(UserContext);
 
   const { createSlug } = props;
@@ -37,8 +37,9 @@ const Cart = (props) => {
           if (userData !== "") {
             setUser("");
           }
-          alert(`You need to be a member to place an order.
-          Would you like to sign up?`);
+          setAlert({ showAlert: true, type: "info", message: "Please login before making a purchase.", popper: true })
+
+
           return;
         }
         openCart();

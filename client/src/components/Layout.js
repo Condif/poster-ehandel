@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { Grid, Container } from "@material-ui/core";
 import Header from "./Header";
 import NavBar from "./NavBar/NavBar";
@@ -22,7 +22,8 @@ import Orders from "./Orders/Orders";
 import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
-import AlertMessage from "./AlertMessage/AlertMessage";
+import ActionAlert from "./Alerts/ActionAlert";
+import useStyles from "./Alerts/AlertsStyles";
 
 const Layout = () => {
   const { setUser, isAdmin, userData, alert, setAlert } = useContext(
@@ -39,8 +40,9 @@ const Layout = () => {
   //   }));
   // };
 
-  const [products, setProducts] = useState([]);
+  const classes = useStyles();
 
+  const [products, setProducts] = useState([]);
   const [fetchingUserData, setfetchingUserData] = useState(true);
 
   // Fetch products "on mount"
@@ -91,6 +93,12 @@ const Layout = () => {
     />
   );
 
+  const handleClickAway = (timeoutOne, timeoutTwo) => {
+    clearTimeout(timeoutOne); 
+    clearTimeout(timeoutTwo); 
+    setAlert({ showAlert: false, type: null, message: null, popper: false })
+  }
+
   const checkLoginSession = () => {
     setfetchingUserData(true);
     fetch("http://localhost:8080/sessions/checkLoginSession", {
@@ -110,20 +118,9 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
-        {alert.showAlert && (
-          <AlertMessage
-            setAlert={setAlert}
-            alert={alert}
-            show={alert.showAlert}
-            clickAway={(timeout) => {
-              clearTimeout(timeout);
-              setAlert({ showAlert: false, type: null, message: null });
-            }}
-            type={alert.type}
-          >
-            {alert.message}
-          </AlertMessage>
-        )}
+        <div className={classes.ref} style={{ "zIndex": (alert.showAlert ? 9999 : -1) }}>
+          {alert.showAlert && <ActionAlert setAlert={setAlert} alert={alert} clickAway={(timeoutOne, timeoutTwo) => handleClickAway(timeoutOne, timeoutTwo)} />}
+        </div>
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />
