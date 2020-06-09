@@ -7,16 +7,16 @@ const UserContextProvider = (props) => {
   const [alert, setAlert] = useState({
     showAlert: false,
     type: null,
-    message: null
+    message: null,
   });
 
   const [receipt, setReceipt] = useState("");
   const [showReceipt, setShowReceipt] = useState(false);
-  
+
   const handleReceipt = (newReceipt) => {
-      setReceipt(newReceipt)
-      setShowReceipt(true)
-  }
+    setReceipt(newReceipt);
+    setShowReceipt(true);
+  };
   // CartStates
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem("products" || []))
@@ -164,7 +164,8 @@ const UserContextProvider = (props) => {
         deleteProduct,
         totalCost,
         amountOfItems,
-        alert, setAlert
+        alert,
+        setAlert,
       }}
     >
       {props.children}
