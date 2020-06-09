@@ -58,14 +58,18 @@ const NavBar = (props) => {
 
   const [mobileOpen, setMobileOpen] = useState(false);
   // Hämta openCart funktionen samt inloggad user från UserContext
-  const { openCart, userData, amountOfItems, setUser, setAlert, setShowReceipt } = useContext(
-    UserContext
-  );
+  const {
+    openCart,
+    userData,
+    amountOfItems,
+    setUser,
+    setAlert,
+    setShowReceipt,
+  } = useContext(UserContext);
 
   const handleDrawerToggle = (props) => {
     setMobileOpen(!mobileOpen);
   };
-
 
   const drawer = (
     <div className={classes.drawer}>
@@ -118,6 +122,19 @@ const NavBar = (props) => {
             </ListItem>
           </>
         )}
+        {userData && (
+          <>
+            <ListItem
+              button
+              onClick={function (event) {
+                handleDontShowReceipt();
+                handleDrawerToggle();
+              }}
+            >
+              Your orders
+            </ListItem>
+          </>
+        )}
       </List>
     </div>
   );
@@ -141,9 +158,9 @@ const NavBar = (props) => {
   };
 
   const handleDontShowReceipt = () => {
-    setShowReceipt(false)
-    history.push("/receipt")
-  }
+    setShowReceipt(false);
+    history.push("/receipt");
+  };
 
   return (
     <>
@@ -210,14 +227,16 @@ const NavBar = (props) => {
                   Edit Products
                 </NavButton>
               </>
-            ) : 
-            <NavButton
-                  aria-label="yourOrders"
-                  onClick={() => handleDontShowReceipt()}
-                >
-                  Your orders
+            ) : null}
+            {userData !== "" && (
+              <NavButton
+                className={classes.desktopLinks}
+                aria-label="yourOrders"
+                onClick={() => handleDontShowReceipt()}
+              >
+                Your orders
               </NavButton>
-              }
+            )}
             {userData === "" ? (
               <>
                 <NavButton
@@ -239,22 +258,20 @@ const NavBar = (props) => {
                 Logout
               </NavButton>
             )}
-            {window.location.pathname !== "/checkout"
-              ? userData.email && (
-                  <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-                    <IconButton
-                      style={{
-                        width: "4rem",
-                        color: "#333",
-                      }}
-                      edge="start"
-                      onClick={openCart}
-                    >
-                      <ShoppingCartIcon />
-                    </IconButton>
-                  </StyledBadge>
-                )
-              : null}
+            {window.location.pathname !== "/checkout" ? (
+              <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+                <IconButton
+                  style={{
+                    width: "4rem",
+                    color: "#333",
+                  }}
+                  edge="start"
+                  onClick={openCart}
+                >
+                  <ShoppingCartIcon />
+                </IconButton>
+              </StyledBadge>
+            ) : null}
           </Grid>
         </Toolbar>
       </NavAppBar>
