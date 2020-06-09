@@ -30,16 +30,6 @@ const Layout = () => {
     UserContext
   );
 
-  // const [value, setState] = useState(true);
-
-  // console.log(value, "här är value");
-
-  // const handleValue = () => {
-  //   setState((prevState) => ({
-  //     value: !prevState.value,
-  //   }));
-  // };
-
   const classes = useStyles();
 
   const [products, setProducts] = useState([]);
