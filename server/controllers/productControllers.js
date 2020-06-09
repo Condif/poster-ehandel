@@ -77,7 +77,7 @@ exports.updateProductStock = async (req, res) => {
   // if (products.length === 0 || Object.keys(products) == 0) {
   //   throw new ServerError("The product does not exist", 404);
   // }
-  products.forEach(async (product) => {
+  for (const product of products) {
     const productInStock = await Product.findOne({ _id: product._id });
     if (!productInStock) {
       throw new ServerError("No such product in stock", 404);
@@ -91,6 +91,6 @@ exports.updateProductStock = async (req, res) => {
     const updatedProduct = new Product(Object.assign(productInStock, product));
     console.log(updatedProduct, "uppdateringen");
     await updatedProduct.save();
-  });
+  }
   res.json("Product inventory updated");
 };
