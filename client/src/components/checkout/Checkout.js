@@ -20,7 +20,7 @@ const Checkout = () => {
     userData,
     setUser,
     handleReceipt,
-    authenticateUser,
+    clearCartAndLocalStorage,
     totalCost,
     setAlert,
     setOrderPlaced
@@ -76,7 +76,7 @@ const Checkout = () => {
         updateInventory();
 
         const receipt = await createNewOrder();
-        
+        clearCartAndLocalStorage()
         setOrderPlaced(Date.now())
 
         handleReceipt(receipt);
@@ -127,15 +127,16 @@ const Checkout = () => {
   return (
     <div className={classes.mainDiv}>
       <Container>
-        {cartList.map((product) => (
-          <ProductCard
-            key={product._id}
-            case="checkout"
-            product={product}
-          ></ProductCard>
-        ))}
+        {cartList !== undefined &&
+          cartList.map((product) => (
+            <ProductCard
+              key={product._id}
+              case="checkout"
+              product={product}
+            ></ProductCard>
+          ))}
       </Container>
-      {cartList.length === 0 && (
+      {cartList !== undefined && cartList.length === 0 && (
         <Container className={classes.goBackDiv}>
           <Typography className={classes.text}>
             Your cart is empty. Go back and add items.
@@ -165,6 +166,7 @@ const Checkout = () => {
       </Grid>
       <Button
         className={classes.submitButton}
+        disabled={cartList !== undefined && cartList.length === 0}
         variant="contained"
         color="primary"
         onClick={redirectToReceipt}

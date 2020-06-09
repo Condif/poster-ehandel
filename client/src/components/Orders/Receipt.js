@@ -4,7 +4,7 @@ import { Grid, Typography, Paper } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
 const Receipt = () => {
   const classes = useStyles();
-  const { receipt, showReceipt, clearCartAndLocalStorage } = useContext(UserContext);
+  const { receipt, showReceipt } = useContext(UserContext);
   const [specificOrders, setSpecificOrders] = useState();
 
   const getSpecificOrders = async () => {
@@ -24,13 +24,13 @@ const Receipt = () => {
   }
 
   useEffect(() => {
-    setupSpecificOrders()
-    clearCartAndLocalStorage();
+    setupSpecificOrders();
   }, []);
-
+        
   return (
     <>
-      {(receipt.shipment != undefined && showReceipt ? (
+      {(receipt.shipment !== undefined && showReceipt ? (
+        
         <Grid
           container
           key={receipt._id}
@@ -87,7 +87,7 @@ const Receipt = () => {
               </Grid>
             </Grid>
             <Grid container className={classes.priceAndShipped}>
-              <Grid item item xs={12} sm={6} className={classes.total}>
+              <Grid item xs={12} sm={6} className={classes.total}>
                 <Typography>Total cost: {receipt.totalPrice} SEK </Typography>
               </Grid>
             </Grid>
@@ -95,8 +95,9 @@ const Receipt = () => {
         </Grid>
       )
         :
-        specificOrders != undefined && !showReceipt &&
+        specificOrders !== undefined && !showReceipt &&
         specificOrders.map((order) => (
+          
           <Grid
             container
             key={order._id}
@@ -123,7 +124,8 @@ const Receipt = () => {
                     <Grid item xs={12}>
                       <Typography variant="h6">Products:</Typography>
                     </Grid>
-                    {order.products[0].map((product) => (
+                    {order.products[0] !== undefined && 
+                      order.products[0].map((product) => (
                       <Grid
                         item
                         xs={12}
@@ -153,7 +155,7 @@ const Receipt = () => {
                 </Grid>
               </Grid>
               <Grid container className={classes.priceAndShipped}>
-                <Grid item item xs={12} sm={6} className={classes.total}>
+                <Grid item xs={12} sm={6} className={classes.total}>
                   <Typography>Total cost: {order.totalPrice} SEK </Typography>
                 </Grid>
               </Grid>
