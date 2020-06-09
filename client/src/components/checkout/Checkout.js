@@ -23,13 +23,14 @@ const Checkout = () => {
     clearCartAndLocalStorage,
     totalCost,
     setAlert,
+    setOrderPlaced
   } = useContext(UserContext);
-
+  
   const {
     validateInputFields,
     checkErrorsInInfo,
     validationInputs,
-    shipmentAlternatives,
+    shipmentAlternatives
   } = useContext(CheckoutContext);
 
   //updates inventory of each product when a purches is made
@@ -76,6 +77,8 @@ const Checkout = () => {
 
         const receipt = await createNewOrder();
         clearCartAndLocalStorage()
+        setOrderPlaced(Date.now())
+
         handleReceipt(receipt);
         history.push("/receipt");
       });
@@ -120,7 +123,7 @@ const Checkout = () => {
       });
     return receipt;
   };
-
+  
   return (
     <div className={classes.mainDiv}>
       <Container>
@@ -166,7 +169,7 @@ const Checkout = () => {
         disabled={cartList !== undefined && cartList.length === 0}
         variant="contained"
         color="primary"
-        onClick={() => redirectToReceipt()}
+        onClick={redirectToReceipt}
       >
         Make purchase
       </Button>

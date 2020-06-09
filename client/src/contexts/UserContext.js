@@ -9,6 +9,8 @@ const UserContextProvider = (props) => {
     type: null,
     message: null,
   });
+  const [orderPlaced, setOrderPlaced] = useState(Date.now())
+
 
   const [receipt, setReceipt] = useState("");
   const [showReceipt, setShowReceipt] = useState(false);
@@ -169,8 +171,7 @@ const UserContextProvider = (props) => {
         deleteProduct,
         totalCost,
         amountOfItems,
-        alert,
-        setAlert,
+        alert, setAlert, setOrderPlaced, orderPlaced
       }}
     >
       {props.children}
