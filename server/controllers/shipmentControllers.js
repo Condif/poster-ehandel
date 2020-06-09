@@ -2,17 +2,17 @@ const { ShipmentModel } = require("../models/shipmentModel");
 const ServerError = require("../serverError");
 
 // Get shipment by id
-exports.getShipmentById = async (req, res, next) => {
-  // Makes comparison in find method case insensitive
-  const collation = { locale: "sv", strength: 2 };
-  const shipment = await ShipmentModel.find({
-    alternative: req.params.shipmentAlternative,
-  }).collation(collation);
-  if (shipment.length === 0) {
-    throw new ServerError("The shipment does not exist", 404);
-  }
-  res.json(shipment);
-};
+// exports.getShipmentById = async (req, res, next) => {
+//   // Makes comparison in find method case insensitive
+//   const collation = { locale: "sv", strength: 2 };
+//   const shipment = await ShipmentModel.find({
+//     alternative: req.params.shipmentAlternative,
+//   }).collation(collation);
+//   if (shipment.length === 0) {
+//     throw new ServerError("The shipment does not exist", 404);
+//   }
+//   res.json(shipment);
+// };
 
 // Get all shipment alternatives
 exports.getShipmentAlternatives = async (req, res) => {

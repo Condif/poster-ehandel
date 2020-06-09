@@ -51,24 +51,24 @@ exports.updateProduct = async (req, res) => {
 };
 
 // Get products from category
-exports.getProductsFromCategory = async (req, res) => {
-  const products = await Product.find({
-    category: req.params.productCategory,
-  });
-  if (products.length === 0) {
-    throw new ServerError("The category does not exist", 404);
-  }
-  res.json(products);
-};
+// exports.getProductsFromCategory = async (req, res) => {
+//   const products = await Product.find({
+//     category: req.params.productCategory,
+//   });
+//   if (products.length === 0) {
+//     throw new ServerError("The category does not exist", 404);
+//   }
+//   res.json(products);
+// };
 
 // Get product by id
-exports.getProductById = async (req, res) => {
-  const product = await Product.findOne({ _id: req.params.productId });
-  if (!product) {
-    throw new ServerError("The product does not exist", 404);
-  }
-  res.json(product);
-};
+// exports.getProductById = async (req, res) => {
+//   const product = await Product.findOne({ _id: req.params.productId });
+//   if (!product) {
+//     throw new ServerError("The product does not exist", 404);
+//   }
+//   res.json(product);
+// };
 
 //Update productstock when items are sold
 exports.updateProductStock = async (req, res) => {
