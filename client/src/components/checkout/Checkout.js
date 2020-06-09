@@ -124,7 +124,7 @@ const Checkout = () => {
   return (
     <div className={classes.mainDiv}>
       <Container>
-        {cartList != undefined &&
+        {cartList !== undefined &&
           cartList.map((product) => (
             <ProductCard
               key={product._id}
@@ -133,7 +133,7 @@ const Checkout = () => {
             ></ProductCard>
           ))}
       </Container>
-      {cartList != undefined && cartList.length === 0 && (
+      {cartList !== undefined && cartList.length === 0 && (
         <Container className={classes.goBackDiv}>
           <Typography className={classes.text}>
             Your cart is empty. Go back and add items.
@@ -163,7 +163,7 @@ const Checkout = () => {
       </Grid>
       <Button
         className={classes.submitButton}
-        disabled={cartList != undefined && cartList.length === 0}
+        disabled={cartList !== undefined && cartList.length === 0}
         variant="contained"
         color="primary"
         onClick={() => redirectToReceipt()}

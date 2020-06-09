@@ -51,8 +51,8 @@ const CheckoutContextProvider = (props) => {
         currentShipment.alternative === validationInputs.choosenShipment.value
       );
     });
-
-    if (!shipmentAlternatives.length == 0) {
+    
+    if (!shipmentAlternatives.length === 0) {
       return shipment[0].cost;
     }
   };

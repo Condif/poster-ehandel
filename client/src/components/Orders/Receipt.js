@@ -29,7 +29,7 @@ const Receipt = () => {
         
   return (
     <>
-      {(receipt.shipment != undefined && showReceipt ? (
+      {(receipt.shipment !== undefined && showReceipt ? (
         
         <Grid
           container
@@ -87,7 +87,7 @@ const Receipt = () => {
               </Grid>
             </Grid>
             <Grid container className={classes.priceAndShipped}>
-              <Grid item item xs={12} sm={6} className={classes.total}>
+              <Grid item xs={12} sm={6} className={classes.total}>
                 <Typography>Total cost: {receipt.totalPrice} SEK </Typography>
               </Grid>
             </Grid>
@@ -95,7 +95,7 @@ const Receipt = () => {
         </Grid>
       )
         :
-        specificOrders != undefined && !showReceipt &&
+        specificOrders !== undefined && !showReceipt &&
         specificOrders.map((order) => (
           
           <Grid
@@ -124,7 +124,7 @@ const Receipt = () => {
                     <Grid item xs={12}>
                       <Typography variant="h6">Products:</Typography>
                     </Grid>
-                    {order.products[0] != undefined && 
+                    {order.products[0] !== undefined && 
                       order.products[0].map((product) => (
                       <Grid
                         item
@@ -155,7 +155,7 @@ const Receipt = () => {
                 </Grid>
               </Grid>
               <Grid container className={classes.priceAndShipped}>
-                <Grid item item xs={12} sm={6} className={classes.total}>
+                <Grid item xs={12} sm={6} className={classes.total}>
                   <Typography>Total cost: {order.totalPrice} SEK </Typography>
                 </Grid>
               </Grid>

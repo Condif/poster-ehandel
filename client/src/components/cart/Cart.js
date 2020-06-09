@@ -21,7 +21,6 @@ const Cart = (props) => {
     totalCost,
     userData,
     setUser,
-    authenticateUser
   } = useContext(UserContext);
 
   const { createSlug } = props;
