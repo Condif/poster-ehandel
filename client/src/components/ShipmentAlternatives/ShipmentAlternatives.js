@@ -34,6 +34,7 @@ const ShipmentAlternatives = () => {
 
   useEffect(() => {
     getShipmentAlternatives();
+    // eslint-disable-next-line
   }, []);
 
   return (
