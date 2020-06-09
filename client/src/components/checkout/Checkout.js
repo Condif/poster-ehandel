@@ -25,7 +25,7 @@ const Checkout = () => {
     setAlert,
     setOrderPlaced
   } = useContext(UserContext);
-  console.log("checkout")
+  
   const {
     validateInputFields,
     checkErrorsInInfo,
