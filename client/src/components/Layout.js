@@ -29,6 +29,16 @@ const Layout = () => {
     UserContext
   );
 
+  // const [value, setState] = useState(true);
+
+  // console.log(value, "här är value");
+
+  // const handleValue = () => {
+  //   setState((prevState) => ({
+  //     value: !prevState.value,
+  //   }));
+  // };
+
   const [products, setProducts] = useState([]);
 
   const [fetchingUserData, setfetchingUserData] = useState(true);
@@ -39,6 +49,7 @@ const Layout = () => {
       checkLoginSession();
       setProducts(await getAllProducts());
     }
+    // handleValue()
     fetchOnLoad();
     // eslint-disable-next-line
   }, []);
