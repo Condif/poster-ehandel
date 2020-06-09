@@ -36,8 +36,6 @@ const Orders = () => {
       shipped: shipped,
     };
 
-    console.log(order);
-
     fetch("http://localhost:8080/api/orders/" + order._id, {
       method: "PUT",
       headers: {
