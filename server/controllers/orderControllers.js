@@ -10,9 +10,8 @@ exports.getAllOrders = async (req, res) => {
 };
 
 exports.getOrderByUserId = async (req, res) => {
-  
-  const order = await Order.find({ user: req.session.id }); //.populate("");
-  
+  const order = await Order.find({ user: req.session.id });
+
   if (!order) {
     throw new ServerError("Order does not exist", 404);
   }
