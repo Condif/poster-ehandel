@@ -15,7 +15,22 @@ const useStyles = makeStyles((theme) => ({
   },
   contentDiv: {
     width: "17rem",
-    margin: "1rem",
+    margin: "0.5rem",
+  },
+  heading: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "1rem",
+    },
+  },
+  textContent: {
+    [theme.breakpoints.down("sm")]: {
+      fontSize: "0.8rem",
+    },
+  },
+  hideMobile: {
+    [theme.breakpoints.down("sm")]: {
+      display: "none",
+    },
   },
 }));
 

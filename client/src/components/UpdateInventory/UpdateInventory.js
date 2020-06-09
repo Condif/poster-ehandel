@@ -36,12 +36,16 @@ export default function UpdateInventory(props) {
     })
       .then((res) => res.json())
       .then(() => {
-        setAlert({ showAlert: true, type: "success", message: "Product inventory updated." });
+        setAlert({
+          showAlert: true,
+          type: "success",
+          message: "Product inventory updated.",
+        });
       });
   }
 
   return (
-    <Grid key={product._id} item sm={4}>
+    <Grid key={product._id} item style={{ width: "100%" }} sm={4}>
       <ProductCard
         case="updateInventory"
         product={product}

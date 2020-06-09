@@ -17,6 +17,7 @@ const useStyles = makeStyles((theme) => ({
     height: "100%",
     marginLeft: "1rem",
     fontSize: "large",
+    cursor: "pointer",
   },
   header: {
     margin: theme.spacing(0, 4),
@@ -26,7 +27,6 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
     height: "calc(100% - 5rem)",
     top: "4rem",
-    // width: "30rem",
     overflowY: "auto",
     [theme.breakpoints.down("sm")]: {
       width: "100vw",

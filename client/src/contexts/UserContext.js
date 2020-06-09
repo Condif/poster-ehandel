@@ -10,6 +10,13 @@ const UserContextProvider = (props) => {
     message: null
   });
 
+  const [receipt, setReceipt] = useState("");
+  const [showReceipt, setShowReceipt] = useState(false);
+  
+  const handleReceipt = (newReceipt) => {
+      setReceipt(newReceipt)
+      setShowReceipt(true)
+  }
   // CartStates
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem("products" || []))
@@ -142,6 +149,11 @@ const UserContextProvider = (props) => {
         isCartOpen,
         userData,
         cartList,
+        receipt,
+        showReceipt,
+        setShowReceipt,
+        handleReceipt,
+        setReceipt,
         isAdmin,
         openCart,
         setUser,

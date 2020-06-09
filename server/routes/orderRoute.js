@@ -8,9 +8,12 @@ const controller = require("../controllers/orderControllers");
 router.get("/", controller.getAllOrders);
 
 //GET order by user id
-router.get("/:_id", controller.getOrderByUserId);
+router.get("/byId", controller.getOrderByUserId);
 
 //POST order
 router.post("/", controller.createOrder);
+
+// Update if a order is shipped
+router.put("/:orderId", controller.updateOrder);
 
 module.exports = router;

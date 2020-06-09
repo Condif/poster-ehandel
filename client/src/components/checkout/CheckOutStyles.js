@@ -4,7 +4,7 @@ const useStyles = makeStyles((theme) => ({
   submitButton: {
     margin: theme.spacing(2, 0),
     marginLeft: "1rem",
-    width: "20%",
+    width: "30%",
   },
   mainDiv: {
     display: "flex",

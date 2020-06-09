@@ -6,7 +6,7 @@ import {
   BrowserRouter as Router,
   Route,
   Switch,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import ProductGrid from "./ProductGrid";
 import Cart from "./Cart/Cart";
@@ -18,14 +18,26 @@ import AdminProductPage from "./AdminProductPage/AdminProductPage";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
-import Orders from "./Orders/Orders"
-import Receipt from "./Orders/Receipt"
+import Orders from "./Orders/Orders";
+import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
 import AlertMessage from "./AlertMessage/AlertMessage";
 
 const Layout = () => {
-  const { setUser, isAdmin, userData, alert, setAlert } = useContext(UserContext);
+  const { setUser, isAdmin, userData, alert, setAlert } = useContext(
+    UserContext
+  );
+
+  // const [value, setState] = useState(true);
+
+  // console.log(value, "här är value");
+
+  // const handleValue = () => {
+  //   setState((prevState) => ({
+  //     value: !prevState.value,
+  //   }));
+  // };
 
   const [products, setProducts] = useState([]);
 
@@ -37,6 +49,7 @@ const Layout = () => {
       checkLoginSession();
       setProducts(await getAllProducts());
     }
+    // handleValue()
     fetchOnLoad();
     // eslint-disable-next-line
   }, []);
@@ -49,8 +62,15 @@ const Layout = () => {
           <p>Loading</p>
         ) : isAdmin() ? (
           props.children
-        ) : <Redirect to={{ pathname: "/", state: { redirectedFrom: window.location.pathname }}} />
-        }
+        ) : (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { redirectedFrom: window.location.pathname },
+            }}
+          />
+        )
+      }
     />
   );
 
@@ -63,10 +83,10 @@ const Layout = () => {
         ) : userData ? (
           props.children
         ) : (
-              <>
-                <Redirect to="/login" />
-              </>
-            )
+          <>
+            <Redirect to="/login" />
+          </>
+        )
       }
     />
   );
@@ -90,7 +110,20 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
-        {alert.showAlert && <AlertMessage setAlert={setAlert} alert={alert} show={alert.showAlert} clickAway={(timeout) => { clearTimeout(timeout); setAlert({ showAlert: false, type: null, message: null }) }} type={alert.type}>{alert.message}</AlertMessage>}
+        {alert.showAlert && (
+          <AlertMessage
+            setAlert={setAlert}
+            alert={alert}
+            show={alert.showAlert}
+            clickAway={(timeout) => {
+              clearTimeout(timeout);
+              setAlert({ showAlert: false, type: null, message: null });
+            }}
+            type={alert.type}
+          >
+            {alert.message}
+          </AlertMessage>
+        )}
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />
@@ -106,11 +139,17 @@ const Layout = () => {
           >
             <Switch>
               <Route exact path="/">
-                <ProductGrid products={products} createSlug={createSlug} setAlert={setAlert} />
+                <ProductGrid
+                  products={products}
+                  createSlug={createSlug}
+                  setAlert={setAlert}
+                />
               </Route>
               <Route path="/login" component={Login} />
               <Route path="/register" component={Register} />
-              <Route path="/orders" component={Orders} />
+              <AdminRoute path="/orders">
+                <Orders />
+              </AdminRoute>
               <Route path="/receipt" component={Receipt} />
               <LoggedInRoute path="/checkout">
                 <Checkout />
