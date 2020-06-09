@@ -115,11 +115,11 @@ const ProductCard = (props) => {
         ) : null}
         {props.case === "main" || props.case === "productview" ? (
           <Button
-            disabled={product.inventory === 0}
+            disabled={product.inventory < 1}
             size="small"
             onClick={handleAddToCart}
           >
-            {product.inventory === 0 ? "Not in stock" : "Add to cart"}
+            {product.inventory < 1 ? "Not in stock" : "Add to cart"}
           </Button>
         ) : props.case === "updateInventory" ? (
           <form
