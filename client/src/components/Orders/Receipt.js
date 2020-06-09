@@ -26,10 +26,11 @@ const Receipt = () => {
   useEffect(() => {
     setupSpecificOrders();
   }, []);
-
+        
   return (
     <>
       {(receipt.shipment != undefined && showReceipt ? (
+        
         <Grid
           container
           key={receipt._id}
@@ -96,6 +97,7 @@ const Receipt = () => {
         :
         specificOrders != undefined && !showReceipt &&
         specificOrders.map((order) => (
+          
           <Grid
             container
             key={order._id}
@@ -122,7 +124,8 @@ const Receipt = () => {
                     <Grid item xs={12}>
                       <Typography variant="h6">Products:</Typography>
                     </Grid>
-                    {order.products[0].map((product) => (
+                    {order.products[0] != undefined && 
+                      order.products[0].map((product) => (
                       <Grid
                         item
                         xs={12}
