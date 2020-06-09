@@ -122,6 +122,19 @@ const NavBar = (props) => {
             </ListItem>
           </>
         )}
+        {userData && (
+          <>
+            <ListItem
+              button
+              onClick={function (event) {
+                handleDontShowReceipt();
+                handleDrawerToggle();
+              }}
+            >
+              Your orders
+            </ListItem>
+          </>
+        )}
       </List>
     </div>
   );
@@ -217,6 +230,7 @@ const NavBar = (props) => {
             ) : null}
             {userData !== "" && (
               <NavButton
+                className={classes.desktopLinks}
                 aria-label="yourOrders"
                 onClick={() => handleDontShowReceipt()}
               >
