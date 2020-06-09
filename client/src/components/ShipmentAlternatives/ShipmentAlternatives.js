@@ -46,7 +46,7 @@ const ShipmentAlternatives = () => {
         onChange={(event) => handleInputChange(event, "choosenShipment")}
       >
         {shipmentAlternatives.map((shipment, index) => (
-          <div key={index} className={classes.containerDiv}>
+          <div key={shipment._id} className={classes.containerDiv}>
             <FormControlLabel
               value={shipment.alternative}
               control={<Radio />}
