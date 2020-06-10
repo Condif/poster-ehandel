@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import { UserContext } from "../../Contexts/UserContext";
 import useStyles from "./LoginStyles";
 
-export default function Login() {
+export default function Login(props) {
   const classes = useStyles();
 
   const [inputValues, setInputValues] = useState({
@@ -14,11 +14,12 @@ export default function Login() {
     userPassword: "",
   });
 
-  const { setUser, setAlert } = useContext(UserContext);
+  const { setUser, setAlert, loginPopup, setLoginPopup } = useContext(UserContext);
 
   const history = useHistory();
 
   function redirectToMain() {
+
     history.push("/");
   }
 
@@ -46,6 +47,13 @@ export default function Login() {
       if (response.status === 200) {
         let dataFromBackend = await response.json();
         setUser(dataFromBackend);
+        if (loginPopup.showLogin) {
+          setAlert({ showAlert: true, type: "success", message: "Successfully logged in." });
+          setTimeout(() => {
+            setLoginPopup({ showLogin: false, message: null });
+          }, 2000);
+          return;
+        }
         redirectToMain();
       }
       if (response.status === 401 || response.status === 404) {

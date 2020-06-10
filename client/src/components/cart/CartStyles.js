@@ -28,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     height: "calc(100% - 5rem)",
     top: "4rem",
     overflowY: "auto",
+    zIndex: 10,
     [theme.breakpoints.down("sm")]: {
       width: "100vw",
     },
