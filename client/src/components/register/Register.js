@@ -193,12 +193,12 @@ const Register = () => {
         <FormControl component="fieldset">
           <RadioGroup
             row
-            defaultValue="user"
+            defaultValue='user'
             aria-label="role"
             onChange={(event) => handleInputChange(event, "adminRequest")}
           >
-            <FormControlLabel value={false} control={<Radio />} label="User" />
-            <FormControlLabel value={true} control={<Radio />} label="Admin" />
+            <FormControlLabel value='user' control={<Radio />} label="User" />
+            <FormControlLabel value='admin' control={<Radio />} label="Admin" />
           </RadioGroup>
         </FormControl>
         <Button
