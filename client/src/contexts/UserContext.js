@@ -7,7 +7,11 @@ const UserContextProvider = (props) => {
   const [alert, setAlert] = useState({
     showAlert: false,
     type: null,
-    message: null,
+    message: null
+  });
+  const [loginPopup, setLoginPopup] = useState({
+    showLogin: false,
+    message: null
   });
   const [orderPlaced, setOrderPlaced] = useState(Date.now())
 
@@ -171,7 +175,12 @@ const UserContextProvider = (props) => {
         deleteProduct,
         totalCost,
         amountOfItems,
-        alert, setAlert, setOrderPlaced, orderPlaced
+        alert, 
+		setAlert, 
+		loginPopup, 
+		setLoginPopup, 
+		setOrderPlaced, 
+		orderPlaced
       }}
     >
       {props.children}

@@ -22,7 +22,8 @@ import Orders from "./Orders/Orders";
 import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
-import AlertMessage from "./AlertMessage/AlertMessage";
+import Alerts from "./Alerts/Alerts";
+import useStyles from "./Alerts/AlertsStyles";
 
 const Layout = () => {
   const {
@@ -32,10 +33,12 @@ const Layout = () => {
     alert,
     setAlert,
     orderPlaced,
+	loginPopup,
+	setLoginPopup
   } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
-
+  const classes = useStyles();
   const [fetchingUserData, setfetchingUserData] = useState(true);
 
   async function getAllProducts() {
@@ -115,11 +118,11 @@ const Layout = () => {
           <p>Loading</p>
         ) : userData ? (
           props.children
-        ) : (
-          <>
-            <Redirect to="/login" />
-          </>
-        )
+        ) : loginPopup.showLogin ? props.children : (
+              <>
+                <Redirect to="/login" />
+              </>
+            )
       }
     />
   );
@@ -153,20 +156,10 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
-        {alert.showAlert && (
-          <AlertMessage
-            setAlert={setAlert}
-            alert={alert}
-            show={alert.showAlert}
-            clickAway={(timeout) => {
-              clearTimeout(timeout);
-              setAlert({ showAlert: false, type: null, message: null });
-            }}
-            type={alert.type}
-          >
-            {alert.message}
-          </AlertMessage>
-        )}
+        <div className={classes.ref} style={{ "zIndex": (alert.showAlert || loginPopup.showLogin ? 8888 : -1) }}>
+          {alert.showAlert && <Alerts action />}
+          {loginPopup.showLogin && <Alerts popper />}
+        </div>
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />
@@ -185,6 +178,8 @@ const Layout = () => {
                 <ProductGrid
                   products={products}
                   createSlug={createSlug}
+                  setLoginPopup={setLoginPopup}
+                  loginPopup={loginPopup}
                   setAlert={setAlert}
                 />
               </Route>

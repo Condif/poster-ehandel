@@ -22,7 +22,7 @@ const Checkout = () => {
     handleReceipt,
     clearCartAndLocalStorage,
     totalCost,
-    setAlert,
+    setLoginPopup,
     setOrderPlaced
   } = useContext(UserContext);
   
@@ -59,15 +59,10 @@ const Checkout = () => {
         const data = await response.json();
         if (data.error) {
           // Reset user data when session has ended
-          if (userData !== "") {
-            setUser("");
-          }
-          setAlert({
-            showAlert: true,
-            type: "info",
-            message: `You need to be a member to make a purchase.
-          Would you like to sign up?`,
-          });
+          setLoginPopup({ showLogin: true, message: "Please login before making a purchase." })
+            if (userData !== "") {
+              setUser("");
+            }
           return;
         }
         if (userData.id !== data.id) {
@@ -76,9 +71,9 @@ const Checkout = () => {
         updateInventory();
 
         const receipt = await createNewOrder();
-        clearCartAndLocalStorage()
-        setOrderPlaced(Date.now())
 
+        clearCartAndLocalStorage();
+        setOrderPlaced(Date.now());
         handleReceipt(receipt);
         history.push("/receipt");
       });
@@ -141,25 +136,25 @@ const Checkout = () => {
           <Typography className={classes.text}>
             Your cart is empty. Go back and add items.
           </Typography>
-          <Button
-            className={classes.submitButton}
-            variant="contained"
-            color="primary"
-            onClick={() => history.push("/")}
-          >
-            Add items
+            <Button
+              className={classes.submitButton}
+              variant="contained"
+              color="primary"
+              onClick={() => history.push("/")}
+            >
+              Add items
           </Button>
-        </Container>
-      )}
-      <ShipmentAlternatives />
-      <PaymentInformation />
-      <TotalCost />
-      <Grid item xs={12}>
-        {checkErrorsInInfo() ? (
-          <div className={classes.errorMsg}>
-            <ErrorIcon fontSize="small" />
-            <Typography variant="body2" align="center">
-              Error in "Your Information"
+          </Container>
+        )}
+        <ShipmentAlternatives />
+        <PaymentInformation />
+        <TotalCost />
+        <Grid item xs={12}>
+          {checkErrorsInInfo() ? (
+            <div className={classes.errorMsg}>
+              <ErrorIcon fontSize="small" />
+              <Typography variant="body2" align="center">
+                Error in "Your Information"
             </Typography>
           </div>
         ) : null}
@@ -173,7 +168,7 @@ const Checkout = () => {
       >
         Make purchase
       </Button>
-    </div>
+      </div>
   );
 };
 
