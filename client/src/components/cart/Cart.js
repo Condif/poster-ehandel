@@ -21,7 +21,7 @@ const Cart = (props) => {
     totalCost,
     userData,
     setUser,
-    setAlert
+    setLoginPopup
   } = useContext(UserContext);
 
   const { createSlug } = props;
@@ -37,9 +37,7 @@ const Cart = (props) => {
           if (userData !== "") {
             setUser("");
           }
-          setAlert({ showAlert: true, type: "info", message: "Please login before making a purchase.", popper: true })
-
-
+          setLoginPopup({ showLogin: true, type: "info", message: "Please login before making a purchase." })
           return;
         }
         openCart();
@@ -62,6 +60,7 @@ const Cart = (props) => {
         anchor="right"
         onClose={openCart}
         open={isCartOpen}
+        ModalProps={{ disableEnforceFocus: true }}
       >
         <div className={classes.headerWrapper}>
           <CloseIcon className={classes.closeIcon} onClick={openCart} />

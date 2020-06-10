@@ -22,7 +22,7 @@ const Checkout = () => {
     handleReceipt,
     clearCartAndLocalStorage,
     totalCost,
-    setAlert,
+    setLoginPopup,
     setOrderPlaced
   } = useContext(UserContext);
   
@@ -62,7 +62,7 @@ const Checkout = () => {
           if (userData !== "") {
             setUser("");
           }
-          setAlert({ showAlert: true, type: "info", message: "Please login before making a purchase.", popper: true })
+          setLoginPopup({ showAlert: true, type: "info", message: "Please login before making a purchase." })
           return;
         }
         if (userData.id !== data.id) {

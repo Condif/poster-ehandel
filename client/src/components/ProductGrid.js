@@ -14,10 +14,6 @@ const Main = (props) => {
   if (location.state) {
     redirectedFrom = location.state.redirectedFrom;
   }
-  useEffect(() => {
-    setAlert({ showAlert: true, type: "info", message: "Please login before making a purchase.", popper: true })
-
-  }, [])
 
   useEffect(() => {
     if (redirectedFrom === "/adminProductPage") {

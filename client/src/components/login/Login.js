@@ -1,6 +1,5 @@
 import React, { useState, useContext } from "react";
 import Button from "@material-ui/core/Button";
-import {Grid} from "@material-ui/core";
 import Container from "@material-ui/core/Container";
 import TextField from "@material-ui/core/TextField";
 import { useHistory } from "react-router-dom";
@@ -15,7 +14,7 @@ export default function Login(props) {
     userPassword: "",
   });
 
-  const { setUser, setAlert } = useContext(UserContext);
+  const { setUser, setAlert, alert } = useContext(UserContext);
 
   const history = useHistory();
 
@@ -51,13 +50,14 @@ export default function Login(props) {
       }
       if (response.status === 401 || response.status === 404) {
         setAlert({ showAlert: true, type: "error", message: "You have entered the wrong username or password." });
+        console.log(alert)
       }
     }
     )
   }
 
   return (
-      <Container className={props.alert && classes.containerAlert, classes.flexedContainer} maxWidth="sm">
+      <Container className={classes.flexedContainer} maxWidth="sm">
         <TextField
           fullWidth
           variant="outlined"
@@ -80,7 +80,7 @@ export default function Login(props) {
         ></TextField>
         <Button
           disabled={!inputValues.userEmail || !inputValues.userPassword}
-          className={classes.submitButton, classes.buttonAlert}
+          className={classes.submitButton}
           variant="contained"
           color="primary"
           fullWidth

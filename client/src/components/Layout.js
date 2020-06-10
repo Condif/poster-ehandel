@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext, useRef } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Grid, Container } from "@material-ui/core";
 import Header from "./Header";
 import NavBar from "./NavBar/NavBar";
@@ -23,11 +23,11 @@ import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
 import { CheckoutContext } from "../Contexts/CheckoutContext";
 import Footer from "./Footer/Footer";
-import ActionAlert from "./Alerts/ActionAlert";
+import Alerts from "./Alerts/Alerts";
 import useStyles from "./Alerts/AlertsStyles";
 
 const Layout = () => {
-  const { setUser, isAdmin, userData, alert, setAlert, orderPlaced } = useContext(
+  const { setUser, isAdmin, userData, alert, setAlert, loginPopup, setLoginPopup, orderPlaced } = useContext(
     UserContext
   );
 
@@ -156,8 +156,9 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
-        <div className={classes.ref} style={{ "zIndex": (alert.showAlert ? 9999 : -1) }}>
-          {alert.showAlert && <ActionAlert setAlert={setAlert} alert={alert} clickAway={(timeoutOne, timeoutTwo) => handleClickAway(timeoutOne, timeoutTwo)} />}
+        <div className={classes.ref} style={{ "zIndex": (alert.showAlert || loginPopup.showLogin ? 8888 : -1) }}>
+          {alert.showAlert && <Alerts action  />}
+          {loginPopup.showLogin && <Alerts popper />}
         </div>
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
@@ -177,6 +178,8 @@ const Layout = () => {
                 <ProductGrid
                   products={products}
                   createSlug={createSlug}
+                  setLoginPopup={setLoginPopup}
+                  loginPopup={loginPopup}
                   setAlert={setAlert}
                 />
               </Route>

@@ -1,5 +1,5 @@
 // Hämta useContext för att använda funktioner i UserContext.
-import React, { useContext, useState, forwardRef } from "react";
+import React, { useContext, useState } from "react";
 import {
   AppBar,
   Toolbar,
