@@ -9,14 +9,13 @@ const UserContextProvider = (props) => {
   const [alert, setAlert] = useState({
     showAlert: false,
     type: null,
-    message: null
+    message: null,
   });
   const [loginPopup, setLoginPopup] = useState({
     showLogin: false,
-    message: null
+    message: null,
   });
-  const [orderPlaced, setOrderPlaced] = useState(Date.now())
-
+  const [orderPlaced, setOrderPlaced] = useState(Date.now());
 
   const [receipt, setReceipt] = useState("");
   const [showReceipt, setShowReceipt] = useState(false);
@@ -94,8 +93,7 @@ const UserContextProvider = (props) => {
   };
 
   const clearCartAndLocalStorage = () => {
-    if (cartList === null) return
-    if (cartList.length === 0) return
+
     setCartList([]);
     localStorage.removeItem("products");
   };
@@ -103,7 +101,7 @@ const UserContextProvider = (props) => {
   const deleteProduct = (product) => {
     const state = [...cartList];
     const productIndex = state.findIndex((p) => p.name === product.name);
-    state[productIndex].cartAmount = 0
+    state[productIndex].cartAmount = 0;
     state.splice(productIndex, 1);
     setCartList(state);
     localStorage.setItem("products", JSON.stringify(state));
@@ -198,7 +196,7 @@ const UserContextProvider = (props) => {
         loginPopup,
         setLoginPopup,
         setOrderPlaced,
-        orderPlaced
+        orderPlaced,
       }}
     >
       {props.children}
