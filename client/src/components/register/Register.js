@@ -17,7 +17,7 @@ const Register = () => {
     lastname: "",
     email: "",
     password: "",
-    role: "",
+    role: "user",
     address: "",
     zipcode: "",
     city: "",
@@ -50,7 +50,7 @@ const Register = () => {
       lastname: inputValues.lastname,
       email: inputValues.email,
       password: inputValues.password,
-      role: "user",
+      role: inputValues.role,
       deliveryAddress: {
         address: inputValues.address,
         zipcode: inputValues.zipcode,
@@ -94,6 +94,7 @@ const Register = () => {
 
   return (
     <Container className={classes.flexedContainer} maxWidth="sm">
+      {console.log(inputValues)}
       <ValidatorForm
         onSubmit={handleSubmit}
         onError={(errors) => console.log(errors)}
