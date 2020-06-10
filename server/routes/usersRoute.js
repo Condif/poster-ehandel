@@ -7,8 +7,8 @@ const controller = require("../controllers/userControllers");
 // Getting specific users
 router.get("/byId", controller.getSpecificUsers)
 
-// // Getting one
-// router.get("/:_id", controller.getUserById)
+//Getting logged in user
+router.get("/loggedIn", controller.getLoggedInUser)
 
 // Creating one
 router.post("/register", controller.registerNewUser);
