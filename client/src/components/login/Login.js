@@ -14,7 +14,7 @@ export default function Login(props) {
     userPassword: "",
   });
 
-  const { setUser, setAlert, loginPopup, setLoginPopup } = useContext(
+  const { setUser, setAlert, loginPopup, setLoginPopup, setupLoggedInUser } = useContext(
     UserContext
   );
 
@@ -48,6 +48,7 @@ export default function Login(props) {
       if (response.status === 200) {
         let dataFromBackend = await response.json();
         setUser(dataFromBackend);
+        setupLoggedInUser()
         if (loginPopup.showLogin) {
           setAlert({
             showAlert: true,
