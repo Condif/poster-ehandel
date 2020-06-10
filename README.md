@@ -107,7 +107,12 @@ This part is only for our teacher's reference, not the actual grading of the ass
 
 - The backend application must have a working global error handler. (Completed)</br>
   In our expressApp we have a middleware that handles global errors. We also have a ServerError class that throws a new error if           something goes wrong. 
- 
+- An administrator should be able to mark an order as shipped.
+  By clicking “see orders”, the administrator can see all orders. There they can mark them as shipped or not. 
+- When the user is logged in, they should be able to see if their order is shipped or not. 
+  When the user clicks on the “my orders” button, they can se all the orders that they have made. There, they can also see if they are     shipped or not. 
+
+
 ### Inlog
 
 email: admin@gmail.com 
