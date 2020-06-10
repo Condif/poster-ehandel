@@ -114,11 +114,15 @@ const ProductCard = (props) => {
         ) : null}
         {props.case === "main" || props.case === "productview" ? (
           <Button
-            disabled={product.inventory < 1 || product.inventory <= product.cartAmount}
+            disabled={
+              product.inventory < 1 || product.inventory <= product.cartAmount
+            }
             size="small"
             onClick={handleAddToCart}
           >
-            {product.inventory < 1 || product.inventory <= product.cartAmount ? "Not in stock" : "Add to cart"}
+            {product.inventory < 1 || product.inventory <= product.cartAmount
+              ? "Not in stock"
+              : "Add to cart"}
           </Button>
         ) : props.case === "updateInventory" ? (
           <form
@@ -157,7 +161,7 @@ const ProductCard = (props) => {
               <AddCircleOutlineIcon />
             </Button>
             <Button
-            className={classes.cartButtons}
+              className={classes.cartButtons}
               variant="contained"
               size="small"
               onClick={() => updateCounter(product, "remove")}
@@ -172,16 +176,17 @@ const ProductCard = (props) => {
             >
               <DeleteIcon />
             </Button>
-            
           </div>
-          ) : null}
+        ) : null}
       </CardActions>
       {props.case === "cart" || props.case === "checkout" ? (
-      <Container style={{display: "flex",  flexDirection: "column"}}>
-            {product.inventory <= product.cartAmount &&
-            <Typography>Product stock empty</Typography>
-            }
-      </Container>
+        <Container style={{ display: "flex", flexDirection: "column" }}>
+          {product.inventory <= product.cartAmount && (
+            <Typography style={{ textAlign: "center" }}>
+              Product stock empty
+            </Typography>
+          )}
+        </Container>
       ) : null}
     </Card>
   );

@@ -18,7 +18,7 @@ const ShipmentAlternatives = () => {
     setShipmentAlternatives,
     validationInputs,
     shipmentAlternatives,
-    handleInputChange
+    handleInputChange,
   } = useContext(CheckoutContext);
   // const { orderPlaced } = useContext(CheckoutContext)
 
@@ -38,13 +38,17 @@ const ShipmentAlternatives = () => {
   }, []);
 
   return (
-    <FormControl>
+    <FormControl style={{ padding: "1rem" }}>
       <FormLabel className={classes.labelText}>Shipping Alternatives</FormLabel>
       <RadioGroup
-        className={classes.containerDiv}
         aria-label="ShippingAlternative"
         name="shipping1"
         value={validationInputs.choosenShipment.value}
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
         onChange={(event) => handleInputChange(event, "choosenShipment")}
       >
         {shipmentAlternatives.map((shipment) => (
