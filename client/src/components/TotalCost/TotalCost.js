@@ -25,7 +25,7 @@ const TotalCost = () => {
             Shipment: {getShipmentCost()} SEK
           </Typography>
           <Typography className={classes.text}>
-            Totalkostnad {totalCost() + getShipmentCost()} SEK
+            Total {totalCost() + getShipmentCost()} SEK
           </Typography>
         </div>
       )}

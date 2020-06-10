@@ -8,11 +8,12 @@ import ShipmentAlternatives from "../ShipmentAlternatives/ShipmentAlternatives";
 import ErrorIcon from "@material-ui/icons/Error";
 import PaymentInformation from "./PaymentInformation";
 import TotalCost from "../TotalCost/TotalCost";
+import { renderProducts } from "../ProductGrid";
 
 //styles
 import useStyles from "./CheckOutStyles";
 
-const Checkout = () => {
+const Checkout = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const {
@@ -23,14 +24,14 @@ const Checkout = () => {
     clearCartAndLocalStorage,
     totalCost,
     setLoginPopup,
-    setOrderPlaced
+    setOrderPlaced,
   } = useContext(UserContext);
-  
+
   const {
     validateInputFields,
     checkErrorsInInfo,
     validationInputs,
-    shipmentAlternatives
+    shipmentAlternatives,
   } = useContext(CheckoutContext);
 
   //updates inventory of each product when a purches is made
@@ -59,10 +60,13 @@ const Checkout = () => {
         const data = await response.json();
         if (data.error) {
           // Reset user data when session has ended
-          setLoginPopup({ showLogin: true, message: "Please login before making a purchase." })
-            if (userData !== "") {
-              setUser("");
-            }
+          setLoginPopup({
+            showLogin: true,
+            message: "Please login before making a purchase.",
+          });
+          if (userData !== "") {
+            setUser("");
+          }
           return;
         }
         if (userData.id !== data.id) {
@@ -118,43 +122,37 @@ const Checkout = () => {
       });
     return receipt;
   };
-  
+
   return (
     <div className={classes.mainDiv}>
-      <Container>
-        {cartList !== undefined &&
-          cartList.map((product) => (
-            <ProductCard
-              key={product._id}
-              case="checkout"
-              product={product}
-            ></ProductCard>
-          ))}
-      </Container>
+      <Grid container spacing={2} alignItems="stretch">
+        {cartList !== null &&
+          renderProducts("checkout", cartList, props.createSlug)}
+      </Grid>
       {cartList !== undefined && cartList.length === 0 && (
         <Container className={classes.goBackDiv}>
           <Typography className={classes.text}>
             Your cart is empty. Go back and add items.
           </Typography>
-            <Button
-              className={classes.submitButton}
-              variant="contained"
-              color="primary"
-              onClick={() => history.push("/")}
-            >
-              Add items
+          <Button
+            className={classes.submitButton}
+            variant="contained"
+            color="primary"
+            onClick={() => history.push("/")}
+          >
+            Add items
           </Button>
-          </Container>
-        )}
-        <ShipmentAlternatives />
-        <PaymentInformation />
-        <TotalCost />
-        <Grid item xs={12}>
-          {checkErrorsInInfo() ? (
-            <div className={classes.errorMsg}>
-              <ErrorIcon fontSize="small" />
-              <Typography variant="body2" align="center">
-                Error in "Your Information"
+        </Container>
+      )}
+      <ShipmentAlternatives />
+      <PaymentInformation />
+      <TotalCost />
+      <Grid item xs={12}>
+        {checkErrorsInInfo() ? (
+          <div className={classes.errorMsg}>
+            <ErrorIcon fontSize="small" />
+            <Typography variant="body2" align="center">
+              Error in "Your Information"
             </Typography>
           </div>
         ) : null}
@@ -168,7 +166,7 @@ const Checkout = () => {
       >
         Make purchase
       </Button>
-      </div>
+    </div>
   );
 };
 
