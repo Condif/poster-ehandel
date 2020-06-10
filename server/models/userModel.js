@@ -32,6 +32,9 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  adminRequest: {
+    type: Boolean,
+  },
   deliveryAddress: [Address],
 });
 

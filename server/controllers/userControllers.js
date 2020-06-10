@@ -28,6 +28,7 @@ exports.registerNewUser = async (req, res) => {
     email: req.body.email,
     password: req.body.password,
     role: req.body.role,
+    adminRequest: req.body.adminRequest,
     deliveryAddress: req.body.deliveryAddress,
   });
   if (!user) {
