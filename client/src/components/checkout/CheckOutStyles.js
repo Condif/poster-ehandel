@@ -26,6 +26,11 @@ const useStyles = makeStyles((theme) => ({
   },
   goBackDiv: {
     margin: "3rem 0",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    textAlign: "center",
   },
 }));
 

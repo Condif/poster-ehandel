@@ -124,11 +124,8 @@ const Checkout = (props) => {
 
   return (
     <div className={classes.mainDiv}>
-      <Grid container spacing={2} alignItems="stretch">
-        {cartList !== null &&
-          renderProducts("checkout", cartList, props.createSlug)}
-      </Grid>
-      {cartList !== undefined && cartList.length === 0 && (
+      {console.log(cartList)}
+      {cartList === null || cartList.length === 0 ? (
         <Container className={classes.goBackDiv}>
           <Typography className={classes.text}>
             Your cart is empty. Go back and add items.
@@ -142,29 +139,36 @@ const Checkout = (props) => {
             Add items
           </Button>
         </Container>
+      ) : (
+        <>
+          <Grid container spacing={2} alignItems="stretch">
+            {cartList !== null &&
+              renderProducts("checkout", cartList, props.createSlug)}
+          </Grid>
+          <ShipmentAlternatives />
+          <PaymentInformation />
+          <TotalCost />
+          <Grid item xs={12}>
+            {checkErrorsInInfo() ? (
+              <div className={classes.errorMsg}>
+                <ErrorIcon fontSize="small" />
+                <Typography variant="body2" align="center">
+                  Error in "Your Information"
+                </Typography>
+              </div>
+            ) : null}
+          </Grid>
+          <Button
+            className={classes.submitButton}
+            disabled={cartList !== undefined && cartList.length === 0}
+            variant="contained"
+            color="primary"
+            onClick={redirectToReceipt}
+          >
+            Make purchase
+          </Button>
+        </>
       )}
-      <ShipmentAlternatives />
-      <PaymentInformation />
-      <TotalCost />
-      <Grid item xs={12}>
-        {checkErrorsInInfo() ? (
-          <div className={classes.errorMsg}>
-            <ErrorIcon fontSize="small" />
-            <Typography variant="body2" align="center">
-              Error in "Your Information"
-            </Typography>
-          </div>
-        ) : null}
-      </Grid>
-      <Button
-        className={classes.submitButton}
-        disabled={cartList !== undefined && cartList.length === 0}
-        variant="contained"
-        color="primary"
-        onClick={redirectToReceipt}
-      >
-        Make purchase
-      </Button>
     </div>
   );
 };
