@@ -29,6 +29,11 @@ const AdminRequests = () => {
         updateUser(user)
     }
 
+    const denyAdminRequest = (user) => {
+        user.adminRequest = 'user'
+        updateUser(user)
+    }
+
     const updateUser = (user) => {
         fetch("http://localhost:8080/api/users/", {
           method: "PUT",
@@ -84,13 +89,13 @@ const AdminRequests = () => {
                                     >
                                     Make admin
                                     </Button>
-                                    {/* <Button
+                                    <Button
                                         variant="contained"
                                         color="primary"
-                                        onClick={() => redirectToCheckOut()}
+                                        onClick={() => denyAdminRequest(user)}
                                     >
                                     Remove Request
-                                    </Button> */}
+                                    </Button>
                                 </Grid>
                             </Grid>
                         </Paper>
