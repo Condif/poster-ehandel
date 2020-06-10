@@ -29,7 +29,6 @@ const CheckoutContextProvider = (props) => {
     },
   });
 
-
   const handleInputChange = (event, id) => {
     if (id === "city") {
       if (validateInputs(event.target.value, true)) {
@@ -128,7 +127,6 @@ const CheckoutContextProvider = (props) => {
         setInputToState,
         validateInputs,
         setShipmentAlternatives,
-
       }}
     >
       {props.children}
