@@ -11,8 +11,7 @@ import CheckoutContextProvider from "./Contexts/CheckoutContext";
 
 const theme = createMuiTheme({
   palette: {
-    primary: green,
-    secondary: lightBlue
+    primary: green
   },
 });
 

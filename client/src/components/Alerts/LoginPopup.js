@@ -49,11 +49,11 @@ const LoginPopup = forwardRef((props, ref) => {
                         <Collapse in={mode.collapse && !mode.login}>
                             <Grid container justify="center" alignItems="center" classes={{ container: classes.container, item: classes.buttons }} spacing={2}>
                                 <Grid item>
-                                    <Button color="secondary" style={{ "color": "white" }} variant="contained" onClick={() => history.push("/register")}>Sign up</Button>
+                                    <Button color="primary" style={{ "color": "white" }} variant="contained" onClick={() => history.push("/register")}>Sign up</Button>
                                 </Grid>
                                 <Grid item>or</Grid>
                                 <Grid item>
-                                    <Button color="secondary" style={{ "color": "white" }} variant="contained" onClick={handleLoginButton}>Login</Button>
+                                    <Button color="primary" style={{ "color": "white" }} variant="contained" onClick={handleLoginButton}>Login</Button>
                                 </Grid>
                             </Grid>
                         </Collapse>}
