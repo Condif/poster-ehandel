@@ -1,14 +1,14 @@
 import React from "react";
-import UpdateInventory from "../UpdateInventory/UpdateInventory.js";
+import UpdateProduct from "../UpdateProduct/UpdateProduct.js";
 import Grid from "@material-ui/core/Grid";
 
 export default function AdminProductPage(props) {
   const { products } = props;
 
   return (
-    <Grid container spacing={2} alignItems="stretch">
+    <Grid container spacing={2} alignItems="stretch" justify="center">
       {products.map((product) => {
-        return <UpdateInventory key={product._id} product={product} />;
+        return <UpdateProduct key={product._id} product={product} />;
       })}
     </Grid>
   );

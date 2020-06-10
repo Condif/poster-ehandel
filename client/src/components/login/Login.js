@@ -14,12 +14,13 @@ export default function Login(props) {
     userPassword: "",
   });
 
-  const { setUser, setAlert, loginPopup, setLoginPopup } = useContext(UserContext);
+  const { setUser, setAlert, loginPopup, setLoginPopup } = useContext(
+    UserContext
+  );
 
   const history = useHistory();
 
   function redirectToMain() {
-
     history.push("/");
   }
 
@@ -48,7 +49,11 @@ export default function Login(props) {
         let dataFromBackend = await response.json();
         setUser(dataFromBackend);
         if (loginPopup.showLogin) {
-          setAlert({ showAlert: true, type: "success", message: "Successfully logged in." });
+          setAlert({
+            showAlert: true,
+            type: "success",
+            message: "Successfully logged in.",
+          });
           setTimeout(() => {
             setLoginPopup({ showLogin: false, message: null });
           }, 2000);
@@ -57,44 +62,47 @@ export default function Login(props) {
         redirectToMain();
       }
       if (response.status === 401 || response.status === 404) {
-        setAlert({ showAlert: true, type: "error", message: "You have entered the wrong username or password." });
+        setAlert({
+          showAlert: true,
+          type: "error",
+          message: "You have entered the wrong username or password.",
+        });
       }
-    }
-    )
+    });
   }
 
   return (
-      <Container className={classes.flexedContainer} maxWidth="sm">
-        <TextField
-          fullWidth
-          variant="outlined"
-          margin="normal"
-          size="small"
-          type="email"
-          required
-          label="E-mail"
-          onChange={(event) => handleChange(event, "userEmail")}
-        ></TextField>
-        <TextField
-          fullWidth
-          variant="outlined"
-          margin="normal"
-          size="small"
-          type="password"
-          required
-          label="Password"
-          onChange={(event) => handleChange(event, "userPassword")}
-        ></TextField>
-        <Button
-          disabled={!inputValues.userEmail || !inputValues.userPassword}
-          className={classes.submitButton}
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={() => logIn()}
-        >
-          Sign in
+    <Container className={classes.flexedContainer} maxWidth="sm">
+      <TextField
+        fullWidth
+        variant="outlined"
+        margin="normal"
+        size="small"
+        type="email"
+        required
+        label="E-mail"
+        onChange={(event) => handleChange(event, "userEmail")}
+      ></TextField>
+      <TextField
+        fullWidth
+        variant="outlined"
+        margin="normal"
+        size="small"
+        type="password"
+        required
+        label="Password"
+        onChange={(event) => handleChange(event, "userPassword")}
+      ></TextField>
+      <Button
+        disabled={!inputValues.userEmail || !inputValues.userPassword}
+        className={classes.submitButton}
+        variant="contained"
+        color="primary"
+        fullWidth
+        onClick={() => logIn()}
+      >
+        Sign in
       </Button>
-      </Container>
+    </Container>
   );
 }

@@ -3,20 +3,21 @@ import ProductCard from "../ProductCard/ProductCard";
 import Grid from "@material-ui/core/Grid";
 import { UserContext } from "../../Contexts/UserContext";
 
-export default function UpdateInventory(props) {
+export default function UpdateProduct(props) {
   const [inputValues, setInputValues] = useState({
     productId: "",
-    productInventory: "",
+    productInventory: props.product.inventory,
+    productCategory: props.product.category,
   });
 
   const { setAlert } = useContext(UserContext);
 
   const { product } = props;
 
-  function handleChange(event, id) {
+  function handleChange(event, id, anchor) {
     setInputValues({
       ...inputValues,
-      productInventory: event.target.value,
+      [anchor]: event.target.value,
       productId: id,
     });
   }
@@ -25,6 +26,7 @@ export default function UpdateInventory(props) {
     event.preventDefault();
 
     product.inventory = inputValues.productInventory;
+    product.category = inputValues.productCategory;
 
     fetch("http://localhost:8080/api/products/" + inputValues.productId, {
       method: "PUT",
@@ -45,9 +47,9 @@ export default function UpdateInventory(props) {
   }
 
   return (
-    <Grid key={product._id} item style={{ width: "100%" }} sm={4}>
+    <Grid key={product._id} item style={{ width: "100%" }} sm={5}>
       <ProductCard
-        case="updateInventory"
+        case="updateProduct"
         product={product}
         updateProduct={updateProduct}
         handleChange={handleChange}
