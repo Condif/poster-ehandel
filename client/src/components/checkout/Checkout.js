@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
 import { CheckoutContext } from "../../Contexts/CheckoutContext";
-import ProductCard from "../ProductCard/ProductCard";
 import ShipmentAlternatives from "../ShipmentAlternatives/ShipmentAlternatives";
 import ErrorIcon from "@material-ui/icons/Error";
 import PaymentInformation from "./PaymentInformation";
@@ -35,7 +34,7 @@ const Checkout = (props) => {
   } = useContext(CheckoutContext);
 
   //updates inventory of each product when a purches is made
-  const updateInventory = () => {
+  const updateProduct = () => {
     fetch("http://localhost:8080/api/products/", {
       method: "PUT",
       headers: {
@@ -46,7 +45,7 @@ const Checkout = (props) => {
     })
       .then((res) => res.json())
       .then(() => {
-        console.log("Product inventory updated.");
+        console.log("Product updated.");
       });
   };
 
@@ -72,7 +71,7 @@ const Checkout = (props) => {
         if (userData.id !== data.id) {
           setUser(data);
         }
-        updateInventory();
+        updateProduct();
 
         const receipt = await createNewOrder();
 
