@@ -124,7 +124,8 @@ const Checkout = (props) => {
 
   return (
     <div className={classes.mainDiv}>
-      {cartList === null || cartList === undefined ? (
+      {console.log(cartList)}
+      {cartList === null || cartList.length === 0 ? (
         <Container className={classes.goBackDiv}>
           <Typography className={classes.text}>
             Your cart is empty. Go back and add items.

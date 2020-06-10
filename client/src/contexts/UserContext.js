@@ -91,11 +91,11 @@ const UserContextProvider = (props) => {
   };
 
   const clearCartAndLocalStorage = () => {
-    const state = [...cartList];
-    state.forEach((product) => {
-      product.cartAmount = 0;
-    });
-    setCartList("");
+    // const state = [...cartList];
+    // state.forEach((product) => {
+    //   product.cartAmount = 0;
+    // });
+    setCartList([]);
     localStorage.removeItem("products");
   };
 
@@ -144,7 +144,7 @@ const UserContextProvider = (props) => {
 
   function amountOfItems() {
     if (cartList !== null) {
-      if (cartList !== undefined) {
+      if (cartList.length !== 0) {
         const itemsAmount = cartList.reduce((amount, product) => {
           return amount + product.cartAmount;
         }, 0);
