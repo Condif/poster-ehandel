@@ -25,14 +25,16 @@ exports.updateUser = async (req, res) => {
   res.json("User updated");
 };
 
-// Get one user
-// exports.getUserById = async (req, res) => {
-//   const user = await User.findOne({ _id: req.params._id });
-//   if (!user) {
-//     throw new ServerError("The user does not exist", 404);
-//   }
-//   res.json(user);
-// };
+//Get logged in user
+exports.getLoggedInUser = async (req, res) => {
+  console.log(req.session.id);
+  
+  const user = await User.findOne({ _id: req.session.id });
+  if (!user) {
+    throw new ServerError("The user does not exist", 404);
+  }
+  res.json(user);
+};
 
 // Register new user
 exports.registerNewUser = async (req, res) => {
