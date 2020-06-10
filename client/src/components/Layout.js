@@ -21,7 +21,6 @@ import CategoryPage from "./CategoryPage/CategoryPage";
 import Orders from "./Orders/Orders";
 import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
-import { CheckoutContext } from "../Contexts/CheckoutContext";
 import Footer from "./Footer/Footer";
 import AlertMessage from "./AlertMessage/AlertMessage";
 
