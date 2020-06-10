@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
@@ -59,10 +59,10 @@ const Checkout = () => {
         const data = await response.json();
         if (data.error) {
           // Reset user data when session has ended
-          if (userData !== "") {
-            setUser("");
-          }
-          setLoginPopup({ showAlert: true, type: "info", message: "Please login before making a purchase." })
+          setLoginPopup({ showLogin: true, message: "Please login before making a purchase." })
+            if (userData !== "") {
+              setUser("");
+            }
           return;
         }
         if (userData.id !== data.id) {
@@ -71,9 +71,9 @@ const Checkout = () => {
         updateInventory();
 
         const receipt = await createNewOrder();
-        clearCartAndLocalStorage()
-        setOrderPlaced(Date.now())
 
+        clearCartAndLocalStorage();
+        setOrderPlaced(Date.now());
         handleReceipt(receipt);
         history.push("/receipt");
       });

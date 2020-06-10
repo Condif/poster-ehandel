@@ -34,11 +34,6 @@ const LoginPopup = forwardRef((props, ref) => {
         }, 600);
     }
 
-    const handleClose = (type) => {
-        setLoginPopup({ showLogin: false, message: null });
-        history.push(`/${type}`);
-    }
-
     return (
         <Fade in={loginPopup.showLogin} timeout={1000}>
             <div className={classes.root}>
@@ -54,7 +49,7 @@ const LoginPopup = forwardRef((props, ref) => {
                         <Collapse in={mode.collapse && !mode.login}>
                             <Grid container justify="center" alignItems="center" classes={{ container: classes.container, item: classes.buttons }} spacing={2}>
                                 <Grid item>
-                                    <Button color="secondary" style={{ "color": "white" }} variant="contained" onClick={() => handleClose("register")}>Sign up</Button>
+                                    <Button color="secondary" style={{ "color": "white" }} variant="contained" onClick={() => history.push("/register")}>Sign up</Button>
                                 </Grid>
                                 <Grid item>or</Grid>
                                 <Grid item>
