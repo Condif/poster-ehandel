@@ -32,12 +32,7 @@ const Layout = () => {
   );
 
   const [products, setProducts] = useState([]);
-
-  // Fetch products "on mount"
-  useEffect(() => {
-    async function fetchOnLoad() {
-      checkLoginSession();
-      setProducts(await getAllProducts());
+  const classes = useStyles();
   const [fetchingUserData, setfetchingUserData] = useState(true);
 
   async function getAllProducts() {
@@ -127,8 +122,8 @@ const Layout = () => {
   );
 
   const handleClickAway = (timeoutOne, timeoutTwo) => {
-    clearTimeout(timeoutOne); 
-    clearTimeout(timeoutTwo); 
+    clearTimeout(timeoutOne);
+    clearTimeout(timeoutTwo);
     setAlert({ showAlert: false, type: null, message: null, popper: false })
   }
 
