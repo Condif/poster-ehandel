@@ -1,28 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Grid, Typography, Paper, Button } from "@material-ui/core";
 import useStyles from "../Orders/OrdersStyles";
 
+
+
 const AdminRequests = () => {
-    const classes = useStyles();
     const [specificUsers, setSpecificUsers] = useState();
-
-    const getSpecificUsers = async () => {
-        const newSpecificUsers = await fetch("http://localhost:8080/api/users/byId", {
-            method: "GET",
-            credentials: "include",
-        }).then((response) => response.json())
-            .then((data) => {
-                return data
-            })
-        return newSpecificUsers
-    };
-
-    const setupSpecificUsers = async () => {
-        const newSpecificUsers = await getSpecificUsers()
-        setSpecificUsers(newSpecificUsers)
-    }
-
-
+    // Gör så att statet sätts första gången, useRef finns hela komponentens lifetime,
+    // alltså försvinner den inte när komponenten uppdateras.
+    const _isMounted = useRef(true);
+    const classes = useStyles();
     const makeAdmin = (user) => {
         user.adminRequest = 'user'
         user.role = 'admin'
@@ -36,28 +23,45 @@ const AdminRequests = () => {
 
     const updateUser = (user) => {
         fetch("http://localhost:8080/api/users/", {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(user),
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            credentials: "include",
+            body: JSON.stringify(user),
         })
-          .then((res) => res.json())
-          .then(() => {
-            console.log("User updated");
-          });
-      };
+            .then((res) => res.json())
+            .then(() => {
+                console.log("User updated");
+            });
+    };
 
+    const setupSpecificUsers = async () => {
+        const newSpecificUsers = await getSpecificUsers()
+        //Eftersom useEffect bara ska köras 1 gång ska statet bara sättas en gång
+        if (_isMounted.current) {
+            setSpecificUsers(newSpecificUsers)
+        }
+    }
+
+    const getSpecificUsers = async () => {
+            const newSpecificUsers = await fetch("http://localhost:8080/api/users/byId", {
+                method: "GET",
+                credentials: "include",
+            }).then((response) => response.json())
+                .then((data) => {
+                    return data
+                })
+            return newSpecificUsers
+        
+    };
     useEffect(() => {
-        setupSpecificUsers();
+        setupSpecificUsers()
+        return () => {
+            _isMounted.current = false;
+        }
         // eslint-disable-next-line
     }, []);
-
-    
-
-    console.log(specificUsers);
-
 
     return (
         <>
@@ -87,14 +91,14 @@ const AdminRequests = () => {
                                         color="primary"
                                         onClick={() => makeAdmin(user)}
                                     >
-                                    Make admin
+                                        Make admin
                                     </Button>
                                     <Button
                                         variant="contained"
                                         color="primary"
                                         onClick={() => denyAdminRequest(user)}
                                     >
-                                    Remove Request
+                                        Remove Request
                                     </Button>
                                 </Grid>
                             </Grid>
