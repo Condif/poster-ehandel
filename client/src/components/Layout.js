@@ -33,8 +33,8 @@ const Layout = () => {
     alert,
     setAlert,
     orderPlaced,
-	loginPopup,
-	setLoginPopup
+    loginPopup,
+    setLoginPopup,
   } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
@@ -118,11 +118,13 @@ const Layout = () => {
           <p>Loading</p>
         ) : userData ? (
           props.children
-        ) : loginPopup.showLogin ? props.children : (
-              <>
-                <Redirect to="/login" />
-              </>
-            )
+        ) : loginPopup.showLogin ? (
+          props.children
+        ) : (
+          <>
+            <Redirect to="/login" />
+          </>
+        )
       }
     />
   );
@@ -156,7 +158,12 @@ const Layout = () => {
   return (
     <Router>
       <div className="App">
-        <div className={classes.ref} style={{ "zIndex": (alert.showAlert || loginPopup.showLogin ? 8888 : -1) }}>
+        <div
+          className={classes.ref}
+          style={{
+            zIndex: alert.showAlert || loginPopup.showLogin ? 8888 : -1,
+          }}
+        >
           {alert.showAlert && <Alerts action />}
           {loginPopup.showLogin && <Alerts popper />}
         </div>
@@ -190,7 +197,7 @@ const Layout = () => {
               </AdminRoute>
               <Route path="/receipt" component={Receipt} />
               <LoggedInRoute path="/checkout">
-                <Checkout />
+                <Checkout createSlug={createSlug} />
               </LoggedInRoute>
               <AdminRoute path="/adminProductPage">
                 <AdminProductPage products={products} />
