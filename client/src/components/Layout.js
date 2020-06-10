@@ -26,9 +26,16 @@ import Alerts from "./Alerts/Alerts";
 import useStyles from "./Alerts/AlertsStyles";
 
 const Layout = () => {
-  const { setUser, isAdmin, userData, alert, setAlert, loginPopup, setLoginPopup, orderPlaced } = useContext(
-    UserContext
-  );
+  const {
+    setUser,
+    isAdmin,
+    userData,
+    alert,
+    setAlert,
+    orderPlaced,
+	loginPopup,
+	setLoginPopup
+  } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
   const classes = useStyles();
@@ -92,13 +99,13 @@ const Layout = () => {
         ) : isAdmin() ? (
           props.children
         ) : (
-              <Redirect
-                to={{
-                  pathname: "/",
-                  state: { redirectedFrom: window.location.pathname },
-                }}
-              />
-            )
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { redirectedFrom: window.location.pathname },
+            }}
+          />
+        )
       }
     />
   );

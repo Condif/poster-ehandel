@@ -9,6 +9,7 @@ import {
   CardMedia,
   TextField,
   Typography,
+  Container,
 } from "@material-ui/core";
 import useStyles from "./ProductCardStyles";
 import { UserContext } from "../../Contexts/UserContext";
@@ -113,11 +114,11 @@ const ProductCard = (props) => {
         ) : null}
         {props.case === "main" || props.case === "productview" ? (
           <Button
-            disabled={product.inventory < 1}
+            disabled={product.inventory < 1 || product.inventory <= product.cartAmount}
             size="small"
             onClick={handleAddToCart}
           >
-            {product.inventory < 1 ? "Not in stock" : "Add to cart"}
+            {product.inventory < 1 || product.inventory <= product.cartAmount ? "Not in stock" : "Add to cart"}
           </Button>
         ) : props.case === "updateInventory" ? (
           <form
@@ -147,13 +148,16 @@ const ProductCard = (props) => {
         {props.case === "cart" || props.case === "checkout" ? (
           <div className={classes.flexedDiv}>
             <Button
+              className={classes.cartButtons}
               variant="contained"
               size="small"
               onClick={() => updateCounter(product, "add")}
+              disabled={product.inventory <= product.cartAmount}
             >
               <AddCircleOutlineIcon />
             </Button>
             <Button
+            className={classes.cartButtons}
               variant="contained"
               size="small"
               onClick={() => updateCounter(product, "remove")}
@@ -161,15 +165,24 @@ const ProductCard = (props) => {
               <RemoveCircleOutlineIcon />
             </Button>
             <Button
+              className={classes.cartButtons}
               variant="contained"
               size="small"
               onClick={() => deleteProduct(product)}
             >
               <DeleteIcon />
             </Button>
+            
           </div>
-        ) : null}
+          ) : null}
       </CardActions>
+      {props.case === "cart" || props.case === "checkout" ? (
+      <Container style={{display: "flex",  flexDirection: "column"}}>
+            {product.inventory <= product.cartAmount &&
+            <Typography>Product stock empty</Typography>
+            }
+      </Container>
+      ) : null}
     </Card>
   );
 };
