@@ -1,5 +1,5 @@
 // Hämta useContext för att använda funktioner i UserContext.
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -66,6 +66,8 @@ const NavBar = (props) => {
     setUser,
     setAlert,
     setShowReceipt,
+    setupLoggedInUser,
+    loggedInUser,
   } = useContext(UserContext);
 
   const handleDrawerToggle = (props) => {
@@ -157,6 +159,7 @@ const NavBar = (props) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          setupLoggedInUser()
           setUser("");
           setAlert({ showAlert: true, type: "success", message: data.message });
           if (window.location.pathname !== "/") {
@@ -171,6 +174,11 @@ const NavBar = (props) => {
     setShowReceipt(false);
     history.push("/receipt");
   };
+
+  useEffect(() => {
+    setupLoggedInUser();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
@@ -220,7 +228,7 @@ const NavBar = (props) => {
           </Categories>
 
           <Grid justifycontent="flex-end" item>
-            {userData.adminRequest === 'admin' &&
+            {userData !== '' && loggedInUser !== undefined && loggedInUser.adminRequest === 'admin' &&
               <Typography>Admin Request Pending</Typography>
             }
             {userData.role === "admin" ? (

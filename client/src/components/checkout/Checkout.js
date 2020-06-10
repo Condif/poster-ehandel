@@ -128,7 +128,7 @@ const Checkout = (props) => {
         {cartList !== null &&
           renderProducts("checkout", cartList, props.createSlug)}
       </Grid>
-      {cartList !== undefined && cartList.length === 0 && (
+      {cartList !== null && cartList.length === 0 && (
         <Container className={classes.goBackDiv}>
           <Typography className={classes.text}>
             Your cart is empty. Go back and add items.
@@ -158,7 +158,7 @@ const Checkout = (props) => {
       </Grid>
       <Button
         className={classes.submitButton}
-        disabled={cartList !== undefined && cartList.length === 0}
+        disabled={cartList !== null && cartList.length === 0}
         variant="contained"
         color="primary"
         onClick={redirectToReceipt}
