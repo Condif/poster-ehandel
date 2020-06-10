@@ -3,6 +3,8 @@ export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  const [loggedInUser, setLoggedInUser] = useState();
   const [userData, setUserData] = useState("");
   const [alert, setAlert] = useState({
     showAlert: false,
@@ -92,11 +94,9 @@ const UserContextProvider = (props) => {
   };
 
   const clearCartAndLocalStorage = () => {
-    const state = [...cartList];
-    state.forEach(product => {
-      product.cartAmount = 0
-    });
-    setCartList();
+    if (cartList === null) return
+    if (cartList.length === 0) return
+    setCartList([]);
     localStorage.removeItem("products");
   };
 
@@ -127,33 +127,48 @@ const UserContextProvider = (props) => {
       setUserData({
         email: user.email,
         role: user.role,
-        adminRequest: user.adminRequest,
         deliveryAddress: user.deliveryAddress[0],
       });
     }
   };
 
   function totalCost() {
-    if (cartList !== null) {
-      if (cartList !== undefined) {
-        const totalCost = cartList.reduce((total, product) => {
-          return total + product.cartAmount * product.price;
-        }, 0);
-        return totalCost;
-      }
-    }
+    if (cartList === null) return
+    if (cartList.length === 0) return
+    const totalCost = cartList.reduce((total, product) => {
+      return total + product.cartAmount * product.price;
+    }, 0);
+    return totalCost;
   }
 
   function amountOfItems() {
-    if (cartList !== null) {
-      if (cartList !== undefined) {
-        const itemsAmount = cartList.reduce((amount, product) => {
-          return amount + product.cartAmount;
-        }, 0);
-        return itemsAmount;
-      }
-    }
+    if (cartList === null) return
+    if (cartList.length === 0) return
+
+    const itemsAmount = cartList.reduce((amount, product) => {
+      return amount + product.cartAmount;
+    }, 0);
+    return itemsAmount;
   }
+
+  const getLoggedInUser = async () => {
+    const newLoggedInUser = await fetch("http://localhost:8080/api/users/loggedIn", {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => response.json())
+      .then((data) => {
+        return data
+      })
+    return newLoggedInUser
+  }
+
+
+  const setupLoggedInUser = async () => {
+    const newLoggedInUser = await getLoggedInUser()
+    setLoggedInUser(newLoggedInUser)
+  }
+
+  
 
   return (
     <UserContext.Provider
@@ -163,6 +178,8 @@ const UserContextProvider = (props) => {
         cartList,
         receipt,
         showReceipt,
+        loggedInUser,
+        setupLoggedInUser,
         setShowReceipt,
         handleReceipt,
         setReceipt,
@@ -176,12 +193,12 @@ const UserContextProvider = (props) => {
         deleteProduct,
         totalCost,
         amountOfItems,
-        alert, 
-		setAlert, 
-		loginPopup, 
-		setLoginPopup, 
-		setOrderPlaced, 
-		orderPlaced
+        alert,
+        setAlert,
+        loginPopup,
+        setLoginPopup,
+        setOrderPlaced,
+        orderPlaced
       }}
     >
       {props.children}
