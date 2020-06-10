@@ -13,6 +13,7 @@ import {
   ListItemText,
   Hidden,
   Drawer,
+  Typography,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import green from "@material-ui/core/colors/green";
@@ -219,6 +220,9 @@ const NavBar = (props) => {
           </Categories>
 
           <Grid justifycontent="flex-end" item>
+            {userData.adminRequest === 'admin' &&
+              <Typography>Admin Request Pending</Typography>
+            }
             {userData.role === "admin" ? (
               <>
                 <NavButton
@@ -245,12 +249,12 @@ const NavBar = (props) => {
               </>
             ) : null}
             {userData !== "" && (
-              <NavButton
-                className={classes.desktopLinks}
-                aria-label="yourOrders"
-                onClick={() => handleDontShowReceipt()}
-              >
-                Your orders
+                <NavButton
+                  className={classes.desktopLinks}
+                  aria-label="yourOrders"
+                  onClick={() => handleDontShowReceipt()}
+                >
+                  Your orders
               </NavButton>
             )}
             {userData === "" ? (
