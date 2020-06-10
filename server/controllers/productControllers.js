@@ -92,5 +92,5 @@ exports.updateProductStock = async (req, res) => {
     console.log(updatedProduct, "uppdateringen");
     await updatedProduct.save();
   });
-  res.json("Product inventory updated");
+  res.json("Product updated");
 };
