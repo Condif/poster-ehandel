@@ -21,7 +21,7 @@ exports.updateUser = async (req, res) => {
 
   const updatedUser = new User(Object.assign(userToUpdate, user));
   console.log(updatedUser, "updatedUser");
-  await updatedUser.save('dontHash');
+  await updatedUser.save();
   res.json("User updated");
 };
 

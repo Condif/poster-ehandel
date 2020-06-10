@@ -127,6 +127,7 @@ const UserContextProvider = (props) => {
       setUserData({
         email: user.email,
         role: user.role,
+        adminRequest: user.adminRequest,
         deliveryAddress: user.deliveryAddress[0],
       });
     }
