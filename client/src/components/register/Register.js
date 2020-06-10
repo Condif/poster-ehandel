@@ -94,7 +94,6 @@ const Register = () => {
 
   return (
     <Container className={classes.flexedContainer} maxWidth="sm">
-      {console.log(inputValues)}
       <ValidatorForm
         onSubmit={handleSubmit}
         onError={(errors) => console.log(errors)}
