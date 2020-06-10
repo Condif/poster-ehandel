@@ -31,8 +31,6 @@ const ProductCard = (props) => {
   };
 
   const handleAddToCart = () => {
-    console.log(product);
-
     addToCartAndLocalStorage(product);
   };
 

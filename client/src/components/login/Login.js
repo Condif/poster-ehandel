@@ -50,7 +50,6 @@ export default function Login(props) {
       }
       if (response.status === 401 || response.status === 404) {
         setAlert({ showAlert: true, type: "error", message: "You have entered the wrong username or password." });
-        console.log(alert)
       }
     }
     )
