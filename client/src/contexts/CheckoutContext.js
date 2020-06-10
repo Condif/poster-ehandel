@@ -1,4 +1,4 @@
-import React, { createContext, useState, useMemo } from "react";
+import React, { createContext, useState } from "react";
 export const CheckoutContext = createContext();
 
 // const initialState = Date.now()
@@ -28,7 +28,6 @@ const CheckoutContextProvider = (props) => {
       error: false,
     },
   });
-
 
   const handleInputChange = (event, id) => {
     if (id === "city") {
@@ -128,7 +127,6 @@ const CheckoutContextProvider = (props) => {
         setInputToState,
         validateInputs,
         setShipmentAlternatives,
-
       }}
     >
       {props.children}

@@ -21,14 +21,18 @@ import CategoryPage from "./CategoryPage/CategoryPage";
 import Orders from "./Orders/Orders";
 import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
-import { CheckoutContext } from "../Contexts/CheckoutContext";
 import Footer from "./Footer/Footer";
 import AlertMessage from "./AlertMessage/AlertMessage";
 
 const Layout = () => {
-  const { setUser, isAdmin, userData, alert, setAlert, orderPlaced } = useContext(
-    UserContext
-  );
+  const {
+    setUser,
+    isAdmin,
+    userData,
+    alert,
+    setAlert,
+    orderPlaced,
+  } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
 
@@ -92,13 +96,13 @@ const Layout = () => {
         ) : isAdmin() ? (
           props.children
         ) : (
-              <Redirect
-                to={{
-                  pathname: "/",
-                  state: { redirectedFrom: window.location.pathname },
-                }}
-              />
-            )
+          <Redirect
+            to={{
+              pathname: "/",
+              state: { redirectedFrom: window.location.pathname },
+            }}
+          />
+        )
       }
     />
   );
@@ -112,10 +116,10 @@ const Layout = () => {
         ) : userData ? (
           props.children
         ) : (
-              <>
-                <Redirect to="/login" />
-              </>
-            )
+          <>
+            <Redirect to="/login" />
+          </>
+        )
       }
     />
   );

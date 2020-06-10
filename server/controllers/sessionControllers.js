@@ -33,11 +33,11 @@ exports.login = async (req, res) => {
     req.session.email = res.user.email;
     req.session.id = res.user._id;
     req.session.role = res.user.role;
-    req.session.name = res.user.name
-    req.session.lastname = res.user.lastname
+    req.session.name = res.user.name;
+    req.session.lastname = res.user.lastname;
 
     // Vi kan nu kolla om (req.session.role === role') i requests
-    
+
     console.log("Created client session");
 
     // Skickar tillbaks en genomförd login
@@ -47,7 +47,7 @@ exports.login = async (req, res) => {
       deliveryAddress: res.user.deliveryAddress,
     });
   });
-  console.log("reached")
+  console.log("reached");
 };
 
 exports.checkLoginSession = (req, res, next) => {
@@ -57,11 +57,18 @@ exports.checkLoginSession = (req, res, next) => {
       email: req.session.email,
       role: req.session.role,
       deliveryAddress: req.session.deliveryAddress,
-      id: req.session.id
+      id: req.session.id,
     };
     res.session = user;
     res.json(user);
     return;
   }
   res.json({ error: true });
+};
+
+exports.logout = (req, res) => {
+  res.clearCookie("LoginSession");
+  res.clearCookie("LoginSession.sig");
+  console.log("Destroyed client session");
+  res.json({ success: true, message: "You have been logged out" });
 };
