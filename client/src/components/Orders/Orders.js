@@ -36,8 +36,6 @@ const Orders = () => {
       shipped: shipped,
     };
 
-    console.log(order);
-
     fetch("http://localhost:8080/api/orders/" + order._id, {
       method: "PUT",
       headers: {
@@ -67,11 +65,12 @@ const Orders = () => {
 
   useEffect(() => {
     setupOrders();
+    // eslint-disable-next-line
   }, []);
 
   return (
     <>
-      {orders != undefined
+      {orders !== undefined
         ? orders.map((order) => (
             <Grid
               container
@@ -99,7 +98,8 @@ const Orders = () => {
                       <Grid item xs={12}>
                         <Typography variant="h6">Products:</Typography>
                       </Grid>
-                      {order.products[0].map((product) => (
+                      {order.products[0] !== undefined &&  
+                        order.products[0].map((product) => (
                         <Grid
                           item
                           xs={12}
@@ -129,7 +129,7 @@ const Orders = () => {
                   </Grid>
                 </Grid>
                 <Grid container className={classes.priceAndShipped}>
-                  <Grid item item xs={12} sm={6} className={classes.total}>
+                  <Grid item xs={12} sm={6} className={classes.total}>
                     <Typography>Total cost: {order.totalPrice} SEK </Typography>
                   </Grid>
                   <Grid item xs={12} sm={6}>

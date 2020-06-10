@@ -1,5 +1,7 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState, useMemo } from "react";
 export const CheckoutContext = createContext();
+
+// const initialState = Date.now()
 
 const CheckoutContextProvider = (props) => {
   const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
@@ -27,6 +29,7 @@ const CheckoutContextProvider = (props) => {
     },
   });
 
+
   const handleInputChange = (event, id) => {
     if (id === "city") {
       if (validateInputs(event.target.value, true)) {
@@ -51,7 +54,7 @@ const CheckoutContextProvider = (props) => {
         currentShipment.alternative === validationInputs.choosenShipment.value
       );
     });
-
+    // eslint-disable-next-line
     if (!shipmentAlternatives.length == 0) {
       return shipment[0].cost;
     }
@@ -125,6 +128,7 @@ const CheckoutContextProvider = (props) => {
         setInputToState,
         validateInputs,
         setShipmentAlternatives,
+
       }}
     >
       {props.children}

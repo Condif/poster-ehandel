@@ -17,14 +17,14 @@ const theme = createMuiTheme({
 function App() {
   return (
     <>
-      <UserContextProvider>
-        <CheckoutContextProvider>
-            <MuiThemeProvider theme={theme}>
-              <CssBaseline />
-              <Layout />
-            </MuiThemeProvider>
-        </CheckoutContextProvider>
-      </UserContextProvider>
+      <CheckoutContextProvider>
+        <UserContextProvider>
+          <MuiThemeProvider theme={theme}>
+            <CssBaseline />
+            <Layout />
+          </MuiThemeProvider>
+        </UserContextProvider>
+      </CheckoutContextProvider>
     </>
   );
 }

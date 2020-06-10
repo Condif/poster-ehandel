@@ -258,7 +258,7 @@ const NavBar = (props) => {
                 Logout
               </NavButton>
             )}
-            {window.location.pathname !== "/checkout" ? (
+            {/* {window.location.pathname !== "/checkout" ? ( */}
               <StyledBadge color="secondary" badgeContent={amountOfItems()}>
                 <IconButton
                   style={{
@@ -271,7 +271,7 @@ const NavBar = (props) => {
                   <ShoppingCartIcon />
                 </IconButton>
               </StyledBadge>
-            ) : null}
+            {/* // ) : null} */}
           </Grid>
         </Toolbar>
       </NavAppBar>

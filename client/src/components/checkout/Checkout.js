@@ -20,16 +20,17 @@ const Checkout = () => {
     userData,
     setUser,
     handleReceipt,
-    authenticateUser,
+    clearCartAndLocalStorage,
     totalCost,
     setAlert,
+    setOrderPlaced
   } = useContext(UserContext);
-
+  
   const {
     validateInputFields,
     checkErrorsInInfo,
     validationInputs,
-    shipmentAlternatives,
+    shipmentAlternatives
   } = useContext(CheckoutContext);
 
   //updates inventory of each product when a purches is made
@@ -70,6 +71,8 @@ const Checkout = () => {
         updateInventory();
 
         const receipt = await createNewOrder();
+        clearCartAndLocalStorage()
+        setOrderPlaced(Date.now())
 
         handleReceipt(receipt);
         history.push("/receipt");
@@ -115,22 +118,23 @@ const Checkout = () => {
       });
     return receipt;
   };
-
+  
   return (
-      <div className={classes.mainDiv}>
-        <Container>
-          {cartList.map((product) => (
+    <div className={classes.mainDiv}>
+      <Container>
+        {cartList !== undefined &&
+          cartList.map((product) => (
             <ProductCard
               key={product._id}
               case="checkout"
               product={product}
             ></ProductCard>
           ))}
-        </Container>
-        {cartList.length === 0 && (
-          <Container className={classes.goBackDiv}>
-            <Typography className={classes.text}>
-              Your cart is empty. Go back and add items.
+      </Container>
+      {cartList !== undefined && cartList.length === 0 && (
+        <Container className={classes.goBackDiv}>
+          <Typography className={classes.text}>
+            Your cart is empty. Go back and add items.
           </Typography>
             <Button
               className={classes.submitButton}
@@ -152,16 +156,17 @@ const Checkout = () => {
               <Typography variant="body2" align="center">
                 Error in "Your Information"
             </Typography>
-            </div>
-          ) : null}
-        </Grid>
-        <Button
-          className={classes.submitButton}
-          variant="contained"
-          color="primary"
-          onClick={() => redirectToReceipt()}
-        >
-          Make purchase
+          </div>
+        ) : null}
+      </Grid>
+      <Button
+        className={classes.submitButton}
+        disabled={cartList !== undefined && cartList.length === 0}
+        variant="contained"
+        color="primary"
+        onClick={redirectToReceipt}
+      >
+        Make purchase
       </Button>
       </div>
   );

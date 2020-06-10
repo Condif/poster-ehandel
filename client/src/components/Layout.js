@@ -21,30 +21,73 @@ import CategoryPage from "./CategoryPage/CategoryPage";
 import Orders from "./Orders/Orders";
 import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
+import { CheckoutContext } from "../Contexts/CheckoutContext";
 import Footer from "./Footer/Footer";
 import ActionAlert from "./Alerts/ActionAlert";
 import useStyles from "./Alerts/AlertsStyles";
 
 const Layout = () => {
-  const { setUser, isAdmin, userData, alert, setAlert } = useContext(
+  const { setUser, isAdmin, userData, alert, setAlert, orderPlaced } = useContext(
     UserContext
   );
 
-  const classes = useStyles();
-
   const [products, setProducts] = useState([]);
-  const [fetchingUserData, setfetchingUserData] = useState(true);
 
   // Fetch products "on mount"
   useEffect(() => {
     async function fetchOnLoad() {
       checkLoginSession();
       setProducts(await getAllProducts());
+  const [fetchingUserData, setfetchingUserData] = useState(true);
+
+  async function getAllProducts() {
+    const products = await fetch("http://localhost:8080/api/products", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.log("Error is: ", error.error);
+      });
+
+    return products;
+  }
+
+  const getCategories = (products) => {
+    const categories = [];
+    products.map((product) => {
+      if (!categories.includes(product.category)) {
+        return categories.push(product.category);
+      }
+      return null;
+    });
+
+    return categories;
+  };
+
+  const createSlug = (string) => {
+    string = string.replace(/^\s+|\s+$/g, ""); // trim
+    string = string.toLowerCase();
+
+    // remove accents, swap ñ for n, etc
+    const from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+    const to = "aaaaeeeeiiiioooouuuunc------";
+    for (let i = 0, l = from.length; i < l; i++) {
+      string = string.replace(new RegExp(from.charAt(i), "g"), to.charAt(i));
     }
-    // handleValue()
-    fetchOnLoad();
-    // eslint-disable-next-line
-  }, []);
+
+    string = string
+      .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+      .replace(/\s+/g, "-") // collapse whitespace and replace by -
+      .replace(/-+/g, "-"); // collapse dashes
+
+    return string;
+  };
 
   const AdminRoute = (props) => (
     <Route
@@ -55,13 +98,13 @@ const Layout = () => {
         ) : isAdmin() ? (
           props.children
         ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { redirectedFrom: window.location.pathname },
-            }}
-          />
-        )
+              <Redirect
+                to={{
+                  pathname: "/",
+                  state: { redirectedFrom: window.location.pathname },
+                }}
+              />
+            )
       }
     />
   );
@@ -75,10 +118,10 @@ const Layout = () => {
         ) : userData ? (
           props.children
         ) : (
-          <>
-            <Redirect to="/login" />
-          </>
-        )
+              <>
+                <Redirect to="/login" />
+              </>
+            )
       }
     />
   );
@@ -104,6 +147,16 @@ const Layout = () => {
       setfetchingUserData(false);
     });
   };
+
+  // Fetch products "on mount"
+  useEffect(() => {
+    async function fetchOnLoad() {
+      checkLoginSession();
+      setProducts(await getAllProducts());
+    }
+    fetchOnLoad();
+    // eslint-disable-next-line
+  }, [orderPlaced]);
 
   return (
     <Router>
@@ -211,66 +264,6 @@ const Layout = () => {
       </div>
     </Router>
   );
-};
-
-/**
- * Get all available products through fetch
- */
-async function getAllProducts() {
-  const products = await fetch("http://localhost:8080/api/products", {
-    method: "GET",
-    credentials: "include",
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      console.log("Error is: ", error.error);
-    });
-
-  return products;
-}
-
-/**
- * Get list of all unique categories
- * @param {[]} products fetched list of all products
- */
-const getCategories = (products) => {
-  const categories = [];
-  products.map((product) => {
-    if (!categories.includes(product.category)) {
-      return categories.push(product.category);
-    }
-    return null;
-  });
-
-  return categories;
-};
-
-/**
- * Convert product name to slug URL
- * @param {string} string the string (product or category name) to convert to slug
- */
-const createSlug = (string) => {
-  string = string.replace(/^\s+|\s+$/g, ""); // trim
-  string = string.toLowerCase();
-
-  // remove accents, swap ñ for n, etc
-  const from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-  const to = "aaaaeeeeiiiioooouuuunc------";
-  for (let i = 0, l = from.length; i < l; i++) {
-    string = string.replace(new RegExp(from.charAt(i), "g"), to.charAt(i));
-  }
-
-  string = string
-    .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
-    .replace(/\s+/g, "-") // collapse whitespace and replace by -
-    .replace(/-+/g, "-"); // collapse dashes
-
-  return string;
 };
 
 export default Layout;

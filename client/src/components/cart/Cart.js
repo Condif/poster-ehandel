@@ -26,7 +26,7 @@ const Cart = (props) => {
 
   const { createSlug } = props;
   function redirectToCheckOut() {
-    if((cartList !== undefined || cartList !== undefined)){   
+    if (cartList !== undefined || cartList !== undefined) {
       fetch("http://localhost:8080/sessions/checkLoginSession", {
         method: "GET",
         credentials: "include",
@@ -44,8 +44,8 @@ const Cart = (props) => {
         }
         openCart();
         history.push("/checkout");
-      })
-    } 
+      });
+    }
   }
 
   return (
@@ -55,10 +55,12 @@ const Cart = (props) => {
       }}
     >
       <Drawer
+        variant="temporary"
         style={{
           overflowX: "hidden",
         }}
         anchor="right"
+        onClose={openCart}
         open={isCartOpen}
       >
         <div className={classes.headerWrapper}>

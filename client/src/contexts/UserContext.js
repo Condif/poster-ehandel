@@ -8,16 +8,17 @@ const UserContextProvider = (props) => {
     showAlert: false,
     type: null,
     message: null,
-    popper: false
   });
+  const [orderPlaced, setOrderPlaced] = useState(Date.now())
+
 
   const [receipt, setReceipt] = useState("");
   const [showReceipt, setShowReceipt] = useState(false);
-  
+
   const handleReceipt = (newReceipt) => {
-      setReceipt(newReceipt)
-      setShowReceipt(true)
-  }
+    setReceipt(newReceipt);
+    setShowReceipt(true);
+  };
   // CartStates
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem("products" || []))
@@ -87,6 +88,10 @@ const UserContextProvider = (props) => {
   };
 
   const clearCartAndLocalStorage = () => {
+    const state = [...cartList];
+    state.forEach(product => {
+      product.cartAmount = 0
+    });
     setCartList();
     localStorage.removeItem("products");
   };
@@ -94,6 +99,7 @@ const UserContextProvider = (props) => {
   const deleteProduct = (product) => {
     const state = [...cartList];
     const productIndex = state.findIndex((p) => p.name === product.name);
+    state[productIndex].cartAmount = 0
     state.splice(productIndex, 1);
     setCartList(state);
     localStorage.setItem("products", JSON.stringify(state));
@@ -165,7 +171,7 @@ const UserContextProvider = (props) => {
         deleteProduct,
         totalCost,
         amountOfItems,
-        alert, setAlert
+        alert, setAlert, setOrderPlaced, orderPlaced
       }}
     >
       {props.children}
