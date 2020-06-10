@@ -21,7 +21,6 @@ import CategoryPage from "./CategoryPage/CategoryPage";
 import Orders from "./Orders/Orders";
 import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
-import { CheckoutContext } from "../Contexts/CheckoutContext";
 import Footer from "./Footer/Footer";
 import Alerts from "./Alerts/Alerts";
 import useStyles from "./Alerts/AlertsStyles";
@@ -112,7 +111,7 @@ const Layout = () => {
           <p>Loading</p>
         ) : userData ? (
           props.children
-        ) : (
+        ) : loginPopup.showLogin ? props.children : (
               <>
                 <Redirect to="/login" />
               </>
@@ -120,12 +119,6 @@ const Layout = () => {
       }
     />
   );
-
-  const handleClickAway = (timeoutOne, timeoutTwo) => {
-    clearTimeout(timeoutOne);
-    clearTimeout(timeoutTwo);
-    setAlert({ showAlert: false, type: null, message: null, popper: false })
-  }
 
   const checkLoginSession = () => {
     setfetchingUserData(true);
@@ -157,7 +150,7 @@ const Layout = () => {
     <Router>
       <div className="App">
         <div className={classes.ref} style={{ "zIndex": (alert.showAlert || loginPopup.showLogin ? 8888 : -1) }}>
-          {alert.showAlert && <Alerts action  />}
+          {alert.showAlert && <Alerts action />}
           {loginPopup.showLogin && <Alerts popper />}
         </div>
         <Grid container justify="center">
