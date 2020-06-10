@@ -120,6 +120,15 @@ const NavBar = (props) => {
             >
               See all orders
             </ListItem>
+            <ListItem
+              button
+              onClick={function (event) {
+                history.push("/adminRequests");
+                handleDrawerToggle();
+              }}
+            >
+              Admin Requests
+            </ListItem>
           </>
         )}
         {userData && (
@@ -214,6 +223,13 @@ const NavBar = (props) => {
               <>
                 <NavButton
                   className={classes.desktopLinks}
+                  aria-label="adminRequests"
+                  onClick={() => history.push("/adminRequests")}
+                >
+                  Admin Requests
+              </NavButton>
+                <NavButton
+                  className={classes.desktopLinks}
                   aria-label="orders"
                   onClick={() => history.push("/orders")}
                 >
@@ -259,18 +275,18 @@ const NavBar = (props) => {
               </NavButton>
             )}
             {/* {window.location.pathname !== "/checkout" ? ( */}
-              <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-                <IconButton
-                  style={{
-                    width: "4rem",
-                    color: "#333",
-                  }}
-                  edge="start"
-                  onClick={openCart}
-                >
-                  <ShoppingCartIcon />
-                </IconButton>
-              </StyledBadge>
+            <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+              <IconButton
+                style={{
+                  width: "4rem",
+                  color: "#333",
+                }}
+                edge="start"
+                onClick={openCart}
+              >
+                <ShoppingCartIcon />
+              </IconButton>
+            </StyledBadge>
             {/* // ) : null} */}
           </Grid>
         </Toolbar>
