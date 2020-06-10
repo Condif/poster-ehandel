@@ -98,19 +98,19 @@ const Orders = () => {
                       <Grid item xs={12}>
                         <Typography variant="h6">Products:</Typography>
                       </Grid>
-                      {order.products[0] !== undefined &&  
+                      {order.products[0] !== undefined &&
                         order.products[0].map((product) => (
-                        <Grid
-                          item
-                          xs={12}
-                          className={classes.orderPaper}
-                          key={product._id}
-                        >
-                          <Typography className={classes.title}>
-                            {product.cartAmount} {product.name}
-                          </Typography>
-                        </Grid>
-                      ))}
+                          <Grid
+                            item
+                            xs={12}
+                            className={classes.orderPaper}
+                            key={product._id}
+                          >
+                            <Typography className={classes.title}>
+                              {product.cartAmount} {product.name}
+                            </Typography>
+                          </Grid>
+                        ))}
                     </Grid>
                   </Grid>
                   <Grid item xs={12} sm={4} className={classes.delivery}>
