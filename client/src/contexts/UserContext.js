@@ -7,14 +7,13 @@ const UserContextProvider = (props) => {
   const [alert, setAlert] = useState({
     showAlert: false,
     type: null,
-    message: null
+    message: null,
   });
   const [loginPopup, setLoginPopup] = useState({
     showLogin: false,
-    message: null
+    message: null,
   });
-  const [orderPlaced, setOrderPlaced] = useState(Date.now())
-
+  const [orderPlaced, setOrderPlaced] = useState(Date.now());
 
   const [receipt, setReceipt] = useState("");
   const [showReceipt, setShowReceipt] = useState(false);
@@ -92,18 +91,18 @@ const UserContextProvider = (props) => {
   };
 
   const clearCartAndLocalStorage = () => {
-    const state = [...cartList];
-    state.forEach(product => {
-      product.cartAmount = 0
-    });
-    setCartList();
+    // const state = [...cartList];
+    // state.forEach((product) => {
+    //   product.cartAmount = 0;
+    // });
+    setCartList([]);
     localStorage.removeItem("products");
   };
 
   const deleteProduct = (product) => {
     const state = [...cartList];
     const productIndex = state.findIndex((p) => p.name === product.name);
-    state[productIndex].cartAmount = 0
+    state[productIndex].cartAmount = 0;
     state.splice(productIndex, 1);
     setCartList(state);
     localStorage.setItem("products", JSON.stringify(state));
@@ -145,7 +144,7 @@ const UserContextProvider = (props) => {
 
   function amountOfItems() {
     if (cartList !== null) {
-      if (cartList !== undefined) {
+      if (cartList.length !== 0) {
         const itemsAmount = cartList.reduce((amount, product) => {
           return amount + product.cartAmount;
         }, 0);
@@ -175,12 +174,12 @@ const UserContextProvider = (props) => {
         deleteProduct,
         totalCost,
         amountOfItems,
-        alert, 
-		setAlert, 
-		loginPopup, 
-		setLoginPopup, 
-		setOrderPlaced, 
-		orderPlaced
+        alert,
+        setAlert,
+        loginPopup,
+        setLoginPopup,
+        setOrderPlaced,
+        orderPlaced,
       }}
     >
       {props.children}
