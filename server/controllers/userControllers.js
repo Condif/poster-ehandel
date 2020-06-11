@@ -5,9 +5,9 @@ const ServerError = require("../serverError");
 // Get specific users
 exports.getSpecificUsers = async (req, res) => {
   const users = await User.find({ adminRequest: 'admin' }).select("-password");
-  // if (users.length === 0) {
-  //   throw new ServerError("The source does not exist", 404);
-  // }
+  if (!users) {
+    throw new ServerError("The source does not exist", 404);
+  }
   res.json(users);
 };
 
@@ -21,8 +21,6 @@ exports.updateUser = async (req, res) => {
   userToUpdate.role = user.role 
   userToUpdate.adminRequest = user.adminRequest
 
-  // const updatedUser = new User(Object.assign(userToUpdate, user));
-  // console.log(updatedUser, "updatedUser");
   await userToUpdate.save();
   res.json("User updated");
 };
