@@ -12,7 +12,7 @@ router.get("/", controller.getAllProducts);
 router.post("/", upload.single("image"), controller.createNewProduct);
 
 // Update a product
-router.put("/:productId", controller.updateProduct);
+router.put("/updateProduct/:productId", controller.updateProduct);
 
 // Get all products in a category
 // router.get("/category/:productCategory", controller.getProductsFromCategory);

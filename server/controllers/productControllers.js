@@ -36,6 +36,7 @@ exports.createNewProduct = async (req, res) => {
 
 // Update product
 exports.updateProduct = async (req, res) => {
+  console.log(req.body);
   const product = await Product.findById(req.params.productId);
   if (!product) {
     throw new ServerError("Product does not exist", 404);
@@ -49,26 +50,6 @@ exports.updateProduct = async (req, res) => {
 
   res.json("Product updated");
 };
-
-// Get products from category
-// exports.getProductsFromCategory = async (req, res) => {
-//   const products = await Product.find({
-//     category: req.params.productCategory,
-//   });
-//   if (products.length === 0) {
-//     throw new ServerError("The category does not exist", 404);
-//   }
-//   res.json(products);
-// };
-
-// Get product by id
-// exports.getProductById = async (req, res) => {
-//   const product = await Product.findOne({ _id: req.params.productId });
-//   if (!product) {
-//     throw new ServerError("The product does not exist", 404);
-//   }
-//   res.json(product);
-// };
 
 //Update productstock when items are sold
 exports.updateProductStock = async (req, res) => {
