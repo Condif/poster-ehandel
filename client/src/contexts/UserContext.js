@@ -3,7 +3,7 @@ export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  
+  const [userForBadge, setUserForBadge] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState();
   const [userData, setUserData] = useState("");
   const [alert, setAlert] = useState({
@@ -166,6 +166,26 @@ const UserContextProvider = (props) => {
     setLoggedInUser(newLoggedInUser)
   }
 
+  const getSpecificUsers = async () => {
+    const newSpecificUsers = await fetch(
+      "http://localhost:8080/api/users/adminRequest",
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        return data;
+      });
+    return newSpecificUsers;
+  };
+  const setupUserForBadge = async () => {
+    const newSpecificUsers = await getSpecificUsers();
+    //Eftersom useEffect bara ska köras 1 gång ska statet bara sättas en gång
+    setUserForBadge(newSpecificUsers);
+  };
+
   
 
   return (
@@ -177,6 +197,9 @@ const UserContextProvider = (props) => {
         receipt,
         showReceipt,
         loggedInUser,
+        userForBadge,
+        getSpecificUsers,
+        setupUserForBadge,
         setupLoggedInUser,
         setShowReceipt,
         handleReceipt,
