@@ -54,23 +54,16 @@ exports.updateProduct = async (req, res) => {
 //Update productstock when items are sold
 exports.updateProductStock = async (req, res) => {
   let products = req.body;
-  console.log(products, "här är products");
-  // if (products.length === 0 || Object.keys(products) == 0) {
-  //   throw new ServerError("The product does not exist", 404);
-  // }
   for (const product of products) {
     const productInStock = await Product.findOne({ _id: product._id });
     if (!productInStock) {
       throw new ServerError("No such product in stock", 404);
     }
-    console.log("PRODUCT: ", productInStock);
     let currentAvalible = productInStock.inventory - product.cartAmount;
-    console.log(currentAvalible, "Current");
     product.inventory = currentAvalible;
     product.cartAmount = 0;
 
     const updatedProduct = new Product(Object.assign(productInStock, product));
-    console.log(updatedProduct, "uppdateringen");
     await updatedProduct.save();
   }
   res.json("Product updated");
