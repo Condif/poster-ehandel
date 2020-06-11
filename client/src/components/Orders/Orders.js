@@ -99,6 +99,13 @@ const Orders = () => {
                     <Typography variant="h6">Information: </Typography>
                     <Typography>Name: {order.name}</Typography>
                     <Typography>Lastname: {order.lastname}</Typography>
+                    <Typography>
+                      Adress: {order.deliveryAddress.address}
+                    </Typography>
+                    <Typography>
+                      Zipcode: {order.deliveryAddress.zipcode}
+                    </Typography>
+                    <Typography>City: {order.deliveryAddress.city}</Typography>
                   </Grid>
                   <Grid item xs={12} sm={4}>
                     <Grid container className={classes.products}>

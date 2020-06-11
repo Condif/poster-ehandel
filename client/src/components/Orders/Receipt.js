@@ -8,30 +8,33 @@ const Receipt = () => {
   const [specificOrders, setSpecificOrders] = useState();
 
   const getSpecificOrders = async () => {
-    const newSpecificOrders = await fetch("http://localhost:8080/api/orders/byId", {
-      method: "GET",
-      credentials: "include",
-    }).then((response) => response.json())
+    const newSpecificOrders = await fetch(
+      "http://localhost:8080/api/orders/byId",
+      {
+        method: "GET",
+        credentials: "include",
+      }
+    )
+      .then((response) => response.json())
       .then((data) => {
-        return data
-      })
-    return newSpecificOrders
+        return data;
+      });
+    return newSpecificOrders;
   };
 
   const setupSpecificOrders = async () => {
-    const newSpecificOrders = await getSpecificOrders()
-    setSpecificOrders(newSpecificOrders)
-  }
+    const newSpecificOrders = await getSpecificOrders();
+    setSpecificOrders(newSpecificOrders);
+  };
 
   useEffect(() => {
     setupSpecificOrders();
     // eslint-disable-next-line
   }, []);
-        
+
   return (
     <>
-      {(receipt.shipment !== undefined && showReceipt ? (
-        
+      {receipt.shipment !== undefined && showReceipt ? (
         <Grid
           container
           key={receipt._id}
@@ -94,11 +97,10 @@ const Receipt = () => {
             </Grid>
           </Paper>
         </Grid>
-      )
-        :
-        specificOrders !== undefined && !showReceipt &&
+      ) : (
+        specificOrders !== undefined &&
+        !showReceipt &&
         specificOrders.map((order) => (
-          
           <Grid
             container
             key={order._id}
@@ -119,25 +121,32 @@ const Receipt = () => {
                   <Typography variant="h6">Information: </Typography>
                   <Typography>Name: {order.name}</Typography>
                   <Typography>Lastname: {order.lastname}</Typography>
+                  <Typography>
+                    Adress: {order.deliveryAddress.address}
+                  </Typography>
+                  <Typography>
+                    Zipcode: {order.deliveryAddress.zipcode}
+                  </Typography>
+                  <Typography>City: {order.deliveryAddress.city}</Typography>
                 </Grid>
                 <Grid item xs={12} sm={4}>
                   <Grid container className={classes.products}>
                     <Grid item xs={12}>
                       <Typography variant="h6">Products:</Typography>
                     </Grid>
-                    {order.products[0] !== undefined && 
+                    {order.products[0] !== undefined &&
                       order.products[0].map((product) => (
-                      <Grid
-                        item
-                        xs={12}
-                        className={classes.orderPaper}
-                        key={product._id}
-                      >
-                        <Typography className={classes.title}>
-                          {product.cartAmount} {product.name}
-                        </Typography>
-                      </Grid>
-                    ))}
+                        <Grid
+                          item
+                          xs={12}
+                          className={classes.orderPaper}
+                          key={product._id}
+                        >
+                          <Typography className={classes.title}>
+                            {product.cartAmount} {product.name}
+                          </Typography>
+                        </Grid>
+                      ))}
                   </Grid>
                 </Grid>
                 <Grid item xs={12} sm={4} className={classes.delivery}>
@@ -162,9 +171,10 @@ const Receipt = () => {
               </Grid>
             </Paper>
           </Grid>
-        )))}
+        ))
+      )}
     </>
-  )
-}
+  );
+};
 
 export default Receipt;

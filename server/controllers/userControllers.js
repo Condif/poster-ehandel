@@ -13,7 +13,6 @@ exports.getSpecificUsers = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   let user = req.body;
-  console.log(user, "här är user");
   const userToUpdate = await User.findOne({ _id: user._id }).select(
     "-password"
   );

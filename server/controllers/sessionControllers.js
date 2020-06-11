@@ -47,7 +47,6 @@ exports.login = async (req, res) => {
       deliveryAddress: res.user.deliveryAddress,
     });
   });
-  console.log("reached");
 };
 
 exports.checkLoginSession = (req, res, next) => {
