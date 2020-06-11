@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useRef } from "react";
 import { Grid, Typography, Paper, Button } from "@material-ui/core";
 import useStyles from "./OrdersStyles";
 import Radio from "@material-ui/core/Radio";
@@ -9,6 +9,8 @@ import { UserContext } from "../../Contexts/UserContext";
 
 const Orders = () => {
   const classes = useStyles();
+
+  const _isMounted = useRef(true);
 
   const { setAlert } = useContext(UserContext);
 
@@ -60,11 +62,16 @@ const Orders = () => {
 
   const setupOrders = async () => {
     const allOrders = await getAllOrders();
-    setOrders(allOrders);
+    if (_isMounted.current) {
+      setOrders(allOrders);
+    }
   };
 
   useEffect(() => {
     setupOrders();
+    return () => {
+      _isMounted.current = false;
+    };
     // eslint-disable-next-line
   }, []);
 
