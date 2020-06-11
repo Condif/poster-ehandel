@@ -18,6 +18,7 @@ const Register = () => {
     email: "",
     password: "",
     role: "user",
+    adminRequest: "",
     address: "",
     zipcode: "",
     city: "",
@@ -51,6 +52,7 @@ const Register = () => {
       email: inputValues.email,
       password: inputValues.password,
       role: inputValues.role,
+      adminRequest: inputValues.adminRequest,
       deliveryAddress: {
         address: inputValues.address,
         zipcode: inputValues.zipcode,
@@ -191,12 +193,12 @@ const Register = () => {
         <FormControl component="fieldset">
           <RadioGroup
             row
-            defaultValue="user"
+            defaultValue='user'
             aria-label="role"
-            onChange={(event) => handleInputChange(event, "role")}
+            onChange={(event) => handleInputChange(event, "adminRequest")}
           >
-            <FormControlLabel value="user" control={<Radio />} label="User" />
-            <FormControlLabel value="admin" control={<Radio />} label="Admin" />
+            <FormControlLabel value='user' control={<Radio />} label="User" />
+            <FormControlLabel value='admin' control={<Radio />} label="Admin" />
           </RadioGroup>
         </FormControl>
         <Button

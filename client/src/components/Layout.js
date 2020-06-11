@@ -15,6 +15,7 @@ import ProductCard from "./ProductCard/ProductCard";
 import Register from "./Register/Register";
 import Checkout from "./Checkout/Checkout";
 import AdminProductPage from "./AdminProductPage/AdminProductPage";
+import AdminRequests from "./AdminRequests/AdminRequests";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
@@ -201,6 +202,9 @@ const Layout = () => {
               </LoggedInRoute>
               <AdminRoute path="/adminProductPage">
                 <AdminProductPage products={products} />
+              </AdminRoute>
+              <AdminRoute path="/adminRequests">
+                <AdminRequests />
               </AdminRoute>
               {/* Get routes for each product */}
               {products !== null &&
