@@ -13,7 +13,6 @@ exports.getSpecificUsers = async (req, res) => {
 
 exports.updateUser = async (req, res) => {
   let user = req.body;
-  console.log(user, "här är user");
   const userToUpdate = await User.findOne({ _id: user._id }).select(
     "-password"
   );
@@ -23,16 +22,12 @@ exports.updateUser = async (req, res) => {
   userToUpdate.role = user.role;
   userToUpdate.adminRequest = user.adminRequest;
 
-  // const updatedUser = new User(Object.assign(userToUpdate, user));
-  // console.log(updatedUser, "updatedUser");
   await userToUpdate.save();
   res.json("User updated");
 };
 
 //Get logged in user
 exports.getLoggedInUser = async (req, res) => {
-  console.log(req.session.id);
-
   const user = await User.findOne({ _id: req.session.id }).select("-password");
   if (!user) {
     throw new ServerError("The user does not exist", 404);
