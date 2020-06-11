@@ -4,10 +4,10 @@ const ServerError = require("../serverError");
 
 // Get specific users
 exports.getSpecificUsers = async (req, res) => {
-  const users = await User.find({ adminRequest: 'admin' });
-  // if (users.length === 0) {
-  //   throw new ServerError("The source does not exist", 404);
-  // }
+  const users = await User.find({ adminRequest: "admin" });
+  if (users.length === 0) {
+    throw new ServerError("The source does not exist", 404);
+  }
   res.json(users);
 };
 
@@ -28,7 +28,7 @@ exports.updateUser = async (req, res) => {
 //Get logged in user
 exports.getLoggedInUser = async (req, res) => {
   console.log(req.session.id);
-  
+
   const user = await User.findOne({ _id: req.session.id });
   if (!user) {
     throw new ServerError("The user does not exist", 404);

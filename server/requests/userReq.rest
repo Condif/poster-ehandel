@@ -1,29 +1,20 @@
 // users
 
-//Get all
-
-GET http://localhost:8080/api/users/
-
-###
-
-//Get one
-
-GET http://localhost:8080/api/users/5ecba68a7d085f4d744cb891
-
 ###
 // Post new user
 POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
 {
-    "name": "Emadfgwhgwrghde",
+    "name": "Hej",
     "lastname": "Lastname",
-    "email": "emfasfg5",
+    "email": "abc@gmail.com",
     "password": "admin",
-    "role": "Admin",
+    "role": "admin",
+    "adminRequest": "user",
     "deliveryAddress": {
         "address": "street",
-        "zipcode": 1,
+        "zipcode": 12345,
         "city": "city"
     }
 }
