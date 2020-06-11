@@ -22,8 +22,6 @@ exports.updateUser = async (req, res) => {
   userToUpdate.role = user.role;
   userToUpdate.adminRequest = user.adminRequest;
 
-  // const updatedUser = new User(Object.assign(userToUpdate, user));
-  // console.log(updatedUser, "updatedUser");
   await userToUpdate.save();
   res.json("User updated");
 };
