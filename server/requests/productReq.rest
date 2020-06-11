@@ -47,18 +47,6 @@ Content-Type: application/json
     "_id": "5ed7903574c28384bc088f01"
 }
 
-###
-
-// Get all products in category
-GET http://localhost:8080/api/products/category/blue
-
-###
-
-// Get one specific product
-GET http://localhost:8080/api/products/product/5ec7d055dfbbcd4930b76b3d
-
-###
-
 // Update stock 
 PUT http://localhost:8080/api/products/
 Content-Type: application/json

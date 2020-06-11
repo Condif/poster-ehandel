@@ -11,7 +11,7 @@ GET http://localhost:8080/api/users/
 GET http://localhost:8080/api/users/5ecba68a7d085f4d744cb891
 
 ###
-
+// Post new user
 POST http://localhost:8080/api/users/register
 Content-Type: application/json
 
