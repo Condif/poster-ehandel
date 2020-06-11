@@ -3,9 +3,6 @@ const router = express.Router();
 
 // Middlewares
 const controller = require("../controllers/sessionControllers");
-// const getUser = require('../Middlewares/getUser.js')
-// const login = require('../Middlewares/login.js')
-// const checkloginSession = require('../Middlewares/checkLoginSession.js')
 
 // Check logged in users
 router.get("/checkLoginSession", controller.checkLoginSession);

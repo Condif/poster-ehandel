@@ -6,13 +6,6 @@ Content-Type: application/json
 
 ### 
 
-
-// Get specific shipment alternative
-GET http://localhost:8080/api/shipments/schenket
-Content-Type: application/json
-
-###
-
 // Add new shipment alternative, for testing purposes
 POST http://localhost:8080/api/shipments
 Content-Type: application/json

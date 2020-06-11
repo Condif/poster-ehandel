@@ -5,10 +5,10 @@ const controller = require("../controllers/userControllers");
 // const getUser = require("../Middlewares/getUser.js");
 
 // Getting specific users
-router.get("/byId", controller.getSpecificUsers)
+router.get("/adminRequest", controller.getSpecificUsers);
 
 //Getting logged in user
-router.get("/loggedIn", controller.getLoggedInUser)
+router.get("/loggedIn", controller.getLoggedInUser);
 
 // Creating one
 router.post("/register", controller.registerNewUser);
