@@ -25,9 +25,6 @@ export default function UpdateProduct(props) {
   function updateProduct(event) {
     event.preventDefault();
 
-    console.log("PRODUCT CATEGORy: ", product.category);
-    console.log("PRODUCT INPUT: ", inputValues.productCategory);
-
     const productCategory = product.category;
     const productInventory = product.inventory;
 

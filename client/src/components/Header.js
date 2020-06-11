@@ -5,7 +5,7 @@ const Header = () => {
     <img
       height="120"
       style={{ marginTop: "9px" }}
-      src={require("../assets/logo.jpg")}
+      src={require("../assets/logo.png")}
       alt="Logo"
     />
   );

@@ -77,21 +77,27 @@ const Cart = (props) => {
           </Button>
         </div>
         <div className={classes.listWrapper}>
-          <Grid item>
-            {cartList !== null &&
-              cartList !== undefined &&
-              renderProducts(cartList, createSlug)}
-          </Grid>
-          <Grid item>
-            <Typography className={classes.totalCostText}>
-              Total cost excluding shipment: {totalCost()} SEK
+          {cartList !== null &&
+            cartList !== undefined &&
+            cartList.length !== 0 ?
+            <>
+              <Grid item>
+                {cartList !== null &&
+                  cartList !== undefined &&
+                  renderProducts(cartList, createSlug)}
+              </Grid>
+              <Grid item>
+                <Typography className={classes.totalCostText}>
+                  Total cost excluding shipment: {totalCost()} SEK
             </Typography>
-            {cartList !== null && cartList !== undefined && (
-              <Typography className={classes.totalCostText}>
-                VAT: {(totalCost() * 0.2).toFixed(2)} SEK
-              </Typography>
-            )}
-          </Grid>
+                {cartList !== null && cartList !== undefined && (
+                  <Typography className={classes.totalCostText}>
+                    VAT: {(totalCost() * 0.2).toFixed(2)} SEK
+                  </Typography>
+                )}
+              </Grid>
+            </>
+            : <Typography className={classes.emptyText} align="center">Your cart is empty.</Typography>}
         </div>
         <Button
           className={classes.submitButton}
