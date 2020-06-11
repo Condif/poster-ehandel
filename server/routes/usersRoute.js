@@ -4,13 +4,15 @@ const controller = require("../controllers/userControllers");
 
 // const getUser = require("../Middlewares/getUser.js");
 
-// // Getting all
-// router.get("/", controller.getAllUsers)
+// Getting specific users
+router.get("/byId", controller.getSpecificUsers)
 
-// // Getting one
-// router.get("/:_id", controller.getUserById)
+//Getting logged in user
+router.get("/loggedIn", controller.getLoggedInUser)
 
 // Creating one
 router.post("/register", controller.registerNewUser);
+
+router.put("/", controller.updateUser);
 
 module.exports = router;

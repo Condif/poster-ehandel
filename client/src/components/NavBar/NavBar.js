@@ -1,5 +1,5 @@
 // Hämta useContext för att använda funktioner i UserContext.
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -13,6 +13,7 @@ import {
   ListItemText,
   Hidden,
   Drawer,
+  Typography,
 } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 import green from "@material-ui/core/colors/green";
@@ -65,6 +66,8 @@ const NavBar = (props) => {
     setUser,
     setAlert,
     setShowReceipt,
+    setupLoggedInUser,
+    loggedInUser,
   } = useContext(UserContext);
 
   const handleDrawerToggle = (props) => {
@@ -120,6 +123,15 @@ const NavBar = (props) => {
             >
               See all orders
             </ListItem>
+            <ListItem
+              button
+              onClick={function (event) {
+                history.push("/adminRequests");
+                handleDrawerToggle();
+              }}
+            >
+              Admin Requests
+            </ListItem>
           </>
         )}
         {userData && (
@@ -147,6 +159,7 @@ const NavBar = (props) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
+          setupLoggedInUser()
           setUser("");
           setAlert({ showAlert: true, type: "success", message: data.message });
           if (window.location.pathname !== "/") {
@@ -161,6 +174,11 @@ const NavBar = (props) => {
     setShowReceipt(false);
     history.push("/receipt");
   };
+
+  useEffect(() => {
+    setupLoggedInUser();
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>
@@ -210,8 +228,18 @@ const NavBar = (props) => {
           </Categories>
 
           <Grid justifycontent="flex-end" item>
+            {userData !== '' && loggedInUser !== undefined && loggedInUser.adminRequest === 'admin' &&
+              <Typography>Admin Request Pending</Typography>
+            }
             {userData.role === "admin" ? (
               <>
+                <NavButton
+                  className={classes.desktopLinks}
+                  aria-label="adminRequests"
+                  onClick={() => history.push("/adminRequests")}
+                >
+                  Admin Requests
+              </NavButton>
                 <NavButton
                   className={classes.desktopLinks}
                   aria-label="orders"
@@ -229,12 +257,12 @@ const NavBar = (props) => {
               </>
             ) : null}
             {userData !== "" && (
-              <NavButton
-                className={classes.desktopLinks}
-                aria-label="yourOrders"
-                onClick={() => handleDontShowReceipt()}
-              >
-                Your orders
+                <NavButton
+                  className={classes.desktopLinks}
+                  aria-label="yourOrders"
+                  onClick={() => handleDontShowReceipt()}
+                >
+                  Your orders
               </NavButton>
             )}
             {userData === "" ? (
@@ -259,18 +287,18 @@ const NavBar = (props) => {
               </NavButton>
             )}
             {/* {window.location.pathname !== "/checkout" ? ( */}
-              <StyledBadge color="secondary" badgeContent={amountOfItems()}>
-                <IconButton
-                  style={{
-                    width: "4rem",
-                    color: "#333",
-                  }}
-                  edge="start"
-                  onClick={openCart}
-                >
-                  <ShoppingCartIcon />
-                </IconButton>
-              </StyledBadge>
+            <StyledBadge color="secondary" badgeContent={amountOfItems()}>
+              <IconButton
+                style={{
+                  width: "4rem",
+                  color: "#333",
+                }}
+                edge="start"
+                onClick={openCart}
+              >
+                <ShoppingCartIcon />
+              </IconButton>
+            </StyledBadge>
             {/* // ) : null} */}
           </Grid>
         </Toolbar>
