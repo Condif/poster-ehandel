@@ -6,7 +6,7 @@ const Footer = () => {
   const classes = useStyles();
   return (
     <div className={classes.footerContainer}>
-      <div className={classes.contentDiv}>
+      <div className={(classes.contentDiv, classes.hideMobile)}>
         <Typography variant="h5" className={classes.heading}>
           About us
         </Typography>
@@ -15,7 +15,7 @@ const Footer = () => {
           and more inspiring atmosphere by beautiful posters.
         </Typography>
       </div>
-      <div className={(classes.contentDiv, classes.hideMobile)}>
+      <div className={classes.contentDiv}>
         <Typography variant="h5" className={classes.heading}>
           Contact us
         </Typography>
