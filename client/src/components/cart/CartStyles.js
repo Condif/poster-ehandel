@@ -49,6 +49,9 @@ const useStyles = makeStyles((theme) => ({
   totalCostText: {
     fontWeight: "bold",
   },
+  emptyText: {
+    margin: theme.spacing(2)
+  }
 }));
 
 export default useStyles;
