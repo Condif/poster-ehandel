@@ -40,6 +40,14 @@ const StyledBadge = withStyles((theme) => ({
     margin: theme.spacing(1),
   },
 }))(Badge);
+const StyledRequestBadge = withStyles((theme) => ({
+  badge: {
+    border: `2px solid ${theme.palette.background.paper}`,
+    padding: "2px 4px 1px 4px",
+    fontSize: "0.6rem",
+    margin: theme.spacing(.6),
+  },
+}))(Badge);
 
 const Categories = withStyles({
   root: {
@@ -58,6 +66,7 @@ const NavBar = (props) => {
   const history = useHistory();
 
   const [mobileOpen, setMobileOpen] = useState(false);
+  
   // Hämta openCart funktionen samt inloggad user från UserContext
   const {
     openCart,
@@ -68,6 +77,7 @@ const NavBar = (props) => {
     setShowReceipt,
     setupLoggedInUser,
     loggedInUser,
+    userForBadge,
   } = useContext(UserContext);
 
   const handleDrawerToggle = (props) => {
@@ -174,6 +184,8 @@ const NavBar = (props) => {
     setShowReceipt(false);
     history.push("/receipt");
   };
+  
+  
 
   useEffect(() => {
     setupLoggedInUser();
@@ -228,18 +240,21 @@ const NavBar = (props) => {
           </Categories>
 
           <Grid justifycontent="flex-end" item>
-            {userData !== '' && loggedInUser !== undefined && loggedInUser.adminRequest === 'admin' &&
+            {userData !== '' && loggedInUser !== null && loggedInUser.adminRequest === 'admin' &&
               <Typography>Admin Request Pending</Typography>
             }
             {userData.role === "admin" ? (
               <>
+              <StyledRequestBadge color="secondary" badgeContent={userForBadge.length}>
                 <NavButton
-                  className={classes.desktopLinks}
-                  aria-label="adminRequests"
-                  onClick={() => history.push("/adminRequests")}
-                >
-                  Admin Requests
-              </NavButton>
+                    className={classes.desktopLinks}
+                    aria-label="adminRequests"
+                    onClick={() => history.push("/adminRequests")}
+                  >
+                    Admin Requests
+                </NavButton>
+              </StyledRequestBadge>
+                
                 <NavButton
                   className={classes.desktopLinks}
                   aria-label="orders"
