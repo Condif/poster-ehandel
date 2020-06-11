@@ -240,7 +240,7 @@ const NavBar = (props) => {
           </Categories>
 
           <Grid justifycontent="flex-end" item>
-            {userData !== '' && loggedInUser !== null && loggedInUser.adminRequest === 'admin' &&
+            {userData !== '' && loggedInUser !== null && loggedInUser !== undefined && loggedInUser.adminRequest === 'admin' &&
               <Typography>Admin Request Pending</Typography>
             }
             {userData.role === "admin" ? (
