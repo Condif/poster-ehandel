@@ -41,8 +41,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", function (next) {
   var user = this;
-
-  if(user.password.length > 40) return next()
   
   // only hash the password if it has been modified (or is new)
   if (!user.isModified("password")) return next();
