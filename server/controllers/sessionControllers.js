@@ -8,7 +8,7 @@ exports.findUserByName = async (req, res, next) => {
   if (req.body.email) condition = req.body.email;
   if (req.params.email) condition = req.params.email;
 
-  user = await User.findOne({ email: condition });
+  user = await User.findOne({ email: condition }).select("+password");
   if (!user) {
     throw new ServerError("Wrong username or password", 404);
   }
