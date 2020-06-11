@@ -36,6 +36,7 @@ exports.createNewProduct = async (req, res) => {
 
 // Update product
 exports.updateProduct = async (req, res) => {
+  console.log(req.body);
   const product = await Product.findById(req.params.productId);
   if (!product) {
     throw new ServerError("Product does not exist", 404);
@@ -72,5 +73,5 @@ exports.updateProductStock = async (req, res) => {
     console.log(updatedProduct, "uppdateringen");
     await updatedProduct.save();
   }
-  res.json("Product inventory updated");
+  res.json("Product updated");
 };

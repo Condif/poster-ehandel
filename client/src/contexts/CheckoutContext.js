@@ -1,6 +1,8 @@
 import React, { createContext, useState } from "react";
 export const CheckoutContext = createContext();
 
+// const initialState = Date.now()
+
 const CheckoutContextProvider = (props) => {
   const [shipmentAlternatives, setShipmentAlternatives] = useState([]);
 
@@ -51,7 +53,7 @@ const CheckoutContextProvider = (props) => {
         currentShipment.alternative === validationInputs.choosenShipment.value
       );
     });
-
+    // eslint-disable-next-line
     if (!shipmentAlternatives.length == 0) {
       return shipment[0].cost;
     }

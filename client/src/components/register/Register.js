@@ -6,6 +6,10 @@ import { useHistory } from "react-router-dom";
 import useStyles from "./RegisterStyles";
 import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 import { UserContext } from "../../Contexts/UserContext";
+import Radio from "@material-ui/core/Radio";
+import RadioGroup from "@material-ui/core/RadioGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 const Register = () => {
   const [inputValues, setInputValues] = useState({
@@ -14,6 +18,7 @@ const Register = () => {
     email: "",
     password: "",
     role: "user",
+    adminRequest: "",
     address: "",
     zipcode: "",
     city: "",
@@ -46,7 +51,8 @@ const Register = () => {
       lastname: inputValues.lastname,
       email: inputValues.email,
       password: inputValues.password,
-      role: "user",
+      role: inputValues.role,
+      adminRequest: inputValues.adminRequest,
       deliveryAddress: {
         address: inputValues.address,
         zipcode: inputValues.zipcode,
@@ -63,14 +69,26 @@ const Register = () => {
       body: JSON.stringify(newUser),
     }).then(async (response) => {
       if (response.status === 409) {
-        setAlert({ showAlert: true, type: "warning", message: "Something went wrong" });
+        setAlert({
+          showAlert: true,
+          type: "warning",
+          message: "Something went wrong",
+        });
       }
       if (response.status === 201) {
-        await setAlert({ showAlert: true, type: "success", message: "Successfully registered user" })
+        await setAlert({
+          showAlert: true,
+          type: "success",
+          message: "Successfully registered user",
+        });
         redirectToLogin();
       }
       if (response.status === 500) {
-        setAlert({ showAlert: true, type: "error", message: "There is already a user registered with that email." });
+        setAlert({
+          showAlert: true,
+          type: "error",
+          message: "There is already a user registered with that email.",
+        });
       }
       return;
     });
@@ -172,6 +190,17 @@ const Register = () => {
           validators={["required", "matchRegexp:^[a-zA-ZåÅäÄöÖ]"]}
           errorMessages={["this field is required", "only letters"]}
         ></TextValidator>
+        <FormControl component="fieldset">
+          <RadioGroup
+            row
+            defaultValue='user'
+            aria-label="role"
+            onChange={(event) => handleInputChange(event, "adminRequest")}
+          >
+            <FormControlLabel value='user' control={<Radio />} label="User" />
+            <FormControlLabel value='admin' control={<Radio />} label="Admin" />
+          </RadioGroup>
+        </FormControl>
         <Button
           type="submit"
           disabled={

@@ -20,10 +20,7 @@ const ShipmentAlternatives = () => {
     shipmentAlternatives,
     handleInputChange,
   } = useContext(CheckoutContext);
-
-  useEffect(() => {
-    getShipmentAlternatives();
-  }, []);
+  // const { orderPlaced } = useContext(CheckoutContext)
 
   function getShipmentAlternatives() {
     fetch("http://localhost:8080/api/shipments", {
@@ -35,18 +32,27 @@ const ShipmentAlternatives = () => {
       });
   }
 
+  useEffect(() => {
+    getShipmentAlternatives();
+    // eslint-disable-next-line
+  }, []);
+
   return (
-    <FormControl>
+    <FormControl style={{ padding: "1rem" }}>
       <FormLabel className={classes.labelText}>Shipping Alternatives</FormLabel>
       <RadioGroup
-        className={classes.containerDiv}
         aria-label="ShippingAlternative"
         name="shipping1"
         value={validationInputs.choosenShipment.value}
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-around",
+        }}
         onChange={(event) => handleInputChange(event, "choosenShipment")}
       >
-        {shipmentAlternatives.map((shipment, index) => (
-          <div key={index} className={classes.containerDiv}>
+        {shipmentAlternatives.map((shipment) => (
+          <div key={shipment._id} className={classes.containerDiv}>
             <FormControlLabel
               value={shipment.alternative}
               control={<Radio />}

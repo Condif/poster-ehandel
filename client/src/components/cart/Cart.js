@@ -21,12 +21,12 @@ const Cart = (props) => {
     totalCost,
     userData,
     setUser,
-    authenticateUser
+    setLoginPopup
   } = useContext(UserContext);
 
   const { createSlug } = props;
   function redirectToCheckOut() {
-    if((cartList !== undefined || cartList !== undefined)){   
+    if (cartList !== undefined || cartList !== undefined) {
       fetch("http://localhost:8080/sessions/checkLoginSession", {
         method: "GET",
         credentials: "include",
@@ -37,14 +37,13 @@ const Cart = (props) => {
           if (userData !== "") {
             setUser("");
           }
-          alert(`You need to be a member to place an order.
-          Would you like to sign up?`);
+          setLoginPopup({ showLogin: true, type: "info", message: "Please login before making a purchase." })
           return;
         }
         openCart();
         history.push("/checkout");
-      })
-    } 
+      });
+    }
   }
 
   return (
@@ -54,11 +53,14 @@ const Cart = (props) => {
       }}
     >
       <Drawer
+        variant="temporary"
         style={{
           overflowX: "hidden",
         }}
         anchor="right"
+        onClose={openCart}
         open={isCartOpen}
+        ModalProps={{ disableEnforceFocus: true }}
       >
         <div className={classes.headerWrapper}>
           <CloseIcon className={classes.closeIcon} onClick={openCart} />

@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: "1.2rem",
     padding: "1rem",
     color: "black",
+    marginTop: "1rem",
   },
   containerDiv: {
     margin: "1rem",

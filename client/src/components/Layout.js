@@ -15,6 +15,7 @@ import ProductCard from "./ProductCard/ProductCard";
 import Register from "./Register/Register";
 import Checkout from "./Checkout/Checkout";
 import AdminProductPage from "./AdminProductPage/AdminProductPage";
+import AdminRequests from "./AdminRequests/AdminRequests";
 // import UserOrders from './UserOrders';
 // import ProductView from './ProductView';
 import CategoryPage from "./CategoryPage/CategoryPage";
@@ -22,37 +23,73 @@ import Orders from "./Orders/Orders";
 import Receipt from "./Orders/Receipt";
 import { UserContext } from "../Contexts/UserContext";
 import Footer from "./Footer/Footer";
-import AlertMessage from "./AlertMessage/AlertMessage";
+import Alerts from "./Alerts/Alerts";
+import useStyles from "./Alerts/AlertsStyles";
 
 const Layout = () => {
-  const { setUser, isAdmin, userData, alert, setAlert } = useContext(
-    UserContext
-  );
-
-  // const [value, setState] = useState(true);
-
-  // console.log(value, "här är value");
-
-  // const handleValue = () => {
-  //   setState((prevState) => ({
-  //     value: !prevState.value,
-  //   }));
-  // };
+  const {
+    setUser,
+    isAdmin,
+    userData,
+    alert,
+    setAlert,
+    orderPlaced,
+    loginPopup,
+    setLoginPopup,
+  } = useContext(UserContext);
 
   const [products, setProducts] = useState([]);
-
+  const classes = useStyles();
   const [fetchingUserData, setfetchingUserData] = useState(true);
 
-  // Fetch products "on mount"
-  useEffect(() => {
-    async function fetchOnLoad() {
-      checkLoginSession();
-      setProducts(await getAllProducts());
+  async function getAllProducts() {
+    const products = await fetch("http://localhost:8080/api/products", {
+      method: "GET",
+      credentials: "include",
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      })
+      .catch((error) => {
+        console.log("Error is: ", error.error);
+      });
+
+    return products;
+  }
+
+  const getCategories = (products) => {
+    const categories = [];
+    products.map((product) => {
+      if (!categories.includes(product.category)) {
+        return categories.push(product.category);
+      }
+      return null;
+    });
+
+    return categories;
+  };
+
+  const createSlug = (string) => {
+    string = string.replace(/^\s+|\s+$/g, ""); // trim
+    string = string.toLowerCase();
+
+    // remove accents, swap ñ for n, etc
+    const from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
+    const to = "aaaaeeeeiiiioooouuuunc------";
+    for (let i = 0, l = from.length; i < l; i++) {
+      string = string.replace(new RegExp(from.charAt(i), "g"), to.charAt(i));
     }
-    // handleValue()
-    fetchOnLoad();
-    // eslint-disable-next-line
-  }, []);
+
+    string = string
+      .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
+      .replace(/\s+/g, "-") // collapse whitespace and replace by -
+      .replace(/-+/g, "-"); // collapse dashes
+
+    return string;
+  };
 
   const AdminRoute = (props) => (
     <Route
@@ -82,6 +119,8 @@ const Layout = () => {
           <p>Loading</p>
         ) : userData ? (
           props.children
+        ) : loginPopup.showLogin ? (
+          props.children
         ) : (
           <>
             <Redirect to="/login" />
@@ -107,23 +146,28 @@ const Layout = () => {
     });
   };
 
+  // Fetch products "on mount"
+  useEffect(() => {
+    async function fetchOnLoad() {
+      checkLoginSession();
+      setProducts(await getAllProducts());
+    }
+    fetchOnLoad();
+    // eslint-disable-next-line
+  }, [orderPlaced]);
+
   return (
     <Router>
       <div className="App">
-        {alert.showAlert && (
-          <AlertMessage
-            setAlert={setAlert}
-            alert={alert}
-            show={alert.showAlert}
-            clickAway={(timeout) => {
-              clearTimeout(timeout);
-              setAlert({ showAlert: false, type: null, message: null });
-            }}
-            type={alert.type}
-          >
-            {alert.message}
-          </AlertMessage>
-        )}
+        <div
+          className={classes.ref}
+          style={{
+            zIndex: alert.showAlert || loginPopup.showLogin ? 8888 : -1,
+          }}
+        >
+          {alert.showAlert && <Alerts action />}
+          {loginPopup.showLogin && <Alerts popper />}
+        </div>
         <Grid container justify="center">
           <Cart products={products} createSlug={createSlug} />
           <Header />
@@ -142,6 +186,8 @@ const Layout = () => {
                 <ProductGrid
                   products={products}
                   createSlug={createSlug}
+                  setLoginPopup={setLoginPopup}
+                  loginPopup={loginPopup}
                   setAlert={setAlert}
                 />
               </Route>
@@ -152,10 +198,13 @@ const Layout = () => {
               </AdminRoute>
               <Route path="/receipt" component={Receipt} />
               <LoggedInRoute path="/checkout">
-                <Checkout />
+                <Checkout createSlug={createSlug} />
               </LoggedInRoute>
               <AdminRoute path="/adminProductPage">
                 <AdminProductPage products={products} />
+              </AdminRoute>
+              <AdminRoute path="/adminRequests">
+                <AdminRequests />
               </AdminRoute>
               {/* Get routes for each product */}
               {products !== null &&
@@ -224,66 +273,6 @@ const Layout = () => {
       </div>
     </Router>
   );
-};
-
-/**
- * Get all available products through fetch
- */
-async function getAllProducts() {
-  const products = await fetch("http://localhost:8080/api/products", {
-    method: "GET",
-    credentials: "include",
-  })
-    .then((response) => {
-      return response.json();
-    })
-    .then((data) => {
-      return data;
-    })
-    .catch((error) => {
-      console.log("Error is: ", error.error);
-    });
-
-  return products;
-}
-
-/**
- * Get list of all unique categories
- * @param {[]} products fetched list of all products
- */
-const getCategories = (products) => {
-  const categories = [];
-  products.map((product) => {
-    if (!categories.includes(product.category)) {
-      return categories.push(product.category);
-    }
-    return null;
-  });
-
-  return categories;
-};
-
-/**
- * Convert product name to slug URL
- * @param {string} string the string (product or category name) to convert to slug
- */
-const createSlug = (string) => {
-  string = string.replace(/^\s+|\s+$/g, ""); // trim
-  string = string.toLowerCase();
-
-  // remove accents, swap ñ for n, etc
-  const from = "àáäâèéëêìíïîòóöôùúüûñç·/_,:;";
-  const to = "aaaaeeeeiiiioooouuuunc------";
-  for (let i = 0, l = from.length; i < l; i++) {
-    string = string.replace(new RegExp(from.charAt(i), "g"), to.charAt(i));
-  }
-
-  string = string
-    .replace(/[^a-z0-9 -]/g, "") // remove invalid chars
-    .replace(/\s+/g, "-") // collapse whitespace and replace by -
-    .replace(/-+/g, "-"); // collapse dashes
-
-  return string;
 };
 
 export default Layout;

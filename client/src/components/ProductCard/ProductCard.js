@@ -9,6 +9,10 @@ import {
   CardMedia,
   TextField,
   Typography,
+  Container,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
 } from "@material-ui/core";
 import useStyles from "./ProductCardStyles";
 import { UserContext } from "../../Contexts/UserContext";
@@ -31,8 +35,6 @@ const ProductCard = (props) => {
   };
 
   const handleAddToCart = () => {
-    console.log(product);
-
     addToCartAndLocalStorage(product);
   };
 
@@ -99,7 +101,7 @@ const ProductCard = (props) => {
               : null}
             {props.case === "main" || props.case === "productview" ? (
               <Typography>{product.price} SEK</Typography>
-            ) : props.case === "updateInventory" ? null : (
+            ) : props.case === "updateProduct" ? null : (
               <Typography className={classes.cartSmallText}>
                 á {product.price} SEK
               </Typography>
@@ -115,15 +117,23 @@ const ProductCard = (props) => {
         ) : null}
         {props.case === "main" || props.case === "productview" ? (
           <Button
-            disabled={product.inventory < 1}
+            disabled={
+              product.inventory < 1 || product.inventory <= product.cartAmount
+            }
             size="small"
             onClick={handleAddToCart}
           >
-            {product.inventory < 1 ? "Not in stock" : "Add to cart"}
+            {product.inventory < 1 || product.inventory <= product.cartAmount
+              ? "Not in stock"
+              : "Add to cart"}
           </Button>
-        ) : props.case === "updateInventory" ? (
+        ) : props.case === "updateProduct" ? (
           <form
-            style={{ display: "flex", alignItems: "center" }}
+            style={{
+              display: "flex",
+              alignItems: "center",
+              flexDirection: "column",
+            }}
             onSubmit={props.updateProduct}
           >
             <TextField
@@ -132,8 +142,36 @@ const ProductCard = (props) => {
               label="Inventory"
               type="number"
               defaultValue={product.inventory}
-              onChange={(event) => props.handleChange(event, product._id)}
+              onChange={(event) =>
+                props.handleChange(event, product._id, "productInventory")
+              }
             ></TextField>
+            <RadioGroup
+              row
+              style={{ justifyContent: "center" }}
+              defaultValue={product.category}
+              aria-label="category"
+              onChange={(event) =>
+                props.handleChange(event, product._id, "productCategory")
+              }
+            >
+              <FormControlLabel
+                value="Forest"
+                control={<Radio />}
+                label="Forest"
+              />
+              <FormControlLabel
+                value="Mountain"
+                control={<Radio />}
+                label="Mountain"
+              />
+              <FormControlLabel
+                value="Water"
+                control={<Radio />}
+                label="Water"
+              />
+            </RadioGroup>
+
             <Button
               type="submit"
               style={{ marginLeft: "1rem" }}
@@ -149,13 +187,16 @@ const ProductCard = (props) => {
         {props.case === "cart" || props.case === "checkout" ? (
           <div className={classes.flexedDiv}>
             <Button
+              className={classes.cartButtons}
               variant="contained"
               size="small"
               onClick={() => updateCounter(product, "add")}
+              disabled={product.inventory <= product.cartAmount}
             >
               <AddCircleOutlineIcon />
             </Button>
             <Button
+              className={classes.cartButtons}
               variant="contained"
               size="small"
               onClick={() => updateCounter(product, "remove")}
@@ -163,6 +204,7 @@ const ProductCard = (props) => {
               <RemoveCircleOutlineIcon />
             </Button>
             <Button
+              className={classes.cartButtons}
               variant="contained"
               size="small"
               onClick={() => deleteProduct(product)}
@@ -172,6 +214,15 @@ const ProductCard = (props) => {
           </div>
         ) : null}
       </CardActions>
+      {props.case === "cart" || props.case === "checkout" ? (
+        <Container style={{ display: "flex", flexDirection: "column" }}>
+          {product.inventory <= product.cartAmount && (
+            <Typography style={{ textAlign: "center" }}>
+              Product stock empty
+            </Typography>
+          )}
+        </Container>
+      ) : null}
     </Card>
   );
 };

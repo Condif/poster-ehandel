@@ -3,16 +3,16 @@ import { useHistory } from "react-router-dom";
 import { Container, Typography, Button, Grid } from "@material-ui/core";
 import { UserContext } from "../../Contexts/UserContext";
 import { CheckoutContext } from "../../Contexts/CheckoutContext";
-import ProductCard from "../ProductCard/ProductCard";
 import ShipmentAlternatives from "../ShipmentAlternatives/ShipmentAlternatives";
 import ErrorIcon from "@material-ui/icons/Error";
 import PaymentInformation from "./PaymentInformation";
 import TotalCost from "../TotalCost/TotalCost";
+import { renderProducts } from "../ProductGrid";
 
 //styles
 import useStyles from "./CheckOutStyles";
 
-const Checkout = () => {
+const Checkout = (props) => {
   const classes = useStyles();
   const history = useHistory();
   const {
@@ -20,9 +20,10 @@ const Checkout = () => {
     userData,
     setUser,
     handleReceipt,
-    authenticateUser,
+    clearCartAndLocalStorage,
     totalCost,
-    setAlert,
+    setLoginPopup,
+    setOrderPlaced,
   } = useContext(UserContext);
 
   const {
@@ -33,7 +34,7 @@ const Checkout = () => {
   } = useContext(CheckoutContext);
 
   //updates inventory of each product when a purches is made
-  const updateInventory = () => {
+  const updateProduct = () => {
     fetch("http://localhost:8080/api/products/", {
       method: "PUT",
       headers: {
@@ -44,7 +45,7 @@ const Checkout = () => {
     })
       .then((res) => res.json())
       .then(() => {
-        console.log("Product inventory updated.");
+        console.log("Product updated.");
       });
   };
 
@@ -58,24 +59,24 @@ const Checkout = () => {
         const data = await response.json();
         if (data.error) {
           // Reset user data when session has ended
+          setLoginPopup({
+            showLogin: true,
+            message: "Please login before making a purchase.",
+          });
           if (userData !== "") {
             setUser("");
           }
-          setAlert({
-            showAlert: true,
-            type: "info",
-            message: `You need to be a member to make a purchase.
-          Would you like to sign up?`,
-          });
           return;
         }
         if (userData.id !== data.id) {
           setUser(data);
         }
-        updateInventory();
+        updateProduct();
 
         const receipt = await createNewOrder();
 
+        clearCartAndLocalStorage();
+        setOrderPlaced(Date.now());
         handleReceipt(receipt);
         history.push("/receipt");
       });
@@ -123,16 +124,8 @@ const Checkout = () => {
 
   return (
     <div className={classes.mainDiv}>
-      <Container>
-        {cartList.map((product) => (
-          <ProductCard
-            key={product._id}
-            case="checkout"
-            product={product}
-          ></ProductCard>
-        ))}
-      </Container>
-      {cartList.length === 0 && (
+      {console.log(cartList)}
+      {cartList === null || cartList.length === 0 ? (
         <Container className={classes.goBackDiv}>
           <Typography className={classes.text}>
             Your cart is empty. Go back and add items.
@@ -146,28 +139,36 @@ const Checkout = () => {
             Add items
           </Button>
         </Container>
+      ) : (
+        <>
+          <Grid container spacing={2} alignItems="stretch">
+            {cartList !== null &&
+              renderProducts("checkout", cartList, props.createSlug)}
+          </Grid>
+          <ShipmentAlternatives />
+          <PaymentInformation />
+          <TotalCost />
+          <Grid item xs={12}>
+            {checkErrorsInInfo() ? (
+              <div className={classes.errorMsg}>
+                <ErrorIcon fontSize="small" />
+                <Typography variant="body2" align="center">
+                  Error in "Your Information"
+                </Typography>
+              </div>
+            ) : null}
+          </Grid>
+          <Button
+            className={classes.submitButton}
+            disabled={cartList !== undefined && cartList.length === 0}
+            variant="contained"
+            color="primary"
+            onClick={redirectToReceipt}
+          >
+            Make purchase
+          </Button>
+        </>
       )}
-      <ShipmentAlternatives />
-      <PaymentInformation />
-      <TotalCost />
-      <Grid item xs={12}>
-        {checkErrorsInInfo() ? (
-          <div className={classes.errorMsg}>
-            <ErrorIcon fontSize="small" />
-            <Typography variant="body2" align="center">
-              Error in "Your Information"
-            </Typography>
-          </div>
-        ) : null}
-      </Grid>
-      <Button
-        className={classes.submitButton}
-        variant="contained"
-        color="primary"
-        onClick={() => redirectToReceipt()}
-      >
-        Make purchase
-      </Button>
     </div>
   );
 };

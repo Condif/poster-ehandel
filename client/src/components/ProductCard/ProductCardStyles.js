@@ -36,8 +36,12 @@ const useStyles = makeStyles((theme) => ({
   },
   flexedDiv: {
     display: "flex",
-    justifyContent: "center",
     width: "100%",
+    height: "100%",
+    justifyContent: "center",
+  },
+  cartButtons: {
+    margin: theme.spacing(0.5),
   },
   cartSmallText: {
     [theme.breakpoints.down("xs")]: {

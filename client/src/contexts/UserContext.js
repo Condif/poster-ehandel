@@ -3,20 +3,27 @@ export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
+  
+  const [loggedInUser, setLoggedInUser] = useState();
   const [userData, setUserData] = useState("");
   const [alert, setAlert] = useState({
     showAlert: false,
     type: null,
-    message: null
+    message: null,
   });
+  const [loginPopup, setLoginPopup] = useState({
+    showLogin: false,
+    message: null,
+  });
+  const [orderPlaced, setOrderPlaced] = useState(Date.now());
 
   const [receipt, setReceipt] = useState("");
   const [showReceipt, setShowReceipt] = useState(false);
-  
+
   const handleReceipt = (newReceipt) => {
-      setReceipt(newReceipt)
-      setShowReceipt(true)
-  }
+    setReceipt(newReceipt);
+    setShowReceipt(true);
+  };
   // CartStates
   const [cartList, setCartList] = useState(
     JSON.parse(localStorage.getItem("products" || []))
@@ -86,13 +93,15 @@ const UserContextProvider = (props) => {
   };
 
   const clearCartAndLocalStorage = () => {
-    setCartList();
+
+    setCartList([]);
     localStorage.removeItem("products");
   };
 
   const deleteProduct = (product) => {
     const state = [...cartList];
     const productIndex = state.findIndex((p) => p.name === product.name);
+    state[productIndex].cartAmount = 0;
     state.splice(productIndex, 1);
     setCartList(state);
     localStorage.setItem("products", JSON.stringify(state));
@@ -122,26 +131,42 @@ const UserContextProvider = (props) => {
   };
 
   function totalCost() {
-    if (cartList !== null) {
-      if (cartList !== undefined) {
-        const totalCost = cartList.reduce((total, product) => {
-          return total + product.cartAmount * product.price;
-        }, 0);
-        return totalCost;
-      }
-    }
+    if (cartList === null) return
+    if (cartList.length === 0) return
+    const totalCost = cartList.reduce((total, product) => {
+      return total + product.cartAmount * product.price;
+    }, 0);
+    return totalCost;
   }
 
   function amountOfItems() {
-    if (cartList !== null) {
-      if (cartList !== undefined) {
-        const itemsAmount = cartList.reduce((amount, product) => {
-          return amount + product.cartAmount;
-        }, 0);
-        return itemsAmount;
-      }
-    }
+    if (cartList === null) return
+    if (cartList.length === 0) return
+
+    const itemsAmount = cartList.reduce((amount, product) => {
+      return amount + product.cartAmount;
+    }, 0);
+    return itemsAmount;
   }
+
+  const getLoggedInUser = async () => {
+    const newLoggedInUser = await fetch("http://localhost:8080/api/users/loggedIn", {
+      method: "GET",
+      credentials: "include",
+    }).then((response) => response.json())
+      .then((data) => {
+        return data
+      })
+    return newLoggedInUser
+  }
+
+
+  const setupLoggedInUser = async () => {
+    const newLoggedInUser = await getLoggedInUser()
+    setLoggedInUser(newLoggedInUser)
+  }
+
+  
 
   return (
     <UserContext.Provider
@@ -151,6 +176,8 @@ const UserContextProvider = (props) => {
         cartList,
         receipt,
         showReceipt,
+        loggedInUser,
+        setupLoggedInUser,
         setShowReceipt,
         handleReceipt,
         setReceipt,
@@ -164,7 +191,12 @@ const UserContextProvider = (props) => {
         deleteProduct,
         totalCost,
         amountOfItems,
-        alert, setAlert
+        alert,
+        setAlert,
+        loginPopup,
+        setLoginPopup,
+        setOrderPlaced,
+        orderPlaced,
       }}
     >
       {props.children}
