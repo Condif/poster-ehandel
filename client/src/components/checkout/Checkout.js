@@ -124,7 +124,6 @@ const Checkout = (props) => {
 
   return (
     <div className={classes.mainDiv}>
-      {console.log(cartList)}
       {cartList === null || cartList.length === 0 ? (
         <Container className={classes.goBackDiv}>
           <Typography className={classes.text}>
