@@ -106,14 +106,21 @@ This part is only for our teacher's reference, not the actual grading of the ass
 ### Extra credits
 
 - The backend application must have a working global error handler. (Completed)</br>
-  In our expressApp we have a middleware that handles global errors. We also have a ServerError class that throws a new error if           something goes wrong. 
-- An administrator should be able to mark an order as shipped.
-  By clicking “see orders”, the administrator can see all orders. There they can mark them as shipped or not. 
-- When the user is logged in, they should be able to see if their order is shipped or not. 
-  When the user clicks on the “my orders” button, they can se all the orders that they have made. There, they can also see if they are     shipped or not. 
+  In our expressApp we have a middleware that handles global errors. We also have a ServerError class that throws a new error if           something goes wrong. </br>
+- An administrator should be able to mark an order as shipped. (Completed)</br>
+  By clicking “see orders”, the administrator can see all orders. There they can mark them as shipped or not. </br>
+- When the user is logged in, they should be able to see if their order is shipped or not. (Completed)</br>
+  When the user clicks on the “my orders” button, they can se all the orders that they have made. There, they can also see if they are     shipped or not. </br>
+- A user should be able to register as an administrator, new users must be saved in the database. (Completed)</br>
+  When a user registers they can choose between User och Admin. Their request is then added to the other admins “admin requests”. When     another admin accepts the request, the users role changes from user to admin. During the time the user waits for the request to be       approved, they can log in as a user, without the admin features. </br>
+- An administrator needs to be approved by another administrator before they log in as admin for the first time. (Completed)
+  See explanation above. </br>
+- An administrator should be able to edit which category a product belongs to. (Completed) </br>
+  Under “edit product” the administrator can choose to edit the products category. This changes the category in the product document in   the database. 
+    
 
 
-### Inlog
+### Login
 
 email: admin@gmail.com 
 password: admin
