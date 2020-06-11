@@ -14,12 +14,7 @@ router.post("/", upload.single("image"), controller.createNewProduct);
 // Update a product
 router.put("/updateProduct/:productId", controller.updateProduct);
 
-// Get all products in a category
-// router.get("/category/:productCategory", controller.getProductsFromCategory);
-
-// Get one specific product
-// router.get("/product/:productId", controller.getProductById);
-
+//Update productstock/inventory when items are sold
 router.put("/", controller.updateProductStock);
 
 module.exports = router;
