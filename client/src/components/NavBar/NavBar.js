@@ -45,7 +45,7 @@ const StyledRequestBadge = withStyles((theme) => ({
     border: `2px solid ${theme.palette.background.paper}`,
     padding: "2px 4px 1px 4px",
     fontSize: "0.6rem",
-    margin: theme.spacing(.6),
+    margin: theme.spacing(0.6),
   },
 }))(Badge);
 
@@ -66,7 +66,7 @@ const NavBar = (props) => {
   const history = useHistory();
 
   const [mobileOpen, setMobileOpen] = useState(false);
-  
+
   // Hämta openCart funktionen samt inloggad user från UserContext
   const {
     openCart,
@@ -169,7 +169,7 @@ const NavBar = (props) => {
       .then((response) => response.json())
       .then((data) => {
         if (data.success) {
-          setupLoggedInUser()
+          setupLoggedInUser();
           setUser("");
           setAlert({ showAlert: true, type: "success", message: data.message });
           if (window.location.pathname !== "/") {
@@ -184,8 +184,6 @@ const NavBar = (props) => {
     setShowReceipt(false);
     history.push("/receipt");
   };
-  
-  
 
   useEffect(() => {
     setupLoggedInUser();
@@ -240,21 +238,28 @@ const NavBar = (props) => {
           </Categories>
 
           <Grid justifycontent="flex-end" item>
-            {userData !== '' && loggedInUser !== null && loggedInUser !== undefined && loggedInUser.adminRequest === 'admin' &&
-              <Typography>Admin Request Pending</Typography>
-            }
+            {userData !== "" &&
+              loggedInUser !== null &&
+              loggedInUser !== undefined &&
+              loggedInUser.adminRequest === "admin" && (
+                <Typography>Admin Request Pending</Typography>
+              )}
             {userData.role === "admin" ? (
               <>
-              <StyledRequestBadge color="secondary" badgeContent={userForBadge.length}>
-                <NavButton
+                <StyledRequestBadge
+                  className={classes.desktopLinks}
+                  color="secondary"
+                  badgeContent={userForBadge.length}
+                >
+                  <NavButton
                     className={classes.desktopLinks}
                     aria-label="adminRequests"
                     onClick={() => history.push("/adminRequests")}
                   >
                     Admin Requests
-                </NavButton>
-              </StyledRequestBadge>
-                
+                  </NavButton>
+                </StyledRequestBadge>
+
                 <NavButton
                   className={classes.desktopLinks}
                   aria-label="orders"
@@ -272,12 +277,12 @@ const NavBar = (props) => {
               </>
             ) : null}
             {userData !== "" && (
-                <NavButton
-                  className={classes.desktopLinks}
-                  aria-label="yourOrders"
-                  onClick={() => handleDontShowReceipt()}
-                >
-                  Your orders
+              <NavButton
+                className={classes.desktopLinks}
+                aria-label="yourOrders"
+                onClick={() => handleDontShowReceipt()}
+              >
+                Your orders
               </NavButton>
             )}
             {userData === "" ? (
