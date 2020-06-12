@@ -31,6 +31,8 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("sm")]: {
       display: "none",
     },
+    width: "17rem",
+    margin: "0.5rem",
   },
 }));
 
