@@ -1,11 +1,15 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef , useContext} from "react";
 import { Grid, Typography, Paper, Button } from "@material-ui/core";
 import useStyles from "../Orders/OrdersStyles";
+import { UserContext } from "../../Contexts/UserContext";
 
 const AdminRequests = () => {
   const [specificUsers, setSpecificUsers] = useState();
   // Gör så att statet sätts första gången, useRef finns hela komponentens lifetime,
   // alltså försvinner den inte när komponenten uppdateras.
+  const { getSpecificUsers } = useContext(
+    UserContext
+  );
   const _isMounted = useRef(true);
   const classes = useStyles();
   const makeAdmin = (user) => {
@@ -42,20 +46,6 @@ const AdminRequests = () => {
     }
   };
 
-  const getSpecificUsers = async () => {
-    const newSpecificUsers = await fetch(
-      "http://localhost:8080/api/users/adminRequest",
-      {
-        method: "GET",
-        credentials: "include",
-      }
-    )
-      .then((response) => response.json())
-      .then((data) => {
-        return data;
-      });
-    return newSpecificUsers;
-  };
   useEffect(() => {
     setupSpecificUsers();
     return () => {

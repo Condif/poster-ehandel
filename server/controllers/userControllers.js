@@ -29,9 +29,6 @@ exports.updateUser = async (req, res) => {
 //Get logged in user
 exports.getLoggedInUser = async (req, res) => {
   const user = await User.findOne({ _id: req.session.id }).select("-password");
-  if (!user) {
-    throw new ServerError("The user does not exist", 404);
-  }
   res.json(user);
 };
 
