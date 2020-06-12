@@ -2,13 +2,10 @@ import React, { useContext } from "react";
 import { CheckoutContext } from "../../Contexts/CheckoutContext";
 import { FormControl, FormLabel, TextField } from "@material-ui/core";
 import useStyles from "./CheckOutStyles";
-import { UserContext } from "../../Contexts/UserContext";
 
 const PaymentInformation = () => {
   const classes = useStyles();
   const { validationInputs, handleInputChange } = useContext(CheckoutContext);
-  const { userData } = useContext(UserContext);
-
   return (
     <FormControl className={classes.containerDiv}>
       <FormLabel className={classes.labelText}>Deliveryaddress</FormLabel>
@@ -19,7 +16,6 @@ const PaymentInformation = () => {
         size="small"
         type="text"
         required
-        defaultValue={userData.deliveryAddress.address}
         label="Address"
         inputProps={{
           maxLength: 20,
@@ -29,7 +25,6 @@ const PaymentInformation = () => {
       <TextField
         className={classes.containerDiv}
         error={validationInputs.zipcode.error}
-        defaultValue={userData.deliveryAddress.zipcode}
         variant="outlined"
         size="small"
         inputProps={{
@@ -44,7 +39,6 @@ const PaymentInformation = () => {
       <TextField
         className={classes.containerDiv}
         error={validationInputs.city.error}
-        defaultValue={userData.deliveryAddress.city}
         variant="outlined"
         size="small"
         type="text"
