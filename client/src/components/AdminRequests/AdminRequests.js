@@ -7,7 +7,7 @@ const AdminRequests = () => {
   const [specificUsers, setSpecificUsers] = useState();
   // Gör så att statet sätts första gången, useRef finns hela komponentens lifetime,
   // alltså försvinner den inte när komponenten uppdateras.
-  const { getSpecificUsers } = useContext(
+  const { getSpecificUsers, updateUserBadge} = useContext(
     UserContext
   );
   const _isMounted = useRef(true);
@@ -16,11 +16,13 @@ const AdminRequests = () => {
     user.adminRequest = "user";
     user.role = "admin";
     updateUser(user);
+    updateUserBadge()
   };
 
   const denyAdminRequest = (user) => {
     user.adminRequest = "user";
     updateUser(user);
+    updateUserBadge()
   };
 
   const updateUser = (user) => {
