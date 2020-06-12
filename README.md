@@ -5,7 +5,7 @@ Link to [github repo](https://github.com/Condif/poster-ehandel).
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 and built using [Material-UI](https://material-ui.com/getting-started/installation/).
 The server is built using [Node.js](https://nodejs.org/en/).
-The database is built with [MongoDB](https://docs.mongodb.com/guides/).
+The database is built with [MongoDB](https://docs.mongodb.com/guides/) Atlas.
 
 ## Project description
 
