@@ -10,7 +10,7 @@ module.exports = productSchema = new mongoose.Schema({
     required: true,
   },
   category: {
-    type: String,
+    type: [{ type: String, required: true }],
     required: true,
   },
   description: {
