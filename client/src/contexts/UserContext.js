@@ -3,7 +3,7 @@ export const UserContext = createContext();
 
 const UserContextProvider = (props) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [userForBadge, setUserForBadge] = useState([]);
+  const [userForBadge, setUserForBadge] = useState(Date.now());
   const [loggedInUser, setLoggedInUser] = useState();
   const [userData, setUserData] = useState("");
   const [alert, setAlert] = useState({
@@ -19,6 +19,10 @@ const UserContextProvider = (props) => {
 
   const [receipt, setReceipt] = useState("");
   const [showReceipt, setShowReceipt] = useState(false);
+
+  const updateUserBadge = () => {
+    setUserForBadge(Date.now())
+  }
 
   const handleReceipt = (newReceipt) => {
     setReceipt(newReceipt);
@@ -220,6 +224,7 @@ const UserContextProvider = (props) => {
         setLoginPopup,
         setOrderPlaced,
         orderPlaced,
+        updateUserBadge
       }}
     >
       {props.children}
