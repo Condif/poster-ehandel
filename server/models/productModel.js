@@ -9,8 +9,9 @@ module.exports = productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  category: {
-    type: [{ type: String, required: true }],
+  category: { 
+    type: [String], 
+    validate: value => Array.isArray(value) && value.length > 0,
     required: true,
   },
   description: {
