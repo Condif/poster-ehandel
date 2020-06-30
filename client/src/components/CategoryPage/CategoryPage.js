@@ -14,17 +14,19 @@ const CategoryPage = (props) => {
 /**
  * Get list of products in category
  * @param {Object} props
- * @param {string} props.category
+ * @param {string} props.pageCategory
  * @param {{}} props.products
  * @return {[{}]} list of products in category
  */
 const getProducts = ({ category, products }) => {
   const categoryProducts = [];
   products.map((product) => {
-    if (product.category === category) {
-      categoryProducts.push(product);
-    }
-    return categoryProducts;
+    product.category.forEach(productCategory => {
+      if (productCategory === category) {
+        categoryProducts.push(product);
+      }
+      return categoryProducts;
+    })
   });
   return categoryProducts;
 };

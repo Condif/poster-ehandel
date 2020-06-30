@@ -63,10 +63,12 @@ const Layout = () => {
   const getCategories = (products) => {
     const categories = [];
     products.map((product) => {
-      if (!categories.includes(product.category)) {
-        return categories.push(product.category);
-      }
-      return null;
+      product.category.forEach(category => {
+        if (!categories.includes(category)) {
+          return categories.push(category);
+        }
+        return null;
+      })
     });
 
     return categories;
@@ -100,13 +102,13 @@ const Layout = () => {
         ) : isAdmin() ? (
           props.children
         ) : (
-          <Redirect
-            to={{
-              pathname: "/",
-              state: { redirectedFrom: window.location.pathname },
-            }}
-          />
-        )
+              <Redirect
+                to={{
+                  pathname: "/",
+                  state: { redirectedFrom: window.location.pathname },
+                }}
+              />
+            )
       }
     />
   );
@@ -122,10 +124,10 @@ const Layout = () => {
         ) : loginPopup.showLogin ? (
           props.children
         ) : (
-          <>
-            <Redirect to="/login" />
-          </>
-        )
+                <>
+                  <Redirect to="/login" />
+                </>
+              )
       }
     />
   );
@@ -244,7 +246,8 @@ const Layout = () => {
                       )}
                     />
                   );
-                })}
+                })
+              })
               {/* Get routes for category pages */}
               {products !== null &&
                 products.length !== 0 &&
