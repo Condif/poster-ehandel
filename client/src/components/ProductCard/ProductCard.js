@@ -12,6 +12,8 @@ import {
   Container,
   RadioGroup,
   FormControlLabel,
+  FormGroup,
+  Checkbox,
   Radio,
 } from "@material-ui/core";
 import useStyles from "./ProductCardStyles";
@@ -50,6 +52,7 @@ const ProductCard = (props) => {
         }
         onClick={handleClick}
       >
+        {console.log(product.category)}
         <CardMedia
           className={
             props.case === "cart" ||
@@ -146,31 +149,45 @@ const ProductCard = (props) => {
                 props.handleChange(event, product._id, "productInventory")
               }
             ></TextField>
-            <RadioGroup
+            <FormGroup
               row
               style={{ justifyContent: "center" }}
-              defaultValue={product.category}
               aria-label="category"
-              onChange={(event) =>
-                props.handleChange(event, product._id, "productCategory")
-              }
             >
               <FormControlLabel
-                value="Forest"
-                control={<Radio />}
+                control={
+                  <Checkbox
+                    defaultChecked={
+                      product.category.includes("Forest") ? true : false
+                    }
+                    value="Forest"
+                  />
+                }
                 label="Forest"
               />
               <FormControlLabel
-                value="Mountain"
-                control={<Radio />}
+                control={
+                  <Checkbox
+                    defaultChecked={
+                      product.category.includes("Mountain") ? true : false
+                    }
+                    value="Mountain"
+                  />
+                }
                 label="Mountain"
               />
               <FormControlLabel
-                value="Water"
-                control={<Radio />}
+                control={
+                  <Checkbox
+                    defaultChecked={
+                      product.category.includes("Water") ? true : false
+                    }
+                    value="Water"
+                  />
+                }
                 label="Water"
               />
-            </RadioGroup>
+            </FormGroup>
 
             <Button
               type="submit"
