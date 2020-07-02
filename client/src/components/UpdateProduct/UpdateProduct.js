@@ -15,19 +15,22 @@ export default function UpdateProduct(props) {
   const { product } = props;
 
   function handleChange(event, id, anchor) {
-    const categories = inputValues.productCategory;
+    let categories = null;
     const value = event.target.value;
     const checked = event.target.checked;
 
-    if (checked === true && !categories.includes(value)) {
-      categories.push(value);
-    } else if (!checked && categories.includes(value)) {
-      categories.splice(categories.indexOf(value), 1)
+    if (anchor === "productCategory") {
+      categories = inputValues.productCategory;
+      if (checked === true && !categories.includes(value)) {
+        categories.push(value);
+      } else if (!checked && categories.includes(value)) {
+        categories.splice(categories.indexOf(value), 1)
+      }
     }
 
     setInputValues({
       ...inputValues,
-      [anchor]: categories,
+      [anchor]: categories === null ? event.target.value : categories,
       productId: id,
     });
   }
