@@ -157,7 +157,7 @@ const ProductCard = (props) => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    defaultChecked={
+                    checked={
                       product.category.includes("Forest") ? true : false
                     }
                   />
@@ -168,7 +168,7 @@ const ProductCard = (props) => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    defaultChecked={
+                    checked={
                       product.category.includes("Mountain") ? true : false
                     }
                   />
@@ -179,7 +179,7 @@ const ProductCard = (props) => {
               <FormControlLabel
                 control={
                   <Checkbox
-                    defaultChecked={
+                    checked={
                       product.category.includes("Water") ? true : false
                     }
                   />

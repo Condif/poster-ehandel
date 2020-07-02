@@ -15,9 +15,19 @@ export default function UpdateProduct(props) {
   const { product } = props;
 
   function handleChange(event, id, anchor) {
+    const categories = inputValues.productCategory;
+    const value = event.target.value;
+    const checked = event.target.checked;
+
+    if (checked === true && !categories.includes(value)) {
+      categories.push(value);
+    } else if (!checked && categories.includes(value)) {
+      categories.splice(categories.indexOf(value), 1)
+    }
+
     setInputValues({
       ...inputValues,
-      [anchor]: [event.target.value],
+      [anchor]: categories,
       productId: id,
     });
   }
@@ -30,10 +40,11 @@ export default function UpdateProduct(props) {
 
     product.inventory = inputValues.productInventory;
     product.category = inputValues.productCategory;
+    delete product.__v;
 
     fetch(
       "http://localhost:8080/api/products/updateProduct/" +
-        inputValues.productId,
+      inputValues.productId,
       {
         method: "PUT",
         headers: {
@@ -43,18 +54,26 @@ export default function UpdateProduct(props) {
         body: JSON.stringify(product),
       }
     )
-      .then((res) => res.json())
-      .then(() => {
-        if (
-          inputValues.productCategory !== productCategory ||
-          inputValues.productInventory !== productInventory
-        ) {
-          setAlert({
-            showAlert: true,
-            type: "success",
-            message: "Product updated.",
-          });
+      .then(async (res) => {
+        const json = await res.json();
+        if (res.status !== 200) {
+          throw new Error(json.message)
         }
+        return json;
+      })
+      .then((json) => {
+        setAlert({
+          showAlert: true,
+          type: "success",
+          message: json,
+        });
+      })
+      .catch((error) => {
+        setAlert({
+          showAlert: true,
+          type: "error",
+          message: error.toString()
+        })
       });
   }
 

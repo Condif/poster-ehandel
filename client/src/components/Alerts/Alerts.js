@@ -4,10 +4,8 @@ import ActionAlert from "./ActionAlert";
 import LoginPopup from "./LoginPopup";
 import { UserContext } from "../../Contexts/UserContext";
 
-
 const Alerts = (props) => {
     const { setAlert, alert, loginPopup } = useContext(UserContext);
-    
     const childRef = createRef();
     
     const handleClickAway = () => {
