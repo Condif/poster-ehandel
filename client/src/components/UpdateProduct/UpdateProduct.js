@@ -17,7 +17,7 @@ export default function UpdateProduct(props) {
   function handleChange(event, id, anchor) {
     setInputValues({
       ...inputValues,
-      [anchor]: event.target.value,
+      [anchor]: [event.target.value],
       productId: id,
     });
   }

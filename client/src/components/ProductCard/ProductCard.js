@@ -10,11 +10,9 @@ import {
   TextField,
   Typography,
   Container,
-  RadioGroup,
   FormControlLabel,
   FormGroup,
   Checkbox,
-  Radio,
 } from "@material-ui/core";
 import useStyles from "./ProductCardStyles";
 import { UserContext } from "../../Contexts/UserContext";
@@ -52,7 +50,6 @@ const ProductCard = (props) => {
         }
         onClick={handleClick}
       >
-        {console.log(product.category)}
         <CardMedia
           className={
             props.case === "cart" ||
@@ -153,6 +150,9 @@ const ProductCard = (props) => {
               row
               style={{ justifyContent: "center" }}
               aria-label="category"
+              onChange={(event) =>
+                props.handleChange(event, product._id, "productCategory")
+              }
             >
               <FormControlLabel
                 control={
@@ -160,10 +160,10 @@ const ProductCard = (props) => {
                     defaultChecked={
                       product.category.includes("Forest") ? true : false
                     }
-                    value="Forest"
                   />
                 }
                 label="Forest"
+                value="Forest"
               />
               <FormControlLabel
                 control={
@@ -171,10 +171,10 @@ const ProductCard = (props) => {
                     defaultChecked={
                       product.category.includes("Mountain") ? true : false
                     }
-                    value="Mountain"
                   />
                 }
                 label="Mountain"
+                value="Mountain"
               />
               <FormControlLabel
                 control={
@@ -182,10 +182,10 @@ const ProductCard = (props) => {
                     defaultChecked={
                       product.category.includes("Water") ? true : false
                     }
-                    value="Water"
                   />
                 }
                 label="Water"
+                value="Water"
               />
             </FormGroup>
 
