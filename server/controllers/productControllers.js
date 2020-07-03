@@ -44,10 +44,17 @@ exports.updateProduct = async (req, res) => {
   if (req.params.productId !== req.body._id) {
     throw new ServerError("You can not update product", 403);
   }
-  const updatedProduct = new Product(Object.assign(product, req.body));
-  await updatedProduct.save();
 
-  res.json("Product updated");
+  const updatedProduct = await new Product(Object.assign(product, req.body));
+
+  await updatedProduct.save(function (err, doc) {
+    if (err) {
+      console.log(err)
+      throw new ServerError(err, 400);
+    }
+    res.json("Product updated");
+  });
+
 };
 
 //Update productstock when items are sold
