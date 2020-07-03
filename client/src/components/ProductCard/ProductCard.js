@@ -10,9 +10,9 @@ import {
   TextField,
   Typography,
   Container,
-  RadioGroup,
   FormControlLabel,
-  Radio,
+  FormGroup,
+  Checkbox,
 } from "@material-ui/core";
 import useStyles from "./ProductCardStyles";
 import { UserContext } from "../../Contexts/UserContext";
@@ -146,31 +146,48 @@ const ProductCard = (props) => {
                 props.handleChange(event, product._id, "productInventory")
               }
             ></TextField>
-            <RadioGroup
+            <FormGroup
               row
               style={{ justifyContent: "center" }}
-              defaultValue={product.category}
               aria-label="category"
               onChange={(event) =>
                 props.handleChange(event, product._id, "productCategory")
               }
             >
               <FormControlLabel
-                value="Forest"
-                control={<Radio />}
+                control={
+                  <Checkbox
+                    checked={
+                      product.category.includes("Forest") ? true : false
+                    }
+                  />
+                }
                 label="Forest"
+                value="Forest"
               />
               <FormControlLabel
-                value="Mountain"
-                control={<Radio />}
+                control={
+                  <Checkbox
+                    checked={
+                      product.category.includes("Mountain") ? true : false
+                    }
+                  />
+                }
                 label="Mountain"
+                value="Mountain"
               />
               <FormControlLabel
-                value="Water"
-                control={<Radio />}
+                control={
+                  <Checkbox
+                    checked={
+                      product.category.includes("Water") ? true : false
+                    }
+                  />
+                }
                 label="Water"
+                value="Water"
               />
-            </RadioGroup>
+            </FormGroup>
 
             <Button
               type="submit"
